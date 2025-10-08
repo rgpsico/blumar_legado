@@ -1,0 +1,115 @@
+html, body           {  font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif; color:#787250; margin: 0px 0px 0px 0px ; padding: 0;  font-size:12px;  background-color:#F6F4E8;  }
+ 
+
+
+/* .jcarousel-skin-tango .jcarousel-container {
+    -moz-border-radius: 10px;
+    background: #F0F6F9;
+    border: 1px solid #346F97;
+} */
+
+ 
+
+.jcarousel-skin-tango .jcarousel-container-vertical {
+	width: 75px;
+     height: 190px;
+    padding: 40px 3px;
+	 
+     
+}
+.jcarousel-skin-tango .jcarousel-clip-vertical {
+	margin: 0px 0 0 0px;
+    width: 75px;
+    height: 190px;
+ 
+}
+.jcarousel-skin-tango .jcarousel-item {
+    width: 71px;
+    height: 48px;
+	
+	}
+
+ 
+.jcarousel-skin-tango .jcarousel-item-vertical {
+    margin-bottom: 5px;
+    width: 71px;
+    height: 48px;
+}
+
+
+
+
+/**
+ *  Vertical Buttons
+ */
+.jcarousel-skin-tango .jcarousel-next-vertical {
+    position: absolute;
+    bottom: 10px;	
+    left: 3px;
+    width: 75px;
+    height: 15px;
+	top:236px;
+    cursor: pointer;
+	 top: 228px;
+    background: transparent url(../images/seta_down.jpg) no-repeat 0 0;
+	/*overflow: visibility;*/
+}
+
+.jcarousel-skin-tango .jcarousel-prev-vertical {
+    position: absolute;	
+    top: 15px;
+    left: 3px;
+    width: 75px;
+    height: 13px;
+    cursor: pointer;
+    background: transparent url(../images/seta_up.jpg) no-repeat 0 0;
+}
+
+ 
+
+/* css para o carousel  */
+#fotosg {height: auto; width:425px;   margin: 0px 0 5px 0; border:0px solid red;  float:left;  }
+.galeria-hotel-foto{ margin:0px  0px 0px 0px;   _margin:0px  0px 0px 8px;  padding:0px 0px 0px 0px; float:left;  width: 305px;   }
+#wrap { margin: -20px 0px 0px 3px; float:right; height:200px;  border:0px solid black; }
+.blur { background-color: #ccc; /*shadow color*/ color: inherit; margin: 2px 0px 6px 4px; float:left; }
+.shadow,.content { position: relative; bottom: 3px; right: 3px; }
+.shadow { background-color: #666; /*shadow color*/ color: inherit;}
+.content { background-color: #fff; /*background color of content*/  color: #000; /*text color of content*/ border: 0px solid #000; /*border color*/ margin: 0px; padding: 1px 2px 1px 0px;	}
+
+
+#container {  width:600px; height:auto;  float:left;  margin: 3px  0px 0px 5px;  }
+ 
+
+div:after, ol:after, form:after, ul:after, dl:after {content:".";display:block;clear:both;visibility:hidden;height:0;overflow:hidden;}
+
+#topohtl{margin: auto; width:560px; background-color:#e4ddc3; height:39px; padding-left: 20px;    float:left; }
+
+#titulohtl{font-size:35px; color:#817c60; float:left;  }
+
+#titulohtl span{font-weight:bold;}
+
+#HotelInfohtl {float:left; font-size:11px; color:#000000; margin:0px  0px 10px 0px   ; padding-top:  5px; width:560px; border:0px solid red; }
+
+.MoreInfo{font-size:11px; color:#000000; width:560px; margin:auto; margin-bottom: 25px; margin-top: 25px; float:left; }
+
+.mapalocalizacao{margin:auto; width:580px;  padding:10px 0px 0px 0px;}
+
+.TextoCorrido{margin-top:10px; text-align: justify;}
+
+#gallery{float:left; width:395px; }
+
+.NomeHotel, .TituloInfo{color:#9d1c20; font-size:15px;}
+
+.detailstop span{font-weight:bold;}
+
+
+
+
+/*
+#content{width:735px; margin:auto; position:relative; top:-102px; padding-bottom:40px; background-color: #ffffff; z-index:1; border: solid 1px #bcb5a1; }
+
+#TopInformations{padding-left: 20px; border-right-width: 20px; padding-right: 20px; width: 695px; padding-top: 20px;}*/
+
+
+
+

@@ -1,0 +1,131 @@
+html, body     { font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif; color:#787250; margin: 0px 0px 0px 0px ; padding: 0;  font-size:12px;  background-color:#F6F4E8;  }
+a              { text-decoration: none;  color:#787250;}
+#container       {  width: 900px; height: auto;  margin: auto;    }
+#container_login     {  width: 600px; height: 100px;  margin: 15px  0px 0px 0px;   border: solid 1px #D3D6CE;   border-radius: 5px 5px 5px 5px;   }
+#container_conteudo  {  width: 900px; height: auto;   float:left;   margin: 15px  0px 0px 0px;  background-color:#F7F7F0;  border: solid 1px #D3D6CE;   border-radius: 5px 5px 5px 5px;   }
+#container_lista     {  width: 250px; height: auto;   float:left;   margin: 15px  0px 0px 0px;   }
+#container_miolo     {  width: 640px; height: auto;   float:right;  margin: 15px  0px 0px 0px;   }
+
+
+#login           {  width: 600px; height: 40px;  margin: 15px  0px 0px 20px;    }
+#texto1          { margin: 5px  4px 0px 5px;  font-size:14px; color:#787252;  text-align:center; }
+#texto2          { margin: 5px  4px 0px 5px;  font-size:12px; color:#787252;  text-align:left; }
+#texto3          { margin: 10px  4px 0px 5px;  font-size:14px; color:#787252;  text-align:left;  border-color:#CACED1; border-style:solid; border-width: 0 0 1px 0;  }
+
+
+
+#alteracao{margin: 0px 0px 0px 15px;    width: 400px;  height: 300px;       /* border:1px solid red; */     overflow:auto;     }
+ 
+a.link:link {
+ font-family: Arial,Verdana,calibri;
+ font-size: 13px;
+ color:#666666;
+ text-decoration:none;
+}
+
+a.link:active {
+ font-family: Arial,Verdana,calibri;
+ font-size: 13px;
+ color:#666666;
+ text-decoration:none;
+}
+
+a.link:visited {
+ font-family: Arial,Verdana,calibri;
+ font-size: 13px;
+ color:#666666;
+ text-decoration:none;
+}
+a.link:hover /*efeito quando o mouse está sobre o link*/{
+ font-family: Arial,Verdana,calibri;
+ font-size: 13px;
+ color:#F78306;
+ text-decoration:none;
+} 
+
+table.bdsimples tr td
+{
+border:1px solid; 
+border-color:#003b57;
+}
+
+
+ .texto00  /* corpo de textos*/
+{
+color:#666666;
+font-family:  Arial;
+font-size : 18px;
+}
+
+.texto01  /* corpo de textos*/
+{
+color:#666666;
+font-family:  Arial;
+font-size : 13px; 
+font-weight: bold; /*todas negrito*/
+/*text-transform: uppercase;    todas maiusculas*/
+/*text-transform: lowercase;    todas minusculas*/
+/*text-transform: capitalize;   todas as primeiras letras maiusculas*/
+}
+
+.texto02  /* corpo de textos*/
+{
+color:#F78306;
+font-family: Arial;
+font-size : 13px;
+font-weight: bold;
+/*text-transform: uppercase;         todas maiusculas*/
+}
+
+.texto03  /* corpo de textos*/
+{
+color:#F78306;
+font-family: Arial;
+font-size : 10px;
+}
+
+.texto04  /* corpo de textos*/
+{
+color:#333333;
+font-family: Tahoma;
+font-size : 9px;
+}
+
+.texto05  /* corpo de textos*/
+{
+color:#333333;
+font-family: Tahoma;
+font-size : 15px;
+}
+
+
+
+select
+{
+background-color: #FFFFFF;
+font:15px, arial;
+color:#5F6061;
+ 
+}
+.botao
+{
+font-family:Arial;
+font-size:12px;
+margin:0px;
+padding:0px;
+}
+
+ textarea{ 
+background-color: #FFFFFF; 
+font: 13px, arial, color:#666666;
+border:1px solid #666666;
+}
+/* css pra os forms*/
+
+label{
+float: left;
+width: 120px;
+font-weight: bold;
+}
+
+ 

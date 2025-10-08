@@ -1,0 +1,16 @@
+﻿ /********************************************************************************************************* 
+	MIOLO
+ ********************************************************************************************************/	
+
+#blumar-garante { display : inline;   margin : 0 0 30px 2px;  width : 782px;  float : right;  height : auto; /* border:1px solid green;*/} 
+#blumar-garante-topo { display : inline;   margin : 0 0 0px 0px;  width : 782px;  float : left;  height : 100px; border:1px solid #c3c3c3; } 
+#blumarGaranteTopoTxt { display : inline;   margin : 10px 0 0px 0px;  width : 654px;  float : right;  height : auto;  } 
+.textTopo1 { font-family : Tahoma; font-size: 30pt; color : #585A59;   font-weight:bold;  margin: 0px 0px 0px 0px;  padding: 0px;  }
+.textTopo2 { font-family : Tahoma; font-size: 12pt; color : #585A59;   font-weight:normal;  margin: 10px 0px 0px 0px;  padding: 0px;  }
+#tabelaForm  { display : inline;   margin : 10px 0 0px 0px;  width : 782px;  float : left;  height : auto;} 
+#img  {  margin : 5px 0 0px 20px;       float : left;}  
+
+ 
+ 
+
+
