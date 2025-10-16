@@ -86,15 +86,16 @@ $ativo_mostrp = pg_escape_string($_POST["ativo_mostrp"]);
 
 $covid_19_pt_url = pg_escape_string($_POST["covid_19_pt_url"]);
 $covid_19_en_url = pg_escape_string($_POST["covid_19_en_url"] ?? '');
-$htl_num_quartos = pg_escape_string($_POST["htl_num_quartos"] ?? 0);
+$htl_num_quartos_raw = $_POST["htl_num_quartos"] ?? '';
+$htl_num_quartos = empty($htl_num_quartos_raw) ? 'NULL' : (int)$htl_num_quartos_raw;
 
 // tratamento do campo estrela blumar para nao dar erro na aplicação do desenvolvimento
 $htlestrelablumar = pg_escape_string($_POST["htlestrelablumar"]);
 $htlestrelablumar = pg_escape_string($_POST["htlestrelablumar"]);
 if (strlen($htlestrelablumar) == '0') {
-	$estrelablumar = null;
+	$estrelablumar = 'NULL';
 } else {
-	$estrelablumar = $htlestrelablumar;
+	$estrelablumar = "'$htlestrelablumar'";
 }
 
 // Novos campos adicionados
@@ -106,23 +107,30 @@ $insight_pt = pg_escape_string($_POST["insight_pt"] ?? '');
 $insight_en = pg_escape_string($_POST["insight_en"] ?? '');
 $insight_es = pg_escape_string($_POST["insight_es"] ?? '');
 $price_range = pg_escape_string($_POST["price_range"] ?? '');
-$capacity_min = pg_escape_string($_POST["capacity_min"] ?? 0);
-$capacity_max = pg_escape_string($_POST["capacity_max"] ?? 0);
+$capacity_min_raw = $_POST["capacity_min"] ?? '';
+$capacity_min = empty($capacity_min_raw) ? 'NULL' : (int)$capacity_min_raw;
+$capacity_max_raw = $_POST["capacity_max"] ?? '';
+$capacity_max = empty($capacity_max_raw) ? 'NULL' : (int)$capacity_max_raw;
 $city_name = pg_escape_string($_POST["city_name"] ?? '');
 $state = pg_escape_string($_POST["state"] ?? '');
 $country = pg_escape_string($_POST["country"] ?? '');
-$rating = pg_escape_string($_POST["rating"] ?? 0);
-$rating_count = pg_escape_string($_POST["rating_count"] ?? 0);
+$rating_raw = $_POST["rating"] ?? '';
+$rating = empty($rating_raw) ? 'NULL' : (float)$rating_raw;
+$rating_count_raw = $_POST["rating_count"] ?? '';
+$rating_count = empty($rating_count_raw) ? 'NULL' : (int)$rating_count_raw;
 $gallery_images = pg_escape_string($_POST["gallery_images"] ?? '');
 $blueprint_image = pg_escape_string($_POST["blueprint_image"] ?? '');
 $room_categories = pg_escape_string($_POST["room_categories"] ?? '');
 $dining_experiences = pg_escape_string($_POST["dining_experiences"] ?? '');
-$meeting_rooms_count = pg_escape_string($_POST["meeting_rooms_count"] ?? 0);
+$meeting_rooms_count_raw = $_POST["meeting_rooms_count"] ?? '';
+$meeting_rooms_count = empty($meeting_rooms_count_raw) ? 'NULL' : (int)$meeting_rooms_count_raw;
 $meeting_rooms_detail = pg_escape_string($_POST["meeting_rooms_detail"] ?? '');
-$has_convention_center = pg_escape_string($_POST["has_convention_center"] ?? 'false');
+$has_convention_center = isset($_POST["has_convention_center"]) ? 'true' : 'false';
 $url_360_halls = pg_escape_string($_POST["url_360_halls"] ?? '');
-$latitude = pg_escape_string($_POST["latitude"] ?? 0);
-$longitude = pg_escape_string($_POST["longitude"] ?? 0);
+$latitude_raw = $_POST["latitude"] ?? '';
+$latitude = empty($latitude_raw) ? 'NULL' : (float)$latitude_raw;
+$longitude_raw = $_POST["longitude"] ?? '';
+$longitude = empty($longitude_raw) ? 'NULL' : (float)$longitude_raw;
 $map_iframe_url = pg_escape_string($_POST["map_iframe_url"] ?? '');
 
 /*
@@ -134,7 +142,8 @@ $map_iframe_url = pg_escape_string($_POST["map_iframe_url"] ?? '');
 			    htlendrua =  '$htlendrua',
 		*/
 
-$sql = "
+// Update 1: Descrições e conteúdos
+$sql1 = "
 		update
 			conteudo_internet.ci_hotel
 		set
@@ -167,7 +176,17 @@ $sql = "
 				campo_extra_en =  '$campo_extra_en',
 				campo_extra =  '$campo_extra',
 				complemento =  '$complemento',
-				hotel_cham =  '$hotel_cham',
+				hotel_cham =  '$hotel_cham'
+		where
+		    	frncod = '$frncod'
+		 ";
+pg_query($conn, $sql1);
+
+// Update 2: Fotos e mídias
+$sql2 = "
+		update
+			conteudo_internet.ci_hotel
+		set
 			    htlimgfotofachada =  '$htlimgfotofachada',
 				fotofachada_tbn =  '$fotofachada_tbn',
 				htlfotopiscina =  '$htlfotopiscina',
@@ -183,14 +202,37 @@ $sql = "
 				arq_htl_360 =  '$arq_htl_360',
 				url_video =  '$url_video',
 				arq_video =  '$arq_video',
-				virtual_tour =  '$virtual_tour',
+				virtual_tour =  '$virtual_tour'
+		where
+		    	frncod = '$frncod'
+		 ";
+pg_query($conn, $sql2);
+
+// Update 3: Observações, histórico e classificações
+$sql3 = "
+		update
+			conteudo_internet.ci_hotel
+		set
 				htlobs =  '$htlobs',
 				htlobsing =  '$htlobsing',
 				htlobsesp =  '$htlobsesp',
 				historico_temp =  '$historico_temp',
-				htlestrelablumar =   '$estrelablumar',
+				htlestrelablumar =   $estrelablumar,
 				classif_eco =  '$classif_eco',
 				desc_mostrp_ing =  '$desc_mostrp_ing',
+                covid_19_en_url = '$covid_19_en_url',
+                covid_19_pt_url = '$covid_19_pt_url',
+				htl_num_quartos = $htl_num_quartos
+		where
+		    	frncod = '$frncod'
+		 ";
+pg_query($conn, $sql3);
+
+// Update 4: Flags e marcações
+$sql4 = "
+		update
+			conteudo_internet.ci_hotel
+		set
 				flaghtl =  '$flaghtl',
 				flaglatino =  '$flaglatino',
 				flat =  '$flat',
@@ -209,10 +251,17 @@ $sql = "
 				blumarrecomenda =  '$blumarrecomenda',
 				blumarreveillon =  '$blumarreveillon',
 				allinclusive =  '$allinclusive',
-				ativo_mostrp =  '$ativo_mostrp',
-                covid_19_en_url = '$covid_19_en_url',
-                covid_19_pt_url = '$covid_19_pt_url',
-				htl_num_quartos = '$htl_num_quartos',
+				ativo_mostrp =  '$ativo_mostrp'
+		where
+		    	frncod = '$frncod'
+		 ";
+pg_query($conn, $sql4);
+
+// Update 5: Novos campos adicionados - Parte 1 (slug, descrições curtas, insights, preço)
+$sql5 = "
+		update
+			conteudo_internet.ci_hotel
+		set
 				slug = '$slug',
 				short_description_pt = '$short_description_pt',
 				short_description_en = '$short_description_en',
@@ -220,29 +269,69 @@ $sql = "
 				insight_pt = '$insight_pt',
 				insight_en = '$insight_en',
 				insight_es = '$insight_es',
-				price_range = '$price_range',
-				capacity_min = '$capacity_min',
-				capacity_max = '$capacity_max',
+				price_range = '$price_range'
+		where
+		    	frncod = '$frncod'
+		 ";
+pg_query($conn, $sql5);
+
+// Update 6: Novos campos adicionados - Parte 2 (capacidade, localização)
+$sql6 = "
+		update
+			conteudo_internet.ci_hotel
+		set
+				capacity_min = $capacity_min,
+				capacity_max = $capacity_max,
 				city_name = '$city_name',
 				state = '$state',
-				country = '$country',
-				rating = '$rating',
-				rating_count = '$rating_count',
+				country = '$country'
+		where
+		    	frncod = '$frncod'
+		 ";
+pg_query($conn, $sql6);
+
+// Update 7: Novos campos adicionados - Parte 3 (avaliações, galeria)
+$sql7 = "
+		update
+			conteudo_internet.ci_hotel
+		set
+				rating = $rating,
+				rating_count = $rating_count,
 				gallery_images = '$gallery_images',
-				blueprint_image = '$blueprint_image',
+				blueprint_image = '$blueprint_image'
+		where
+		    	frncod = '$frncod'
+		 ";
+pg_query($conn, $sql7);
+
+// Update 8: Novos campos adicionados - Parte 4 (categorias, experiências, reuniões)
+$sql8 = "
+		update
+			conteudo_internet.ci_hotel
+		set
 				room_categories = '$room_categories',
 				dining_experiences = '$dining_experiences',
-				meeting_rooms_count = '$meeting_rooms_count',
-				meeting_rooms_detail = '$meeting_rooms_detail',
+				meeting_rooms_count = $meeting_rooms_count,
+				meeting_rooms_detail = '$meeting_rooms_detail'
+		where
+		    	frncod = '$frncod'
+		 ";
+pg_query($conn, $sql8);
+
+// Update 9: Novos campos adicionados - Parte 5 (convenções, coordenadas, mapa)
+$sql9 = "
+		update
+			conteudo_internet.ci_hotel
+		set
 				has_convention_center = '$has_convention_center',
 				url_360_halls = '$url_360_halls',
-				latitude = '$latitude',
-				longitude = '$longitude',
+				latitude = $latitude,
+				longitude = $longitude,
 				map_iframe_url = '$map_iframe_url'
 		where
 		    	frncod = '$frncod'
 		 ";
-pg_query($conn, $sql);
+pg_query($conn, $sql9);
 
 
 

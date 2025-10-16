@@ -798,17 +798,17 @@ for ($htl = 0; $htl < pg_numrows($result_hoteis_pendentes); $htl++) {
 		<input type="text" name="slug" id="slug" size="50" maxlength="255">
 	</div>
 	<div id="box12">
-		Short Description PT<br>
+		Descrição Curta PT<br>
 		<textarea name="short_description_pt" id="short_description_pt" cols="40" rows="2"></textarea>
 	</div>
 </div>
 <div id="box13">
 	<div id="box12">
-		Short Description EN<br>
+		Descrição Curta EN<br>
 		<textarea name="short_description_en" id="short_description_en" cols="40" rows="2"></textarea>
 	</div>
 	<div id="box12">
-		Short Description ES<br>
+		Descrição Curta ES<br>
 		<textarea name="short_description_es" id="short_description_es" cols="40" rows="2"></textarea>
 	</div>
 </div>
@@ -830,7 +830,7 @@ for ($htl = 0; $htl < pg_numrows($result_hoteis_pendentes); $htl++) {
 		<textarea name="insight_es" id="insight_es" cols="40" rows="3"></textarea>
 	</div>
 	<div id="box12">
-		Price Range<br>
+		Faixa de Preço<br>
 		<input type="text" name="price_range" id="price_range" size="20" maxlength="20">
 	</div>
 </div>
@@ -838,37 +838,37 @@ for ($htl = 0; $htl < pg_numrows($result_hoteis_pendentes); $htl++) {
 <div id="box6">LOCALIZAÇÃO E CAPACIDADE</div>
 <div id="box13">
 	<div id="box12">
-		City Name<br>
+		Nome da Cidade<br>
 		<input type="text" name="city_name" id="city_name" size="30" maxlength="255">
 	</div>
 	<div id="box12">
-		State<br>
+		Estado<br>
 		<input type="text" name="state" id="state" size="30" maxlength="50">
 	</div>
 </div>
 <div id="box13">
 	<div id="box12">
-		Country<br>
+		País<br>
 		<input type="text" name="country" id="country" size="30" maxlength="50">
 	</div>
 	<div id="box12">
-		Capacity Min<br>
+		Capacidade Mínima<br>
 		<input type="number" name="capacity_min" id="capacity_min" size="10">
 	</div>
 </div>
 <div id="box13">
 	<div id="box12">
-		Capacity Max<br>
+		Capacidade Máxima<br>
 		<input type="number" name="capacity_max" id="capacity_max" size="10">
 	</div>
 	<div id="box12">
-		Rating (0-5)<br>
+		Classificação (0-5)<br>
 		<input type="number" name="rating" id="rating" step="0.1" min="0" max="5" size="5">
 	</div>
 </div>
 <div id="box13">
 	<div id="box12">
-		Rating Count<br>
+		Número de Avaliações<br>
 		<input type="number" name="rating_count" id="rating_count" size="10">
 	</div>
 	<div id="box12">
@@ -882,7 +882,7 @@ for ($htl = 0; $htl < pg_numrows($result_hoteis_pendentes); $htl++) {
 		<input type="number" name="longitude" id="longitude" step="0.000001" size="15">
 	</div>
 	<div id="box12">
-		Map Iframe URL<br>
+		URL do Iframe do Mapa<br>
 		<input type="text" name="map_iframe_url" id="map_iframe_url" size="50" maxlength="500">
 	</div>
 </div>
@@ -890,11 +890,11 @@ for ($htl = 0; $htl < pg_numrows($result_hoteis_pendentes); $htl++) {
 <div id="box6">GALERIA E IMAGENS</div>
 <div id="box13">
 	<div id="box12">
-		Gallery Images (comma-separated URLs)<br>
+		Imagens da Galeria (URLs separadas por vírgula)<br>
 		<textarea name="gallery_images" id="gallery_images" cols="60" rows="3"></textarea>
 	</div>
 	<div id="box12">
-		Blueprint Image<br>
+		Imagem da Planta Baixa<br>
 		<input type="text" name="blueprint_image" id="blueprint_image" size="50" maxlength="255">
 	</div>
 </div>
@@ -902,11 +902,11 @@ for ($htl = 0; $htl < pg_numrows($result_hoteis_pendentes); $htl++) {
 <div id="box6">CATEGORIAS DE QUARTOS E EXPERIÊNCIAS</div>
 <div id="box13">
 	<div id="box12">
-		Room Categories (comma-separated)<br>
+		Categorias de Quartos (separadas por vírgula)<br>
 		<textarea name="room_categories" id="room_categories" cols="40" rows="3"></textarea>
 	</div>
 	<div id="box12">
-		Dining Experiences<br>
+		Experiências Culinárias<br>
 		<textarea name="dining_experiences" id="dining_experiences" cols="40" rows="3"></textarea>
 	</div>
 </div>
@@ -914,21 +914,21 @@ for ($htl = 0; $htl < pg_numrows($result_hoteis_pendentes); $htl++) {
 <div id="box6">SALAS DE REUNIÃO E CONVENCÕES</div>
 <div id="box13">
 	<div id="box12">
-		Meeting Rooms Count<br>
+		Número de Salas de Reunião<br>
 		<input type="number" name="meeting_rooms_count" id="meeting_rooms_count" size="10">
 	</div>
 	<div id="box12">
-		Has Convention Center<br>
+		Possui Centro de Convenções<br>
 		<input type="checkbox" name="has_convention_center" id="has_convention_center" value="true">
 	</div>
 </div>
 <div id="box13">
 	<div id="box12">
-		Meeting Rooms Detail<br>
+		Detalhes das Salas de Reunião<br>
 		<textarea name="meeting_rooms_detail" id="meeting_rooms_detail" cols="60" rows="3"></textarea>
 	</div>
 	<div id="box12">
-		URL 360 Halls<br>
+		URL 360 das Salas<br>
 		<input type="text" name="url_360_halls" id="url_360_halls" size="50" maxlength="255">
 	</div>
 </div>
