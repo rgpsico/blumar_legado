@@ -40,7 +40,7 @@
 		//
 		echo '	    
 			    Inserir novo Hotel <br>
-			    <select name="mneu_for" id="mneu_for"    onChange="javascript:novo_hotel();"> 
+			    <select name="mneu_for" id="mneu_for"    onChange="javascript:novo_hotelv2();"> 
 			    <option value="0" selected>Escolha um hotel para cadastrar</option>
 			    ' . $lista_pendentes . '
 			    </select>
@@ -48,7 +48,7 @@
 			    <br><br>
 			    <form name="frmcities" method="post" action="##"  >
 			    <br>Altera&ccedil;&atilde;o de Hoteis<br>
-			    <select name="frncod" id="frncod"    onChange="javascript:altera_hotel();"> 
+			    <select name="frncod" id="frncod"    onChange="javascript:altera_hotelv2();"> 
 			    <option value="0" selected>Escolha um hotel para alterar</option>
 		     ';
 
@@ -225,7 +225,7 @@ Listagem de Cadastrados (em inglês)<br>
    		
    		
 <br>Template de Hoteis<br>
-<select name="consultahotel" id="consultahotel"    onChange="javascript:consulta_hotel();">
+<select name="consultahotel" id="consultahotel"    onChange="javascript:consulta_hotelv2();">
 <option value="0" selected>Escolha um hotel para ver o template</option>
 ';
 
