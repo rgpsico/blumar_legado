@@ -2,7 +2,7 @@ function acao_hotelv2() {
 
 	$.ajax({
 		dataType: "html",
-		url: "hotel/miolo_hotel.php",
+		url: "hotelv2/miolo_hotel.php",
 		// FUNÇÃO ERRO
 		error: function () {
 			alert("Error when retrieving hotel content!");
@@ -20,7 +20,7 @@ function acao_hotelv2() {
 
 
 
-function novo_hotelv2() {
+function novo_hotel() {
 
 	$.ajax({
 		dataType: "html",
@@ -45,7 +45,7 @@ function novo_hotelv2() {
 
 
 
-function insere_novo_hotelv2() {
+function insere_novo_hotel() {
 
 
 
@@ -321,11 +321,11 @@ function insere_novo_hotelv2() {
 
 
 
-function altera_hotelv2() {
+function altera_hotel() {
 
 	$.ajax({
 		dataType: "html",
-		url: "hotel/altera_hotel.php",
+		url: "hotelv2/altera_hotel.php",
 		type: 'POST',
 		data: {
 
@@ -353,7 +353,7 @@ function altera_hotel2() {
 
 	$.ajax({
 		dataType: "html",
-		url: "hotel/altera_hotel.php",
+		url: "hotelv2/altera_hotel.php",
 		type: 'POST',
 		data: {
 
@@ -377,11 +377,11 @@ function altera_hotel2() {
 
 
 
-function listagem_htl_inglesv2() {
+function listagem_htl_ingles() {
 
 	$.ajax({
 		dataType: "html",
-		url: "hotel/relatorio_hotel_ing.php",
+		url: "hotelv2/relatorio_hotel_ing.php",
 		type: 'POST',
 		data: {
 
@@ -407,11 +407,11 @@ function listagem_htl_inglesv2() {
 
 
 
-function cadastro_facv2() {
+function cadastro_fac() {
 
 	$.ajax({
 		dataType: "html",
-		url: "hotel/cadastro_facilidades.php",
+		url: "hotelv2/cadastro_facilidades.php",
 
 		// FUNÇÃO ERRO
 		error: function () {
@@ -428,11 +428,11 @@ function cadastro_facv2() {
 
 }
 
-function insere_facv2() {
+function insere_fac() {
 
 	$.ajax({
 		dataType: "html",
-		url: "hotel/insert_facilidades.php",
+		url: "hotelv2/insert_facilidades.php",
 		type: 'POST',
 		data: {
 
@@ -472,7 +472,7 @@ function insere_facv2() {
 
 
 
-function update_hotelv2() {
+function update_hotel() {
 
 
 
@@ -607,7 +607,7 @@ function update_hotelv2() {
 
 	$.ajax({
 		dataType: "html",
-		url: "hotel/update_hotel.php",
+		url: "hotelv2/update_hotel.php",
 		type: 'POST',
 		data: {
 			frncod: $("#frncod").val(),
@@ -737,11 +737,11 @@ function update_hotelv2() {
 
 
 
-function altera_aptov2() {
+function altera_apto() {
 
 	$.ajax({
 		dataType: "html",
-		url: "hotel/altera_apto.php",
+		url: "hotelv2/altera_apto.php",
 		type: 'POST',
 		data: {
 
@@ -763,7 +763,7 @@ function altera_aptov2() {
 
 }
 
-function update_aptov2() {
+function update_apto() {
 
 
 	var pk_aptcod1 = '';
@@ -797,7 +797,7 @@ function update_aptov2() {
 
 	$.ajax({
 		dataType: "html",
-		url: "hotel/update_apto.php",
+		url: "hotelv2/update_apto.php",
 		type: 'POST',
 		data: {
 
@@ -842,7 +842,7 @@ function apaga_apto() {
 
 	$.ajax({
 		dataType: "html",
-		url: "hotel/apaga_apto.php",
+		url: "hotelv2/apaga_apto.php",
 		type: 'POST',
 		data: {
 
@@ -873,7 +873,7 @@ function back_htl() {
 
 	$.ajax({
 		dataType: "html",
-		url: "hotel/altera_hotel.php",
+		url: "hotelv2/altera_hotel.php",
 		type: 'POST',
 		data: {
 
@@ -901,7 +901,7 @@ function add_apto() {
 
 	$.ajax({
 		dataType: "html",
-		url: "hotel/novo_apto.php",
+		url: "hotelv2/novo_apto.php",
 		type: 'POST',
 		data: {
 
@@ -929,7 +929,7 @@ function insere_novo_apto() {
 
 	$.ajax({
 		dataType: "html",
-		url: "hotel/insert_novo_apto.php",
+		url: "hotelv2/insert_novo_apto.php",
 		type: 'POST',
 		data: {
 
@@ -958,7 +958,7 @@ function apaga_fac_htl() {
 
 	$.ajax({
 		dataType: "html",
-		url: "hotel/apaga_fac_htl.php",
+		url: "hotelv2/apaga_fac_htl.php",
 		type: 'POST',
 		data: {
 
@@ -984,7 +984,7 @@ function add_fac_htl() {
 
 	$.ajax({
 		dataType: "html",
-		url: "hotel/add_fac_htl.php",
+		url: "hotelv2/add_fac_htl.php",
 		type: 'POST',
 		data: {
 
@@ -1021,7 +1021,7 @@ function insert_add_fac_htl() {
 
 	$.ajax({
 		dataType: "html",
-		url: "hotel/insert_add_fac_htl.php",
+		url: "hotelv2/insert_add_fac_htl.php",
 		type: 'POST',
 		data: {
 
@@ -1048,7 +1048,7 @@ function add_fac_apto() {
 
 	$.ajax({
 		dataType: "html",
-		url: "hotel/add_fac_apto.php",
+		url: "hotelv2/add_fac_apto.php",
 		type: 'POST',
 		data: {
 
@@ -1083,7 +1083,7 @@ function insert_add_fac_apto() {
 
 	$.ajax({
 		dataType: "html",
-		url: "hotel/insert_add_fac_apto.php",
+		url: "hotelv2/insert_add_fac_apto.php",
 		type: 'POST',
 		data: {
 
@@ -1111,7 +1111,7 @@ function apaga_fac_apto() {
 
 	$.ajax({
 		dataType: "html",
-		url: "hotel/apaga_fac_apto.php",
+		url: "hotelv2/apaga_fac_apto.php",
 		type: 'POST',
 		data: {
 
@@ -1141,7 +1141,7 @@ function listagem_selo_new() {
 
 	$.ajax({
 		dataType: "html",
-		url: "hotel/relatorio-hoteis-selo-new.php",
+		url: "hotelv2/relatorio-hoteis-selo-new.php",
 
 		error: function () {
 			alert("Error when retrieving hotel content!");
@@ -1164,7 +1164,7 @@ function listagem_selo_unique() {
 
 	$.ajax({
 		dataType: "html",
-		url: "hotel/relatorio-hoteis-selo-unique.php",
+		url: "hotelv2/relatorio-hoteis-selo-unique.php",
 
 		error: function () {
 			alert("Error when retrieving hotel content!");
@@ -1185,7 +1185,7 @@ function listagem_selo_luxury() {
 
 	$.ajax({
 		dataType: "html",
-		url: "hotel/relatorio-hoteis-selo-luxury.php",
+		url: "hotelv2/relatorio-hoteis-selo-luxury.php",
 
 		error: function () {
 			alert("Error when retrieving hotel content!");
@@ -1205,7 +1205,7 @@ function listagem_marc_nacional() {
 
 	$.ajax({
 		dataType: "html",
-		url: "hotel/relatorio-hoteis-nacional.php",
+		url: "hotelv2/relatorio-hoteis-nacional.php",
 
 		error: function () {
 			alert("Error when retrieving hotel content!");
@@ -1226,7 +1226,7 @@ function listagem_selo_favoritos() {
 
 	$.ajax({
 		dataType: "html",
-		url: "hotel/relatorio-hoteis-selo-favoritos.php",
+		url: "hotelv2/relatorio-hoteis-selo-favoritos.php",
 
 		error: function () {
 			alert("Error when retrieving hotel content!");
@@ -1247,7 +1247,7 @@ function listagem_health_safe() {
 
 	$.ajax({
 		dataType: "html",
-		url: "hotel/relatorio_hoteis_health_safe.php",
+		url: "hotelv2/relatorio_hoteis_health_safe.php",
 
 		error: function () {
 			alert("Error when retrieving hotel content!");
@@ -1268,7 +1268,7 @@ function listagem_shealth_safe() {
 
 	$.ajax({
 		dataType: "html",
-		url: "hotel/relatorio_hoteis_sem_health.php",
+		url: "hotelv2/relatorio_hoteis_sem_health.php",
 
 		error: function () {
 			alert("Error when retrieving hotel content!");
@@ -1289,7 +1289,7 @@ function consulta_hotel() {
 
 	$.ajax({
 		dataType: "html",
-		url: "hotel/template_hotel.php",
+		url: "hotelv2/template_hotel.php",
 		type: 'POST',
 		data: {
 
@@ -1326,7 +1326,7 @@ function insere_estilo_htl() {
 
 	$.ajax({
 		dataType: "html",
-		url: "hotel/insere_estilo.php",
+		url: "hotelv2/insere_estilo.php",
 		type: 'POST',
 		data: {
 
@@ -1360,7 +1360,7 @@ $(document).ready(function () {
 
 		$.ajax({
 			dataType: "html",
-			url: "hotel/apagar_estilo.php",
+			url: "hotelv2/apagar_estilo.php",
 			type: 'POST',
 			cache: false,
 			data: {
@@ -1402,7 +1402,7 @@ function del_covid19pt() {
 
 	$.ajax({
 		dataType: "html",
-		url: "hotel/del_covid19pt.php",
+		url: "hotelv2/del_covid19pt.php",
 		type: 'POST',
 		data: {
 			frncod: $("#frncod").val()
@@ -1426,7 +1426,7 @@ function del_covid19en() {
 
 	$.ajax({
 		dataType: "html",
-		url: "hotel/del_covid19en.php",
+		url: "hotelv2/del_covid19en.php",
 		type: 'POST',
 		data: {
 			frncod: $("#frncod").val()

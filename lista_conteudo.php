@@ -45,6 +45,7 @@ if (isset($_SESSION['conteudo'])) {
 
 <script type="text/javascript" src="js/cidade.js?v=1.4"></script>
 <script type="text/javascript" src="js/hotel.js?v=1.6"></script>
+<script type="text/javascript" src="js/hotelv2.js?v=1.6"></script>
 <script type="text/javascript" src="js/tours.js?v=2.3"></script>
 <script type="text/javascript" src="js/eco.js"></script>
 <script type="text/javascript" src="js/restaurante.js?v=1.1"></script>
@@ -347,6 +348,12 @@ if (isset($_SESSION['conteudo'])) {
 							if ($pk_conteudo == '2') {
 								if ($cad_hotel == 't') {
 									echo '<div id="texto3"><a href="##" onclick="javascript:acao_hotel();">' . $nomecont . '</a></div>';
+								}
+							}
+
+							if ($pk_conteudo == '2') {
+								if ($cad_hotel == 't') {
+									echo '<div id="texto3"><a href="##" onclick="javascript:acao_hotelv2();">HOTEL V2</a></div>';
 								}
 							}
 
