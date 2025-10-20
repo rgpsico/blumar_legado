@@ -20,7 +20,7 @@ function acao_hotelv2() {
 
 
 
-function novo_hotel() {
+function novo_hotelv2() {
 
 	$.ajax({
 		dataType: "html",

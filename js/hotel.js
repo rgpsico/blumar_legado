@@ -1,4 +1,4 @@
-function acao_hotelv2() {
+function acao_hotel() {
 
 	$.ajax({
 		dataType: "html",
@@ -20,11 +20,11 @@ function acao_hotelv2() {
 
 
 
-function novo_hotelv2() {
+function novo_hotel() {
 
 	$.ajax({
 		dataType: "html",
-		url: "hotelv2/novo_hotel.php",
+		url: "hotel/novo_hotel.php",
 		type: 'POST',
 		data: {
 			mneu_for: $("#mneu_for").val()
@@ -45,7 +45,7 @@ function novo_hotelv2() {
 
 
 
-function insere_novo_hotelv2() {
+function insere_novo_hotel() {
 
 
 
@@ -181,7 +181,7 @@ function insere_novo_hotelv2() {
 
 	$.ajax({
 		dataType: "html",
-		url: "hotelv2/insere_novo_hotel.php",
+		url: "hotel/insere_novo_hotel.php",
 		type: 'POST',
 		data: {
 
@@ -321,7 +321,7 @@ function insere_novo_hotelv2() {
 
 
 
-function altera_hotelv2() {
+function altera_hotel() {
 
 	$.ajax({
 		dataType: "html",
@@ -377,7 +377,7 @@ function altera_hotel2() {
 
 
 
-function listagem_htl_inglesv2() {
+function listagem_htl_ingles() {
 
 	$.ajax({
 		dataType: "html",
@@ -407,7 +407,7 @@ function listagem_htl_inglesv2() {
 
 
 
-function cadastro_facv2() {
+function cadastro_fac() {
 
 	$.ajax({
 		dataType: "html",
@@ -428,7 +428,7 @@ function cadastro_facv2() {
 
 }
 
-function insere_facv2() {
+function insere_fac() {
 
 	$.ajax({
 		dataType: "html",
@@ -472,7 +472,7 @@ function insere_facv2() {
 
 
 
-function update_hotelv2() {
+function update_hotel() {
 
 
 
@@ -737,7 +737,7 @@ function update_hotelv2() {
 
 
 
-function altera_aptov2() {
+function altera_apto() {
 
 	$.ajax({
 		dataType: "html",
@@ -763,7 +763,7 @@ function altera_aptov2() {
 
 }
 
-function update_aptov2() {
+function update_apto() {
 
 
 	var pk_aptcod1 = '';
