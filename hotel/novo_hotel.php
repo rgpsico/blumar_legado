@@ -97,7 +97,7 @@ if ($result_hoteis_pendentes && pg_numrows($result_hoteis_pendentes) > 0) {
 
 			<!-- Botões -->
 			<div class="col-12 text-center mt-4">
-				<button type="button" class="btn btn-primary btn-lg me-2" onclick="javascript:insere_novo_hotel();">
+				<button type="button" class="btn btn-primary btn-lg me-2" onclick="javascript:insere_novo_hotelv2();">
 					<i class="bi bi-save"></i> Cadastrar Hotel
 				</button>
 				<button type="button" class="btn btn-secondary btn-lg me-2" id="saveDraft">

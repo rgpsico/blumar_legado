@@ -1,9 +1,9 @@
 
-function acao_blognacional() {
+function acao_blognacionalv2() {
 
     $.ajax({
         dataType: "html",
-        url: "blog/miolo_blognacional.php",
+        url: "blogv2/miolo_blognacional.php",
         // FUN��O ERRO
         error: function () {
             alert("Error when inserting City content!");
@@ -20,11 +20,11 @@ function acao_blognacional() {
 }
 
 
-function novo_post() {
+function novo_postv2() {
 
     $.ajax({
         dataType: "html",
-        url: "blog/form_novo_post.php",
+        url: "blogv2/form_novo_post.php",
         // FUN��O ERRO
         error: function () {
             alert("Error when inserting City content!");
@@ -42,7 +42,7 @@ function novo_post() {
 
 
 
-function insere_novo_post() {
+function insere_novo_postv2() {
 
 
 
@@ -56,7 +56,7 @@ function insere_novo_post() {
 
     $.ajax({
         dataType: "html",
-        url: "blog/insere_novo_post.php",
+        url: "blogv2/insere_novo_post.php",
         type: 'POST',
         data: {
 
@@ -95,11 +95,11 @@ function insere_novo_post() {
 
 
 
-function altera_post() {
+function altera_postv2() {
 
     $.ajax({
         dataType: "html",
-        url: "blog/form_altera_post.php",
+        url: "blogv2/form_altera_post.php",
         type: 'POST',
         data:
         {
@@ -121,7 +121,7 @@ function altera_post() {
 
 
 
-function alteracao_post() {
+function alteracao_postv2() {
     // garanta que o conteúdo do editor vá no POST
     var descritivo_blumar = (typeof tinymce !== 'undefined' && tinymce.get('descritivo_blumar'))
         ? tinymce.get('descritivo_blumar').getContent()
@@ -134,7 +134,7 @@ function alteracao_post() {
     var ativo = $("#ativo").is(":checked") ? true : false;
 
     $.ajax({
-        url: "blog/update_post.php",
+        url: "blogv2/update_post.php",
         type: "POST",
         data: {
             classif: $("#classif").val(),

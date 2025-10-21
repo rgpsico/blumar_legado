@@ -10,6 +10,16 @@ function sanitize_value($value, $default = '')
 	return pg_escape_string($cleaned);
 }
 
+function sanitize_json($value, $default = '[]')
+{
+	$clean = isset($value) ? trim($value) : '';
+	if (empty($clean)) {
+		return $default;
+	}
+	// Assuming input is a valid JSON string; escape it for SQL
+	return pg_escape_string($clean);
+}
+
 function sanitize_int($value)
 {
 	$clean = isset($value) ? trim($value) : '';
@@ -101,7 +111,7 @@ $fotoextra_recep = sanitize_value(isset($_POST["fotoextra_recep"]) ? $_POST["fot
 $ft_resort1 = sanitize_value(isset($_POST["ft_resort1"]) ? $_POST["ft_resort1"] : '');
 $ft_resort2 = sanitize_value(isset($_POST["ft_resort2"]) ? $_POST["ft_resort2"] : '');
 $ft_resort3 = sanitize_value(isset($_POST["ft_resort3"]) ? $_POST["ft_resort3"] : '');
-$gallery_images = sanitize_value(isset($_POST["gallery_images"]) ? $_POST["gallery_images"] : '');
+$gallery_images = sanitize_json(isset($_POST["gallery_images"]) ? $_POST["gallery_images"] : '');
 $blueprint_image = sanitize_value(isset($_POST["blueprint_image"]) ? $_POST["blueprint_image"] : '');
 
 // ============================================

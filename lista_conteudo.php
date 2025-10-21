@@ -78,6 +78,7 @@ if (isset($_SESSION['conteudo'])) {
 <script type="text/javascript" src="js/banco_imagem.js?v=1"></script> 		
 <script type="text/javascript" src="js/banco_video.js"></script> 		 		
 <script type="text/javascript" src="js/blognacional.js?v=1.4"></script> 		
+<script type="text/javascript" src="js/blognacionalv2.js?v=1.4"></script> 	
 <link rel="stylesheet" type="text/css" href="https://www.blumar.com.br/util/css/jquery.ui.autocomplete.css" /> 
 <link rel="stylesheet" type="text/css" href="css/blumar.datepicker.css" />
 <link rel="stylesheet" type="text/css" href="css/padrao.css?v=1.3">
@@ -683,6 +684,12 @@ if (isset($_SESSION['conteudo'])) {
 							if ($pk_conteudo == '41') {
 								if ($blog_nacional == 't') {
 									echo '<div id="texto3"><a href="##" class="text-decoration-none text-dark" onclick="javascript:acao_blognacional();">' . $nomecont . '</a></div>';
+								}
+							}
+
+							if ($pk_conteudo == '41') {
+								if ($blog_nacional == 't') {
+									echo '<div id="texto3"><a href="##" class="text-decoration-none text-dark" onclick="javascript:acao_blognacionalv2();">Blog v2</a></div>';
 								}
 							}
 						}
