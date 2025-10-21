@@ -734,9 +734,45 @@ if (isset($_SESSION['conteudo'])) {
 							  
 							</div> 
 						</div> <br> 
-						</body>
-						</html>
-					';
+						'; ?>
+
+		<script type="text/javascript">
+			// Função para salvar estado
+			function saveState(section) {
+				localStorage.setItem("currentSection", section);
+				localStorage.setItem("userSession", "' . $_SESSION["
+					pk_acesso "] . '"); // Para validar sessão
+			}
+
+			// No load da página, restaura o estado salvo (se válido)
+			$(document).ready(function() {
+				var savedSection = localStorage.getItem("currentSection");
+				var savedSession = localStorage.getItem("userSession");
+				if (savedSection && savedSession === "' . $_SESSION["
+					pk_acesso "] . '") {
+					// Chama a função correspondente para recarregar
+					switch (savedSection) {
+						case "cidade":
+							acao_cidade();
+							break;
+						case "hotel":
+							acao_hotel();
+							break;
+						case "tours":
+							acao_tours();
+							break;
+							// Adicione cases para todas as seções (eco, restaurante, etc.)
+						default:
+							break;
+					}
+				}
+			});
+		</script>
+		</body>
+
+		</html>
+
+<?php
 	}
 } else {
 
