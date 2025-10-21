@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blumar - Special INCENTIVE Client Area</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@3.3.4/dist/vue.global.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        [v-cloak] {
+            display: none;
+        }
+
+        .card-hover {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .card-hover:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+    </style>
+</head>
+
+<body class="bg-gray-100">
+    <div id="app" v-cloak>
+        <!-- Header -->
+        <header class="bg-slate-800 text-white py-4 px-6">
+            <div class="max-w-7xl mx-auto flex items-center justify-between">
+                <div class="text-2xl font-bold tracking-wider">BLUMAR</div>
+                <div class="flex items-center gap-4">
+                    <img src="https://flagcdn.com/w40/us.png" alt="US Flag" class="w-8 h-5">
+                    <button class="px-4 py-2 bg-blue-400 hover:bg-blue-500 text-white rounded text-sm transition">
+                        Back to Main Site
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="max-w-7xl mx-auto px-6 py-12">
+            <!-- Title Section -->
+            <div class="mb-12">
+                <h1 class="text-4xl font-bold text-slate-800 mb-6">Special INCENTIVE Client Area</h1>
+
+                <div class="bg-white rounded-lg shadow-sm p-6 mb-6">
+                    <h2 class="text-xl font-semibold text-slate-700 mb-4">Welcome!</h2>
+                    <p class="text-gray-600 mb-4">
+                        We have created a special area that will allow you to navigate through all the information our
+                        team has put together to help you better sell Brazil. At just a few clicks you will have access
+                        to many products that were designed carefully to better help you sell our destination: tariff
+                        rates, special programs, inspection reports, online training, detailed maps and lots of product
+                        update just to mention a few.
+                    </p>
+                    <p class="text-lg font-semibold text-slate-700">
+                        We invite you to explore and enjoy!
+                    </p>
+                </div>
+            </div>
+
+            <!-- Cards Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Hotels Card -->
+                <div
+                    class="card-hover bg-sky-400 rounded-lg overflow-hidden shadow-lg cursor-pointer h-64 flex flex-col justify-between p-6 text-white">
+                    <div>
+                        <h3 class="text-3xl font-bold mb-4">Hotels</h3>
+                        <div class="w-16 h-1 bg-yellow-400 mb-4"></div>
+                    </div>
+                    <p class="text-sm">Um breve texto introdutório sobre</p>
+                </div>
+
+                <!-- Activities Card -->
+                <div
+                    class="card-hover bg-white rounded-lg overflow-hidden shadow-lg cursor-pointer h-64 flex flex-col justify-between p-6">
+                    <div>
+                        <h3 class="text-3xl font-bold mb-4 text-slate-800">Activities</h3>
+                        <div class="w-16 h-1 bg-yellow-400 mb-4"></div>
+                    </div>
+                    <p class="text-sm text-gray-600">Um breve texto introdutório sobre</p>
+                </div>
+
+                <!-- Venues Card -->
+                <div class="card-hover rounded-lg overflow-hidden shadow-lg cursor-pointer h-64 relative">
+                    <img src="https://images.unsplash.com/photo-1516306580123-e6e52b1b7b5f?w=600&h=400&fit=crop"
+                        alt="Museum" class="w-full h-full object-cover">
+                    <div
+                        class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent flex flex-col justify-between p-6 text-white">
+                        <div>
+                            <h3 class="text-3xl font-bold mb-4">Venues</h3>
+                            <div class="w-16 h-1 bg-yellow-400 mb-4"></div>
+                        </div>
+                        <p class="text-sm">Um breve texto introdutório sobre</p>
+                    </div>
+                </div>
+
+                <!-- Entertainment Card -->
+                <div class="card-hover rounded-lg overflow-hidden shadow-lg cursor-pointer h-64 relative">
+                    <img src="https://images.unsplash.com/photo-1516026672322-bc52d61a55d5?w=600&h=400&fit=crop"
+                        alt="Carnival" class="w-full h-full object-cover">
+                    <div
+                        class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent flex flex-col justify-between p-6 text-white">
+                        <div>
+                            <h3 class="text-3xl font-bold mb-4">Entertainment</h3>
+                            <div class="w-16 h-1 bg-yellow-400 mb-4"></div>
+                        </div>
+                        <p class="text-sm">Um breve texto introdutório sobre</p>
+                    </div>
+                </div>
+
+                <!-- Restaurants Card -->
+                <div
+                    class="card-hover bg-slate-800 rounded-lg overflow-hidden shadow-lg cursor-pointer h-64 flex flex-col justify-between p-6 text-white">
+                    <div>
+                        <h3 class="text-3xl font-bold mb-4">Restaurants</h3>
+                        <div class="w-16 h-1 bg-yellow-400 mb-4"></div>
+                    </div>
+                    <p class="text-sm">Um breve texto introdutório sobre</p>
+                </div>
+
+                <!-- Gifts Card -->
+                <div
+                    class="card-hover bg-orange-500 rounded-lg overflow-hidden shadow-lg cursor-pointer h-64 flex flex-col justify-between p-6 text-white">
+                    <div>
+                        <h3 class="text-3xl font-bold mb-4">Gifts</h3>
+                        <div class="w-16 h-1 bg-yellow-400 mb-4"></div>
+                    </div>
+                    <p class="text-sm">Um breve texto introdutório sobre</p>
+                </div>
+
+                <!-- Add Ons Card -->
+                <div
+                    class="card-hover bg-orange-400 rounded-lg overflow-hidden shadow-lg cursor-pointer h-64 flex flex-col justify-between p-6 text-white">
+                    <div>
+                        <h3 class="text-3xl font-bold mb-4">Add Ons</h3>
+                        <div class="w-16 h-1 bg-yellow-400 mb-4"></div>
+                    </div>
+                    <p class="text-sm">Um breve texto introdutório sobre</p>
+                </div>
+
+                <!-- Library Card -->
+                <div class="card-hover rounded-lg overflow-hidden shadow-lg cursor-pointer h-64 relative">
+                    <img src="https://images.unsplash.com/photo-1483729558449-99ef09a8c325?w=600&h=400&fit=crop"
+                        alt="Rio" class="w-full h-full object-cover">
+                    <div
+                        class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent flex flex-col justify-between p-6 text-white">
+                        <div>
+                            <h3 class="text-3xl font-bold mb-4">Library</h3>
+                            <div class="w-16 h-1 bg-yellow-400 mb-4"></div>
+                        </div>
+                        <p class="text-sm">Our collection of inspirational destinations in Brazil</p>
+                    </div>
+                </div>
+
+                <!-- Team Blumar Card -->
+                <div
+                    class="card-hover bg-sky-400 rounded-lg overflow-hidden shadow-lg cursor-pointer h-64 flex flex-col justify-between p-6 text-white">
+                    <div>
+                        <h3 class="text-3xl font-bold mb-4">Team Blumar</h3>
+                        <div class="w-16 h-1 bg-yellow-400 mb-4"></div>
+                    </div>
+                    <p class="text-sm">Um breve texto introdutório sobre</p>
+                </div>
+            </div>
+        </main>
+
+        <!-- Footer -->
+        <footer class="bg-slate-800 text-white py-8 px-6 mt-16">
+            <div class="max-w-7xl mx-auto">
+                <!-- Contact Info -->
+                <div
+                    class="flex flex-wrap items-center justify-center gap-6 text-sm mb-8 pb-8 border-b border-slate-700">
+                    <div class="flex items-center gap-2">
+                        <span class="font-bold">BLUMAR</span>
+                        <span>Rua Siqueira Campos, 43 - conj 2 - Copacabana | Rio de Janeiro - RJ | Brazil</span>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <span>CEP: 22031-901</span>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                            <path
+                                d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z" />
+                        </svg>
+                        <span>+ 55 21 2145 9000</span>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z" />
+                            <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z" />
+                        </svg>
+                        <span>incentives@blumar.com.br</span>
+                    </div>
+                    <div class="flex items-center gap-3">
+                        <a href="#" class="hover:text-blue-400">
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                                <path
+                                    d="M9 8h-3v4h3v12h5v-12h3.642l.358-4h-4v-1.667c0-.955.192-1.333 1.115-1.333h2.885v-5h-3.808c-3.596 0-5.192 1.583-5.192 4.615v3.385z" />
+                            </svg>
+                        </a>
+                        <a href="#" class="hover:text-blue-400">
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                                <path
+                                    d="M4.98 3.5c0 1.381-1.11 2.5-2.48 2.5s-2.48-1.119-2.48-2.5c0-1.38 1.11-2.5 2.48-2.5s2.48 1.12 2.48 2.5zm.02 4.5h-5v16h5v-16zm7.982 0h-4.968v16h4.969v-8.399c0-4.67 6.029-5.052 6.029 0v8.399h4.988v-10.131c0-7.88-8.922-7.593-11.018-3.714v-2.155z" />
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Partners Section -->
+                <div class="mb-8">
+                    <div
+                        class="grid grid-cols-3 md:grid-cols-6 lg:grid-cols-10 gap-6 items-center justify-items-center mb-8">
+                        <img v-for="(logo, index) in topLogos" :key="index" :src="logo.src" :alt="logo.alt"
+                            class="h-12 object-contain opacity-80 hover:opacity-100 transition">
+                    </div>
+
+                    <div class="text-center text-sm text-gray-400 mb-4">WE ARE IN COMPLIANCE WITH:</div>
+
+                    <div class="grid grid-cols-3 md:grid-cols-6 gap-6 items-center justify-items-center mb-8">
+                        <img v-for="(logo, index) in complianceLogos" :key="index" :src="logo.src" :alt="logo.alt"
+                            class="h-12 object-contain opacity-80 hover:opacity-100 transition">
+                    </div>
+
+                    <div class="text-center text-sm text-gray-400 mb-4">REPRESENTED BY:</div>
+
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-6 items-center justify-items-center">
+                        <img v-for="(logo, index) in representedLogos" :key="index" :src="logo.src" :alt="logo.alt"
+                            class="h-12 object-contain opacity-80 hover:opacity-100 transition">
+                    </div>
+                </div>
+
+                <!-- Copyright -->
+                <div class="text-center text-sm text-gray-400 pt-8 border-t border-slate-700">
+                    <p>Made with ❤️ in Brazil</p>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        const { createApp } = Vue;
+
+        createApp({
+            data() {
+                return {
+                    topLogos: [
+                        { src: 'https://via.placeholder.com/120x60/4A5568/FFFFFF?text=Virtuoso', alt: 'Virtuoso' },
+                        { src: 'https://via.placeholder.com/120x60/4A5568/FFFFFF?text=ILTM', alt: 'ILTM' },
+                        { src: 'https://via.placeholder.com/120x60/4A5568/FFFFFF?text=ABTA', alt: 'ABTA' },
+                        { src: 'https://via.placeholder.com/120x60/4A5568/FFFFFF?text=IATA', alt: 'IATA' },
+                        { src: 'https://via.placeholder.com/120x60/4A5568/FFFFFF?text=USTOA', alt: 'USTOA' },
+                        { src: 'https://via.placeholder.com/120x60/4A5568/FFFFFF?text=Travel+Alliance', alt: 'Travel Alliance' },
+                        { src: 'https://via.placeholder.com/120x60/4A5568/FFFFFF?text=Travelsavers', alt: 'Travelsavers' },
+                        { src: 'https://via.placeholder.com/120x60/4A5568/FFFFFF?text=NEST', alt: 'NEST' },
+                        { src: 'https://via.placeholder.com/120x60/4A5568/FFFFFF?text=Brazil+Travel', alt: 'Brazil Travel' },
+                        { src: 'https://via.placeholder.com/120x60/4A5568/FFFFFF?text=Ensemble', alt: 'Ensemble' }
+                    ],
+                    complianceLogos: [
+                        { src: 'https://via.placeholder.com/100x60/4A5568/FFFFFF?text=Green+Globe', alt: 'Green Globe' },
+                        { src: 'https://via.placeholder.com/100x60/4A5568/FFFFFF?text=Cadastur', alt: 'Cadastur' },
+                        { src: 'https://via.placeholder.com/100x60/4A5568/FFFFFF?text=ISO', alt: 'ISO' }
+                    ],
+                    representedLogos: [
+                        { src: 'https://via.placeholder.com/100x60/4A5568/FFFFFF?text=MPI', alt: 'MPI' },
+                        { src: 'https://via.placeholder.com/100x60/4A5568/FFFFFF?text=GPS', alt: 'GPS' },
+                        { src: 'https://via.placeholder.com/100x60/4A5568/FFFFFF?text=Andy+Warhol', alt: 'Andy Warhol' },
+                        { src: 'https://via.placeholder.com/100x60/4A5568/FFFFFF?text=FEL+Brasil', alt: 'FEL Brasil' }
+                    ]
+                }
+            },
+            methods: {
+                navigateTo(section) {
+                    console.log('Navigating to:', section);
+                    alert(`Você clicou em: ${section}`);
+                }
+            }
+        }).mount('#app');
+    </script>
+</body>
+
+</html>
