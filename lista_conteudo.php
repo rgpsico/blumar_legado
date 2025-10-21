@@ -341,56 +341,56 @@ if (isset($_SESSION['conteudo'])) {
 
 							if ($pk_conteudo == '1') {
 								if ($cad_cidade == 't') {
-									echo '<div id="texto3"><a href="##" onclick="javascript:acao_cidade();">' . $nomecont . '</a></div>';
+									echo '<div id="texto3"><a href="##" class="text-decoration-none text-dark" onclick="javascript:acao_cidade();">' . $nomecont . '</a></div>';
 								}
 							}
 
 							if ($pk_conteudo == '2') {
 								if ($cad_hotel == 't') {
-									echo '<div id="texto3"><a href="##" onclick="javascript:acao_hotel();">' . $nomecont . '</a></div>';
+									echo '<div id="texto3"><a href="##" class="text-decoration-none text-dark" onclick="javascript:acao_hotel();">' . $nomecont . '</a></div>';
 								}
 							}
 
 							if ($pk_conteudo == '2') {
 								if ($cad_hotel == 't') {
-									echo '<div id="texto3"><a href="##" onclick="javascript:acao_hotelv2();">HOTEL V2</a></div>';
+									echo '<div id="texto3"><a href="##" class="text-decoration-none text-dark" onclick="javascript:acao_hotelv2();">HOTEL V2</a></div>';
 								}
 							}
 
 							if ($pk_conteudo == '3') {
 								if ($cad_tours == 't') {
-									echo '<div id="texto3"><a href="##" onclick="javascript:acao_tours();">' . $nomecont . '</a></div>';
+									echo '<div id="texto3"><a href="##" class="text-decoration-none text-dark" onclick="javascript:acao_tours();">' . $nomecont . '</a></div>';
 								}
 							}
 
 							if ($pk_conteudo == '4') {
 								if ($cad_eco == 't') {
-									echo '<div id="texto3"><a href="##" onclick="javascript:acao_ecos();">' . $nomecont . '</a></div>';
+									echo '<div id="texto3"><a href="##" class="text-decoration-none text-dark" onclick="javascript:acao_ecos();">' . $nomecont . '</a></div>';
 								}
 							}
 
 							if ($pk_conteudo == '5') {
 								if ($cad_restaurante == 't') {
-									echo '<div id="texto3"><a href="##" onclick="javascript:acao_restaurante();">' . $nomecont . '</a></div>';
+									echo '<div id="texto3"><a href="##" class="text-decoration-none text-dark" onclick="javascript:acao_restaurante();">' . $nomecont . '</a></div>';
 								}
 							}
 
 							if ($pk_conteudo == '6') {
 								if ($cad_venues == 't') {
-									echo '<div id="texto3"><a href="##" onclick="javascript:acao_venues();">' . $nomecont . '</a></div>';
+									echo '<div id="texto3"><a href="##" class="text-decoration-none text-dark" onclick="javascript:acao_venues();">' . $nomecont . '</a></div>';
 								}
 							}
 
 							if ($pk_conteudo == '7') {
 								if ($cad_various == 't') {
-									echo '<div id="texto3"><a href="##" onclick="javascript:acao_various();">' . $nomecont . '</a></div>';
+									echo '<div id="texto3"><a href="##" class="text-decoration-none text-dark" onclick="javascript:acao_various();">' . $nomecont . '</a></div>';
 								}
 							}
 
 
 							if ($pk_conteudo == '8') {
 								if ($log_conteudo == 't') {
-									echo '<div id="texto3"><a href="##" onclick="javascript:acao_log();"><b>' . $nomecont . '</b></a></div>';
+									echo '<div id="texto3"><a href="##" class="text-decoration-none text-dark" onclick="javascript:acao_log();"><b>' . $nomecont . '</b></a></div>';
 								}
 							}
 
@@ -401,7 +401,7 @@ if (isset($_SESSION['conteudo'])) {
 								if ($cad_quotes == 't') {
 									//echo '<div id="texto3"><a href="http://www.blumar.com.br/novo_site/admin/cotes/new_model/libera_user.cfm?login='.$cad_login.'&pass='.$cad_pass.'&id_cliente=0&tipo=2" target="_new">'.$nomecont.'</a></div>';
 
-									echo '<div id="texto3"><a href="javascript:;"  onClick="MM_openBrWindow(';
+									echo '<div id="texto3"><a href="javascript:;"  class="text-decoration-none text-dark" onClick="MM_openBrWindow(';
 									echo "'https://www.blumar.com.br/novo_site/admin/cotes/new_model/libera_user.cfm?login=" . $cad_login . "&pass=" . $cad_pass . "&id_cliente=0&tipo=2";
 									echo "','quotes', 'scrollbars=yes,width=1030,height=750'";
 									echo ')" >' . $nomecont . '</a></div>';
@@ -412,7 +412,7 @@ if (isset($_SESSION['conteudo'])) {
 							if ($pk_conteudo == '10') {
 								if ($cad_contatos == 't') {
 
-									echo '<div id="texto3"><a href="javascript:;"  onClick="MM_openBrWindow(';
+									echo '<div id="texto3"><a href="javascript:;"  class="text-decoration-none text-dark" onClick="MM_openBrWindow(';
 									echo "'contatos/miolo_contatos.php";
 									echo "','contacts', 'scrollbars=yes,width=1000,height=750'";
 									echo ')" >' . $nomecont . '</a></div>';
@@ -420,7 +420,7 @@ if (isset($_SESSION['conteudo'])) {
 
 
 
-									//echo '<div id="texto3"><a  href="##" onclick="javascript:acao_contatos();">'.$nomecont.'</a></div>';
+									//echo '<div id="texto3"><a  href="##" class="text-decoration-none text-dark" onclick="javascript:acao_contatos();">'.$nomecont.'</a></div>';
 								}
 							}
 
@@ -429,29 +429,29 @@ if (isset($_SESSION['conteudo'])) {
 
 							if ($pk_conteudo == '11') {
 								if ($cad_abt == 't') {
-									echo '<div id="texto3"><a href="##" onclick="javascript:acao_abt();">' . $nomecont . '</a></div>';
+									echo '<div id="texto3"><a href="##" class="text-decoration-none text-dark" onclick="javascript:acao_abt();">' . $nomecont . '</a></div>';
 								}
 							}
 
 
 							if ($pk_conteudo == '12') {
 								if ($cad_news == 't') {
-									echo '<div id="texto3"><a href="##" onclick="javascript:acao_news();">' . $nomecont . '</a></div>';
+									echo '<div id="texto3"><a href="##" class="text-decoration-none text-dark" onclick="javascript:acao_news();">' . $nomecont . '</a></div>';
 								}
 							}
 
 							if ($pk_conteudo == '13') {
 								if ($cad_guias == 't') {
-									echo '<div id="texto3"><a href="##" onclick="javascript:acao_guias();">' . $nomecont . '</a></div>';
+									echo '<div id="texto3"><a href="##" class="text-decoration-none text-dark" onclick="javascript:acao_guias();">' . $nomecont . '</a></div>';
 								}
 							}
 
 
 							if ($pk_conteudo == '14') {
 								if ($cad_cliente == 't') {
-									//echo '<div id="texto3"><a href="##" onclick="javascript:acao_clientes();">'.$nomecont.'</a></div>';
+									//echo '<div id="texto3"><a href="##" class="text-decoration-none text-dark" onclick="javascript:acao_clientes();">'.$nomecont.'</a></div>';
 
-									echo '<div id="texto3"><a href="javascript:;"  onClick="MM_openBrWindow(';
+									echo '<div id="texto3"><a href="javascript:;"  class="text-decoration-none text-dark" onClick="MM_openBrWindow(';
 									echo "'clientes/index.php";
 									echo "','clients', 'scrollbars=yes,width=1000,height=auto'";
 									echo ')" >' . $nomecont . '</a></div>';
@@ -463,7 +463,7 @@ if (isset($_SESSION['conteudo'])) {
 							if ($pk_conteudo == '16') {
 								if ($cad_trailfinders == 't') {
 
-									echo '<div id="texto3"><a href="javascript:;"  onClick="MM_openBrWindow(';
+									echo '<div id="texto3"><a href="javascript:;"  class="text-decoration-none text-dark" onClick="MM_openBrWindow(';
 									echo "'trailfinders/miolo_trailfinders.php?login=" . $cad_login . "&pass=" . $cad_pass . "&pk_usuario=" . $_SESSION['user'] . " ";
 									echo "','trailf', 'scrollbars=yes,width=1030,height=750'";
 									echo ')" >' . $nomecont . '</a></div>';
@@ -479,7 +479,7 @@ if (isset($_SESSION['conteudo'])) {
 
 							if ($pk_conteudo == '18') {
 								if ($cad_prod_update == 't') {
-									echo '<div id="texto3"><a href="##" onclick="javascript:acao_produpdate();">' . $nomecont . '</a></div>';
+									echo '<div id="texto3"><a href="##" class="text-decoration-none text-dark" onclick="javascript:acao_produpdate();">' . $nomecont . '</a></div>';
 								}
 							}
 
@@ -488,7 +488,7 @@ if (isset($_SESSION['conteudo'])) {
 
 							if ($pk_conteudo == '19') {
 								if ($cad_acesso_conteudo == 't') {
-									echo '<div id="texto3"><a href="##" onclick="javascript:acao_controle_acesso();"><b>' . $nomecont . '</b></a></div>';
+									echo '<div id="texto3"><a href="##" class="text-decoration-none text-dark" onclick="javascript:acao_controle_acesso();"><b>' . $nomecont . '</b></a></div>';
 								}
 							}
 
@@ -496,14 +496,14 @@ if (isset($_SESSION['conteudo'])) {
 
 							if ($pk_conteudo == '20') {
 								if ($cad_func == 't') {
-									echo '<div id="texto3"><a href="##" onclick="javascript:acao_func();">' . $nomecont . '</a></div>';
+									echo '<div id="texto3"><a href="##" class="text-decoration-none text-dark" onclick="javascript:acao_func();">' . $nomecont . '</a></div>';
 								}
 							}
 
 
 							if ($pk_conteudo == '21') {
 								if ($log_tarifario == 't') {
-									echo '<div id="texto3"><a href="##" onclick="javascript:acao_log_tarifario ();"><b>' . $nomecont . '</b></a></div>';
+									echo '<div id="texto3"><a href="##" class="text-decoration-none text-dark" onclick="javascript:acao_log_tarifario ();"><b>' . $nomecont . '</b></a></div>';
 								}
 							}
 
@@ -513,14 +513,14 @@ if (isset($_SESSION['conteudo'])) {
 
 							if ($pk_conteudo == '22') {
 								if ($cad_destaque_fit == 't') {
-									echo '<div id="texto3"><a href="##" onclick="javascript:acao_destaque_fit();">' . $nomecont . '</a></div>';
+									echo '<div id="texto3"><a href="##" class="text-decoration-none text-dark" onclick="javascript:acao_destaque_fit();">' . $nomecont . '</a></div>';
 								}
 							}
 
 
 							if ($pk_conteudo == '23') {
 								if ($cad_expert == 't') {
-									echo '<div id="texto3"><a href="##" onclick="javascript:acao_expert();">' . $nomecont . '</a></div>';
+									echo '<div id="texto3"><a href="##" class="text-decoration-none text-dark" onclick="javascript:acao_expert();">' . $nomecont . '</a></div>';
 								}
 							}
 
@@ -528,21 +528,21 @@ if (isset($_SESSION['conteudo'])) {
 
 							if ($pk_conteudo == '24') {
 								if ($cad_inspections == 't') {
-									echo '<div id="texto3"><a href="##" onclick="javascript:acao_inspections();">' . $nomecont . '</a></div>';
+									echo '<div id="texto3"><a href="##" class="text-decoration-none text-dark" onclick="javascript:acao_inspections();">' . $nomecont . '</a></div>';
 								}
 							}
 
 
 							if ($pk_conteudo == '25') {
 								if ($cad_renovation == 't') {
-									echo '<div id="texto3"><a href="##" onclick="javascript:acao_renovation();">' . $nomecont . '</a></div>';
+									echo '<div id="texto3"><a href="##" class="text-decoration-none text-dark" onclick="javascript:acao_renovation();">' . $nomecont . '</a></div>';
 								}
 							}
 
 
 							if ($pk_conteudo == '26') {
 								if ($cad_deluxe == 't') {
-									echo '<div id="texto3"><a href="##" onclick="javascript:acao_deluxe();">' . $nomecont . '</a></div>';
+									echo '<div id="texto3"><a href="##" class="text-decoration-none text-dark" onclick="javascript:acao_deluxe();">' . $nomecont . '</a></div>';
 								}
 							}
 
@@ -551,24 +551,24 @@ if (isset($_SESSION['conteudo'])) {
 
 
 								if ($cad_os_handling == 't') {
-									echo '<div id="texto3"><a href="javascript:;"  onClick="MM_openBrWindow(';
+									echo '<div id="texto3"><a href="javascript:;"  class="text-decoration-none text-dark" onClick="MM_openBrWindow(';
 									echo "'https://webapp.blumar.com.br/sistem_os/repass.php?login=" . $login . "&pass=" . $pass . "";
 									echo "','sis_os', 'scrollbars=yes,width=1050,height=700'";
 									echo ')" >' . $nomecont . '</a></div>';
 								} elseif ($cad_os_usuario == 't') {
-									echo '<div id="texto3"><a href="javascript:;"  onClick="MM_openBrWindow(';
+									echo '<div id="texto3"><a href="javascript:;"  class="text-decoration-none text-dark" onClick="MM_openBrWindow(';
 									echo "'https://webapp.blumar.com.br/sistem_os/repass.php?login=" . $login . "&pass=" . $pass . "";
 									echo "','sis_os', 'scrollbars=yes,width=1050,height=700'";
 									echo ')" >' . $nomecont . '</a></div>';
 								} elseif ($cad_os_financeiro == 't') {
-									echo '<div id="texto3"><a href="javascript:;"  onClick="MM_openBrWindow(';
+									echo '<div id="texto3"><a href="javascript:;"  class="text-decoration-none text-dark" onClick="MM_openBrWindow(';
 									echo "'https://webapp.blumar.com.br/sistem_os/repass.php?login=" . $login . "&pass=" . $pass . "";
 									echo "','sis_os', 'scrollbars=yes,width=1050,height=700'";
 									echo ')" >' . $nomecont . '</a></div>';
 								}
 								/* else
 																	        {
-																	        	                    echo '<div id="texto3"><a href="javascript:;"  onClick="MM_openBrWindow(';
+																	        	                    echo '<div id="texto3"><a href="javascript:;"  class="text-decoration-none text-dark" onClick="MM_openBrWindow(';
 																									echo"'https://webapp.blumar.com.br/sistem_os/logon.htm";
 																								    echo"','sis_os', 'scrollbars=yes,width=1050,height=700'";
 																									echo')" >'.$nomecont.'</a></div>'; 	
@@ -579,7 +579,7 @@ if (isset($_SESSION['conteudo'])) {
 
 							if ($pk_conteudo == '28') {
 								if ($cad_beach_house == 't') {
-									echo '<div id="texto3"><a href="##" onclick="javascript:acao_beach_house();">' . $nomecont . '</a></div>';
+									echo '<div id="texto3"><a href="##" class="text-decoration-none text-dark" onclick="javascript:acao_beach_house();">' . $nomecont . '</a></div>';
 								}
 							}
 
@@ -588,7 +588,7 @@ if (isset($_SESSION['conteudo'])) {
 
 							if ($pk_conteudo == '29') {
 								if ($cad_minisite == 't') {
-									echo '<div id="texto3"><a href="##" onclick="javascript:acao_minisite();">' . $nomecont . '</a></div>';
+									echo '<div id="texto3"><a href="##" class="text-decoration-none text-dark" onclick="javascript:acao_minisite();">' . $nomecont . '</a></div>';
 								}
 							}
 
@@ -600,7 +600,7 @@ if (isset($_SESSION['conteudo'])) {
 									//ela pode ser acessada pelo ambiente de conteudo ou diretamente via sis blumar
 									// echo '<div id="texto3"><a href="http://webapp.blumar.com.br/trip_request/meiodecampo.php?email_usuario='.$email_usuario.'&pk_usuario='.$fk_usuario.'&nome_todo='.$nome_todo.'&apelido='.$apelido_usr.'&cad_trip_request='.$cad_trip_request.'&cad_trip_request_dir='.$cad_trip_request_dir.'" target="_new">TRIP REQUEST</a></div>'; 	 
 
-									echo '<div id="texto3"><a href="javascript:;"  onClick="MM_openBrWindow(';
+									echo '<div id="texto3"><a href="javascript:;"  class="text-decoration-none text-dark" onClick="MM_openBrWindow(';
 									echo "'https://webapp.blumar.com.br/trip_request/meiodecampo.php?email_usuario=" . $email_usuario . "&pk_usuario=" . $fk_usuario . "&nome_todo=" . $nome_todo . "&apelido=" . $apelido_usr . "&cad_trip_request=" . $cad_trip_request . "&cad_trip_request_dir=" . $cad_trip_request_dir . "&nivel=" . $nivel . "";
 									echo "','trip_request', 'scrollbars=yes,width=1050,height=700'";
 									echo ')" >PRESTAÇÃO DE CONTAS</a></div>';
@@ -610,7 +610,7 @@ if (isset($_SESSION['conteudo'])) {
 
 							if ($pk_conteudo == '33') {
 								if ($cad_tariff_tools == 't') {
-									echo '<div id="texto3"><a href="##" onclick="javascript:acao_tarif_tools();">' . $nomecont . '</a></div>';
+									echo '<div id="texto3"><a href="##" class="text-decoration-none text-dark" onclick="javascript:acao_tarif_tools();">' . $nomecont . '</a></div>';
 								}
 							}
 
@@ -619,7 +619,7 @@ if (isset($_SESSION['conteudo'])) {
 							if ($pk_conteudo == '34') {
 
 								//Link fixo para o banco de imagem
-								echo '<div id="texto3"><a href="javascript:;"  onClick="MM_openBrWindow(';
+								echo '<div id="texto3"><a href="javascript:;"  class="text-decoration-none text-dark" onClick="MM_openBrWindow(';
 								echo "'banco_imagem/index.php";
 								echo "','bcoimg', 'scrollbars=yes,width=1050,height=700'";
 								echo ')" >BANCO DE IMAGEM</a></div>';
@@ -627,7 +627,7 @@ if (isset($_SESSION['conteudo'])) {
 
 							if ($pk_conteudo == '35') {
 								//Link fixo para o banco de imagem do comercial
-								echo '<div id="texto3"><a href="javascript:;"  onClick="MM_openBrWindow(';
+								echo '<div id="texto3"><a href="javascript:;"  class="text-decoration-none text-dark" onClick="MM_openBrWindow(';
 								echo "'banco_imagem_comercial/index.php";
 								echo "','banco_comercial', 'scrollbars=yes,width=1050,height=700'";
 								echo ')" >BANCO DE IMAGEM COMERCIAL</a></div>';
@@ -636,7 +636,7 @@ if (isset($_SESSION['conteudo'])) {
 
 							if ($pk_conteudo == '36') {
 								//Link fixo para o banco de imagem do comercial
-								echo '<div id="texto3"><a href="javascript:;"  onClick="MM_openBrWindow(';
+								echo '<div id="texto3"><a href="javascript:;"  class="text-decoration-none text-dark" onClick="MM_openBrWindow(';
 								echo "'base_de_imagens/index.php";
 								echo "','new_img_bank', 'scrollbars=yes,width=1050,height=700'";
 								echo ')" >NOVO BANCO DE IMAGEM</a></div>';
@@ -649,7 +649,7 @@ if (isset($_SESSION['conteudo'])) {
 
 							if ($pk_conteudo == '38') {
 								if ($cad_file_web == 't') {
-									echo '<div id="texto3"><a href="javascript:;"  onClick="MM_openBrWindow(';
+									echo '<div id="texto3"><a href="javascript:;"  class="text-decoration-none text-dark" onClick="MM_openBrWindow(';
 									echo "'https://webapp.blumar.com.br/file_web/index.htm";
 									echo "','fileweb', 'scrollbars=yes,width=1200,height=700'";
 									echo ')" >' . $nomecont . '</a></div>';
@@ -664,7 +664,7 @@ if (isset($_SESSION['conteudo'])) {
 
 							if ($pk_conteudo == '39') {
 								if ($invoice_web == 't') {
-									echo '<div id="texto3"><a href="javascript:;"  onClick="MM_openBrWindow(';
+									echo '<div id="texto3"><a href="javascript:;"  class="text-decoration-none text-dark" onClick="MM_openBrWindow(';
 									echo "'invoice_web/index.php";
 									echo "','fileweb', 'scrollbars=yes,width=1200,height=700'";
 									echo ')" >' . $nomecont . '</a></div>';
@@ -674,7 +674,7 @@ if (isset($_SESSION['conteudo'])) {
 
 							if ($pk_conteudo == '40') {
 								if ($video_bank == 't') {
-									echo '<div id="texto3"><a href="##" onclick="javascript:acao_video();">' . $nomecont . '</a></div>';
+									echo '<div id="texto3"><a href="##" class="text-decoration-none text-dark" onclick="javascript:acao_video();">' . $nomecont . '</a></div>';
 								}
 							}
 
@@ -682,21 +682,21 @@ if (isset($_SESSION['conteudo'])) {
 
 							if ($pk_conteudo == '41') {
 								if ($blog_nacional == 't') {
-									echo '<div id="texto3"><a href="##" onclick="javascript:acao_blognacional();">' . $nomecont . '</a></div>';
+									echo '<div id="texto3"><a href="##" class="text-decoration-none text-dark" onclick="javascript:acao_blognacional();">' . $nomecont . '</a></div>';
 								}
 							}
 						}
 					}
 					//Link fixo para a ferramenta de voucher
 					//ela pode ser acessada pelo ambiente de conteudo ou diretamente via sis blumar
-					echo '<div id="texto3"><a href="javascript:;"  onClick="MM_openBrWindow(';
+					echo '<div id="texto3"><a href="javascript:;"  class="text-decoration-none text-dark" onClick="MM_openBrWindow(';
 					echo "'voucher/index.php";
 					echo "','voucher', 'scrollbars=yes,width=1050,height=700'";
 					echo ')" >VOUCHER</a></div>';
 
 					if ($pk_conteudo == '37') {
 						if ($cad_webservices == 't') {
-							echo '<div id="texto3"><a href="javascript:;"  onClick="MM_openBrWindow(';
+							echo '<div id="texto3"><a href="javascript:;"  class="text-decoration-none text-dark" onClick="MM_openBrWindow(';
 							echo "'http://webservice.blumar.com.br/blumar_ws_config";
 							echo "','blumar_ws_config', 'scrollbars=yes,width=1050,height=700'";
 							echo ')" >WEBSERVICES</a></div>';
