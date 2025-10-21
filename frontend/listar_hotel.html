@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BLUMAR - Hotéis Premium</title>
     <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap"
         rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -180,8 +181,7 @@
             font-weight: 600;
         }
 
-        .filter-menu select,
-        .filter-menu input[type="text"] {
+        .filter-menu select {
             padding: 0.7rem 1rem;
             border: 2px solid #e2e8f0;
             border-radius: 10px;
@@ -268,6 +268,30 @@
         .filter-menu button:hover {
             transform: translateY(-3px);
             box-shadow: 0 6px 25px rgba(255, 107, 53, 0.4);
+        }
+
+        /* Loading State */
+        .loading {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 4rem;
+            color: var(--text-muted);
+        }
+
+        .loading i {
+            font-size: 3rem;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
         }
 
         /* Hotel List */
@@ -436,6 +460,19 @@
             box-shadow: 0 6px 20px rgba(255, 107, 53, 0.4);
         }
 
+        /* No Results */
+        .no-results {
+            text-align: center;
+            padding: 4rem 2rem;
+            color: var(--text-muted);
+        }
+
+        .no-results i {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            color: #e2e8f0;
+        }
+
         /* Footer */
         .footer-info {
             background: var(--blumar-gradient);
@@ -586,19 +623,6 @@
                 font-size: 2rem;
             }
         }
-
-        /* Image Styles */
-        .image-copacabana {
-            background-image: url('https://images.unsplash.com/photo-1566073771259-6a8506099945?w=600&q=80');
-        }
-
-        .image-fasano {
-            background-image: url('https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?w=600&q=80');
-        }
-
-        .image-fairmont {
-            background-image: url('https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?w=600&q=80');
-        }
     </style>
 </head>
 
@@ -630,35 +654,47 @@
             </div>
 
             <div class="filter-item">
-                <select>
-                    <option>Select the Location</option>
-                    <option>Copacabana</option>
-                    <option>Ipanema</option>
-                    <option>Leblon</option>
+                <select v-model="filtros.cidade">
+                    <option value="">Select the Location</option>
+                    <option v-for="cidade in cidades" :key="cidade" :value="cidade">{{ cidade }}</option>
                 </select>
             </div>
 
             <div class="filter-item stars">
                 <label>Stars:</label>
-                <label for="star-5">5</label> <input type="radio" id="star-5" name="stars">
-                <label for="star-4">4</label> <input type="radio" id="star-4" name="stars" checked>
-                <label for="star-2">2</label> <input type="radio" id="star-2" name="stars">
+                <label for="star-5">5</label> <input type="radio" id="star-5" name="stars" value="5"
+                    v-model="filtros.estrelas">
+                <label for="star-4">4</label> <input type="radio" id="star-4" name="stars" value="4"
+                    v-model="filtros.estrelas">
+                <label for="star-3">3</label> <input type="radio" id="star-3" name="stars" value="3"
+                    v-model="filtros.estrelas">
+                <label for="all">All</label> <input type="radio" id="all" name="stars" value=""
+                    v-model="filtros.estrelas" checked>
             </div>
 
             <div class="filter-item">
-                <select>
-                    <option>Change the city</option>
-                    <option>São Paulo</option>
-                    <option>Brasília</option>
-                    <option>Salvador</option>
+                <select v-model="filtros.uf">
+                    <option value="">Change the state</option>
+                    <option value="RJ">Rio de Janeiro</option>
+                    <option value="SP">São Paulo</option>
                 </select>
             </div>
 
-            <button><i class="fas fa-check"></i> Apply Filter</button>
+            <button @click="aplicarFiltros"><i class="fas fa-check"></i> Apply Filter</button>
         </div>
 
-        <div class="hotel-list">
-            <hotel-card v-for="hotel in hotels" :key="hotel.id" :hotel="hotel"></hotel-card>
+        <div v-if="loading" class="loading">
+            <i class="fas fa-spinner"></i>
+        </div>
+
+        <div v-else-if="hoteisFiltrados.length === 0" class="no-results">
+            <i class="fas fa-hotel"></i>
+            <h3>Nenhum hotel encontrado</h3>
+            <p>Tente ajustar os filtros para ver mais resultados</p>
+        </div>
+
+        <div v-else class="hotel-list">
+            <hotel-card v-for="hotel in hoteisFiltrados" :key="hotel.codigo" :hotel="hotel"></hotel-card>
         </div>
 
         <footer>
@@ -700,34 +736,59 @@
     <script>
         Vue.component('hotel-card', {
             props: ['hotel'],
+            computed: {
+                imagemFachada() {
+                    // Tenta pegar a imagem da fachada, se não tiver usa placeholder
+                    if (this.hotel.imagem_fachada && this.hotel.imagem_fachada.includes('http')) {
+                        return this.hotel.imagem_fachada;
+                    } else if (this.hotel.htlimgfotofachada && this.hotel.htlimgfotofachada.includes('http')) {
+                        return this.hotel.htlimgfotofachada;
+                    }
+                    // Placeholder baseado no nome do hotel
+                    const gradients = [
+                        'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+                        'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)',
+                        'linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)',
+                        'linear-gradient(135deg, #43e97b 0%, #38f9d7 100%)',
+                        'linear-gradient(135deg, #fa709a 0%, #fee140 100%)',
+                    ];
+                    const index = this.hotel.codigo.charCodeAt(this.hotel.codigo.length - 1) % gradients.length;
+
+                    return gradients[index];
+                },
+                descricaoTratada() {
+                    const desc = this.hotel.descricao || this.hotel.descricao_ingles ||
+                        'Experience luxury and comfort in the heart of Rio de Janeiro. Our premium facilities and exceptional service ensure an unforgettable stay.';
+                    return desc.substring(0, 150) + (desc.length > 150 ? '...' : '');
+                },
+                estrelas() {
+                    // Extrai o número de estrelas da classificação
+                    const match = this.hotel.classificacao?.match(/(\d+)/);
+                    return match ? parseInt(match[1]) : 4;
+                }
+            },
             template: `
                 <div class="hotel-card">
-                    <div class="hotel-card-image" :class="'image-' + hotel.slug">
-                        <div class="hotel-badge">★★★★★</div>
+                    <div class="hotel-card-image" :style="imagemFachada.includes('http') ? 'background-image: url(' + hotel.htlimgfotofachada  + ')' : 'background: ' + imagemFachada">
+                        <div class="hotel-badge">{{ hotel.classificacao || '4 estrelas' }}</div>
                     </div>
                     <div class="hotel-card-content">
                         <div class="hotel-location">
                             <i class="fas fa-map-marker-alt"></i>
-                            <span>Rio de Janeiro</span>
-                            <span style="margin-left: auto; background: #e0f2fe; padding: 0.25rem 0.75rem; border-radius: 50px; font-size: 0.75rem; color: #0369a1; font-weight: 600;">Hotel</span>
+                            <span>{{ hotel.cidade }}, {{ hotel.uf }}</span>
+                            <span style="margin-left: auto; background: #e0f2fe; padding: 0.25rem 0.75rem; border-radius: 50px; font-size: 0.75rem; color: #0369a1; font-weight: 600;">{{ hotel.categoria }}</span>
                         </div>
-                        <h3>{{ hotel.name }}</h3>
+                        <h3>{{ hotel.nome }}</h3>
                         <div class="hotel-code">
                             <i class="fas fa-tag"></i>
-                            <span>No. Reserva: {{ hotel.code }}</span>
+                            <span>Código: {{ hotel.codigo }}</span>
                         </div>
-                        <p>
-                            Experience luxury and comfort in the heart of Rio de Janeiro. Our premium facilities and exceptional service ensure an unforgettable stay with breathtaking views and world-class amenities.
-                        </p>
+                        <p>{{ descricaoTratada }}</p>
                         <div class="card-footer">
                             <div class="hotel-stars">
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
+                                <i v-for="n in estrelas" :key="n" class="fas fa-star"></i>
                             </div>
-                            <a href="#" class="read-more">
+                            <a :href="'hotelshow.php?id=' + hotel.codigo" class="read-more">
                                 Read More <i class="fas fa-arrow-right"></i>
                             </a>
                         </div>
@@ -739,14 +800,61 @@
         new Vue({
             el: '#app',
             data: {
-                hotels: [
-                    { id: 1, name: 'Copacabana Palace', slug: 'copacabana', code: 'CP2024' },
-                    { id: 2, name: 'Fasano Rio de Janeiro', slug: 'fasano', code: 'FR2024' },
-                    { id: 3, name: 'Fairmont Rio de Janeiro', slug: 'fairmont', code: 'FM2024' },
-                    { id: 4, name: 'Belmond Copacabana', slug: 'copacabana', code: 'BC2024' },
-                    { id: 5, name: 'Hotel Fasano Ipanema', slug: 'fasano', code: 'HF2024' },
-                    { id: 6, name: 'Fairmont Copacabana', slug: 'fairmont', code: 'FC2024' },
-                ]
+                hotels: [],
+                hoteisFiltrados: [],
+                loading: true,
+                filtros: {
+                    cidade: '',
+                    estrelas: '',
+                    uf: ''
+                },
+                apiUrl: 'http://localhost/blumar_legado/blumar/api/hotels.php?request=listar_hoteis'
+            },
+            computed: {
+                cidades() {
+                    // Extrai lista única de cidades
+                    return [...new Set(this.hotels.map(h => h.cidade))].filter(c => c);
+                }
+            },
+            methods: {
+                async carregarHoteis() {
+                    try {
+                        this.loading = true;
+                        const response = await axios.get(this.apiUrl);
+                        this.hotels = response.data.filter(h => h.status === true);
+                        this.hoteisFiltrados = this.hotels;
+                    } catch (error) {
+                        console.error('Erro ao carregar hotéis:', error);
+                        // Dados de fallback em caso de erro
+                        this.hotels = [];
+                        this.hoteisFiltrados = [];
+                    } finally {
+                        this.loading = false;
+                    }
+                },
+                aplicarFiltros() {
+                    let resultado = this.hotels;
+
+                    if (this.filtros.cidade) {
+                        resultado = resultado.filter(h => h.cidade === this.filtros.cidade);
+                    }
+
+                    if (this.filtros.uf) {
+                        resultado = resultado.filter(h => h.uf === this.filtros.uf);
+                    }
+
+                    if (this.filtros.estrelas) {
+                        resultado = resultado.filter(h => {
+                            const match = h.classificacao?.match(/(\d+)/);
+                            return match && match[1] === this.filtros.estrelas;
+                        });
+                    }
+
+                    this.hoteisFiltrados = resultado;
+                }
+            },
+            mounted() {
+                this.carregarHoteis();
             }
         });
     </script>
