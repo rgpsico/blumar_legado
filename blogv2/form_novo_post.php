@@ -83,17 +83,50 @@ error_reporting(~0);
     </form>
 </div>
 
+
 <script>
     setTimeout(function() {
-        if (typeof tinymce !== 'undefined') {
+        if (typeof tinymce !== "undefined") {
             tinymce.remove();
             tinymce.init({
-                selector: '#descritivo_blumar, #descritivo_be',
-                height: 300,
-                menubar: false,
-                plugins: 'link image code lists table media',
-                toolbar: 'undo redo | styles | bold italic underline | alignleft aligncenter alignright | bullist numlist | link image media | code',
-                language: 'pt_BR'
+                selector: "#descritivo_blumar, #descritivo_be",
+                height: 500,
+                menubar: "file edit view insert format tools table help",
+                plugins: [
+                    "advlist",
+                    "autolink",
+                    "lists",
+                    "link",
+                    "image",
+                    "charmap",
+                    "preview",
+                    "anchor",
+                    "searchreplace",
+                    "visualblocks",
+                    "code",
+                    "fullscreen",
+                    "insertdatetime",
+                    "media",
+                    "table",
+                    "code",
+                    "help",
+                    "wordcount"
+                ],
+                toolbar: "undo redo | formatselect | bold italic underline | alignleft aligncenter alignright alignjustify | " +
+                    "bullist numlist outdent indent | link image media | fullscreen preview code",
+                image_title: true,
+                automatic_uploads: false, // você pode deixar true se quiser upload via input file
+                file_picker_types: "image",
+                image_caption: true,
+                // 🔹 Permite inserir imagem por URL
+                images_upload_url: false,
+                image_advtab: true,
+                // 🔹 Permite colar imagens externas (caso queira futuramente)
+                paste_data_images: true,
+                // 🔹 Configura o idioma e estilo visual
+                language: "pt_BR",
+                branding: false,
+                content_style: "body { font-family:Helvetica,Arial,sans-serif; font-size:14px }",
             });
         }
     }, 200);
