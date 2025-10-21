@@ -2,541 +2,420 @@
 
 require_once '../util/connection.php';
 
-//tratamento dos valores entes de inserir na tabela
 
-$mneu_for = pg_escape_string($_POST["mneu_for"]);
-$nome_htl = $mneu_for;
-$descricao_pt = pg_escape_string($_POST["descricao_pt"]);
-$descricao_en = pg_escape_string($_POST["descricao_en"]);
-$descricao_esp = pg_escape_string($_POST["descricao_esp"]);
-$descesp_grpfit = pg_escape_string($_POST["descesp_grpfit"]);
-$regime_hotel_pt = pg_escape_string($_POST["regime_hotel_pt"]);
-$regime_hotel_en = pg_escape_string($_POST["regime_hotel_en"]);
-$regime_hotel_esp = pg_escape_string($_POST["regime_hotel_esp"]);
-$rec_entret_pt = pg_escape_string($_POST["rec_entret_pt"]);
-$rec_entret_en = pg_escape_string($_POST["rec_entret_en"]);
-$rec_entret_esp = pg_escape_string($_POST["rec_entret_esp"]);
-$otras_ativ_pt = pg_escape_string($_POST["otras_ativ_pt"]);
-$otras_ativ_en = pg_escape_string($_POST["otras_ativ_en"]);
-$otras_ativ_esp = pg_escape_string($_POST["otras_ativ_esp"]);
-$alojamiento_pt = pg_escape_string($_POST["alojamiento_pt"]);
-$alojamiento_en = pg_escape_string($_POST["alojamiento_en"]);
-$alojamiento_esp = pg_escape_string($_POST["alojamiento_esp"]);
-$gastronomia_pt = pg_escape_string($_POST["gastronomia_pt"]);
-$gastronomia_en = pg_escape_string($_POST["gastronomia_en"]);
-$gastronomia_esp = pg_escape_string($_POST["gastronomia_esp"]);
-$servicios_pt = pg_escape_string($_POST["servicios_pt"]);
-$servicios_en = pg_escape_string($_POST["servicios_en"]);
-$servicios_esp = pg_escape_string($_POST["servicios_esp"]);
-$convenciones_pt = pg_escape_string($_POST["convenciones_pt"]);
-$convenciones_en = pg_escape_string($_POST["convenciones_en"]);
-$convenciones_esp = pg_escape_string($_POST["convenciones_esp"]);
-$campo_extra_pt = pg_escape_string($_POST["campo_extra_pt"]);
-$campo_extra_en = pg_escape_string($_POST["campo_extra_en"]);
-$campo_extra_esp = pg_escape_string($_POST["campo_extra_esp"]);
-$complemento = pg_escape_string($_POST["complemento"]);
-$hotel_cham = pg_escape_string($_POST["hotel_cham"]);
-$foto_fachada = pg_escape_string($_POST["foto_fachada"]);
-$fotofachada_tbn = pg_escape_string($_POST["fotofachada_tbn"]);
-$fotopiscina = pg_escape_string($_POST["fotopiscina"]);
-$fotoextra = pg_escape_string($_POST["fotoextra"]);
-$fotoextra_recep = pg_escape_string($_POST["fotoextra_recep"]);
-$ft_resort1 = pg_escape_string($_POST["ft_resort1"]);
-$ft_resort2 = pg_escape_string($_POST["ft_resort2"]);
-$ft_resort3 = pg_escape_string($_POST["ft_resort3"]);
-$htlurl = pg_escape_string($_POST["htlurl"]);
-$mapa = pg_escape_string($_POST["mapa"]);
-$map_eco = pg_escape_string($_POST["map_eco"]);
-$url_htl_360 = pg_escape_string($_POST["url_htl_360"]);
-$arq_htl_360 = pg_escape_string($_POST["arq_htl_360"]);
-$url_video = pg_escape_string($_POST["url_video"]);
-$arq_video = pg_escape_string($_POST["arq_video"]);
-$obs_pt = pg_escape_string($_POST["obs_pt"]);
-$obs_en = pg_escape_string($_POST["obs_en"]);
-$obs_esp = pg_escape_string($_POST["obs_esp"]);
-$historico_temp = pg_escape_string($_POST["historico_temp"]);
-$flaghtl = pg_escape_string($_POST["flaghtl"]);
-$ativo_latino = pg_escape_string($_POST["ativo_latino"]);
-$ativo_flat = pg_escape_string($_POST["ativo_flat"]);
-$resort = pg_escape_string($_POST["resort"]);
-$ecologico = pg_escape_string($_POST["ecologico"]);
-$validafotopiscina = pg_escape_string($_POST["validafotopiscina"]);
-$bestdeal = pg_escape_string($_POST["bestdeal"]);
-$inet_mapa = pg_escape_string($_POST["inet_mapa"]);
-$luxury = pg_escape_string($_POST["luxury"]);
-$novo = pg_escape_string($_POST["novo"]);
-$favoritos = pg_escape_string($_POST["favoritos"]);
-$pg6fq7 = pg_escape_string($_POST["pg6fq7"]);
-$pg4fq5 = pg_escape_string($_POST["pg4fq5"]);
-$chdgratis = pg_escape_string($_POST["chdgratis"]);
-$blumarrecomenda = pg_escape_string($_POST["blumarrecomenda"]);
-$blumarreveillon = pg_escape_string($_POST["blumarreveillon"]);
-$allinclusive = pg_escape_string($_POST["allinclusive"]);
-$desc_mostrp_ing = pg_escape_string($_POST["desc_mostrp_ing"]);
-$ativo_mostrp = pg_escape_string($_POST["ativo_mostrp"]);
-$classif_eco = pg_escape_string($_POST["classif_eco"]);
-$ativo_bnuts = pg_escape_string($_POST["ativo_bnuts"]);
-$virtual_tour = pg_escape_string($_POST["virtual_tour"]);
-$htl_num_quartos = pg_escape_string($_POST["htl_num_quartos"]);
+// ========================================
+// FUNÇÕES AUXILIARES
+// ========================================
 
-// tratamento do campo estrela blumar para nao dar erro na aplicação do desenvolvimento
-$htlestrelablumar = pg_escape_string($_POST["htlestrelablumar"]);
-
-if (strlen($htlestrelablumar) == '0') {
-	$estrelablumar = null;
-} else {
-	$estrelablumar = $htlestrelablumar;
+/**
+ * Obtém valor do POST com valor padrão se não existir
+ */
+function getPostValue($key, $default = '')
+{
+	return isset($_POST[$key]) ? $_POST[$key] : $default;
 }
 
-// Novos campos adicionados
-$slug = pg_escape_string($_POST["slug"] ?? '');
-$short_description_pt = pg_escape_string($_POST["short_description_pt"] ?? '');
-$short_description_en = pg_escape_string($_POST["short_description_en"] ?? '');
-$short_description_es = pg_escape_string($_POST["short_description_es"] ?? '');
-$insight_pt = pg_escape_string($_POST["insight_pt"] ?? '');
-$insight_en = pg_escape_string($_POST["insight_en"] ?? '');
-$insight_es = pg_escape_string($_POST["insight_es"] ?? '');
-$price_range = pg_escape_string($_POST["price_range"] ?? '');
-$capacity_min = pg_escape_string($_POST["capacity_min"] ?? '');
-$capacity_max = pg_escape_string($_POST["capacity_max"] ?? '');
-$city_name = pg_escape_string($_POST["city_name"] ?? '');
-$state = pg_escape_string($_POST["state"] ?? '');
-$country = pg_escape_string($_POST["country"] ?? '');
-$rating = pg_escape_string($_POST["rating"] ?? '');
-$rating_count = pg_escape_string($_POST["rating_count"] ?? '');
-$gallery_images = pg_escape_string($_POST["gallery_images"] ?? '');
-$blueprint_image = pg_escape_string($_POST["blueprint_image"] ?? '');
-$room_categories = pg_escape_string($_POST["room_categories"] ?? '');
-$dining_experiences = pg_escape_string($_POST["dining_experiences"] ?? '');
-$meeting_rooms_count = pg_escape_string($_POST["meeting_rooms_count"] ?? '');
-$meeting_rooms_detail = pg_escape_string($_POST["meeting_rooms_detail"] ?? '');
-$has_convention_center = pg_escape_string($_POST["has_convention_center"] ?? '');
-$url_360_halls = pg_escape_string($_POST["url_360_halls"] ?? '');
-$latitude = pg_escape_string($_POST["latitude"] ?? '');
-$longitude = pg_escape_string($_POST["longitude"] ?? '');
-$map_iframe_url = pg_escape_string($_POST["map_iframe_url"] ?? '');
-
-
-// inserção dos valores do cadastro de hotel
-
-
+/**
+ * Sanitiza e prepara valor para SQL
+ */
 function sqlSafe($value)
 {
-	if ($value === '' || $value === null) return "NULL"; // valores vazios → NULL
-	if (is_numeric($value)) return $value; // números sem aspas
-	if (strtolower($value) === 'true' || strtolower($value) === 'false') return strtoupper($value); // boolean
-	return "'" . pg_escape_string($value) . "'"; // texto com escape
+	// Trata valores vazios, nulos ou strings vazias
+	if ($value === '' || $value === null || $value === 'NULL') {
+		return "NULL";
+	}
+
+	// Trata booleanos
+	if (is_bool($value)) {
+		return $value ? 'TRUE' : 'FALSE';
+	}
+
+	// Trata strings 'true' e 'false'
+	$lowerValue = strtolower(trim($value));
+	if ($lowerValue === 'true' || $lowerValue === 'false') {
+		return strtoupper($lowerValue);
+	}
+
+	// Trata números
+	if (is_numeric($value)) {
+		return $value;
+	}
+
+	// Escapa strings
+	return "'" . pg_escape_string($value) . "'";
 }
 
-$query_inserhotel = "
+/**
+ * Obtém valor do POST, sanitiza e prepara para SQL
+ */
+function getPostSafe($key, $default = '')
+{
+	$value = getPostValue($key, $default);
+	return sqlSafe($value);
+}
+
+// ========================================
+// OBTER DADOS DO FORMULÁRIO - REMOVER ESTA SEÇÃO ANTIGA
+// ========================================
+// APAGUE TODAS AS LINHAS DO TIPO:
+// $regime_hotel_pt = pg_escape_string($_POST["regime_hotel_pt"]);
+// Porque agora usaremos getPostValue() e getPostSafe() diretamente
+
+$mneu_for = getPostValue("mneu_for");
+$nome_htl = $mneu_for;
+
+// Validação básica
+if (empty($mneu_for)) {
+	die("Erro: mneu_for é obrigatório!");
+}
+
+// ========================================
+// PASSO 1: INSERT INICIAL (apenas campos essenciais)
+// ========================================
+$query_insert_base = "
 INSERT INTO conteudo_internet.ci_hotel (
-    mneu_for, htldsc, htldscing, htldscesp, descesp_grpfit,
-    regime_hotel_pt, regime_hotel_en, regime_hotel,
-    rec_entret_pt, rec_entret_en, rec_entret,
-    otras_ativ_pt, otras_ativ_en, otras_ativ,
-    alojamiento_pt, alojamiento_en, alojamiento,
-    gastronomia_pt, gastronomia_en, gastronomia,
-    servicios_pt, servicios_en, servicios,
-    convenciones_pt, convenciones_en, convenciones,
-    campo_extra_pt, campo_extra_en, campo_extra,
-    complemento, hotel_cham, htlimgfotofachada, fotofachada_tbn, htlfotopiscina,
-    fotoextra, fotoextra_recep, ft_resort1, ft_resort2, ft_resort3,
-    htlurl, htlimgmapa, map_eco, url_htl_360, arq_htl_360, url_video, arq_video,
-    htlobs, htlobsing, htlobsesp, historico_temp, htlestrelablumar, desc_mostrp_ing,
-    classif_eco, flaghtl, flaglatino, flat, resort, ecologico, flagfotopiscina, bestdeal,
-    flaghtlimgmapa, luxury, novo, favoritos, pg6fq7, pg4fq5, chdgratis,
-    blumarrecomenda, blumarreveillon, allinclusive, ativo_mostrp, ativo_bnuts, virtual_tour,
-    htl_num_quartos, slug, short_description_pt, short_description_en, short_description_es,
-    insight_pt, insight_en, insight_es, price_range, capacity_min, capacity_max,
-    city_name, state, country, rating, rating_count, gallery_images, blueprint_image,
-    room_categories, dining_experiences, meeting_rooms_count, meeting_rooms_detail,
-    has_convention_center, url_360_halls, latitude, longitude, map_iframe_url
+    mneu_for,
+    htldsc,
+    htldscing,
+    htldscesp,
+    htlimgfotofachada,
+    htlfotopiscina,
+    htlurl,
+    htl_num_quartos,
+    htlestrelablumar,
+    resort,
+    flaghtl
 ) VALUES (
-    " . sqlSafe($mneu_for) . ",
-    " . sqlSafe($descricao_pt) . ",
-    " . sqlSafe($descricao_en) . ",
-    " . sqlSafe($descricao_esp) . ",
-    " . sqlSafe($descesp_grpfit) . ",
-    " . sqlSafe($regime_hotel_pt) . ",
-    " . sqlSafe($regime_hotel_en) . ",
-    " . sqlSafe($regime_hotel_esp) . ",
-    " . sqlSafe($rec_entret_pt) . ",
-    " . sqlSafe($rec_entret_en) . ",
-    " . sqlSafe($rec_entret_esp) . ",
-    " . sqlSafe($otras_ativ_pt) . ",
-    " . sqlSafe($otras_ativ_en) . ",
-    " . sqlSafe($otras_ativ_esp) . ",
-    " . sqlSafe($alojamiento_pt) . ",
-    " . sqlSafe($alojamiento_en) . ",
-    " . sqlSafe($alojamiento_esp) . ",
-    " . sqlSafe($gastronomia_pt) . ",
-    " . sqlSafe($gastronomia_en) . ",
-    " . sqlSafe($gastronomia_esp) . ",
-    " . sqlSafe($servicios_pt) . ",
-    " . sqlSafe($servicios_en) . ",
-    " . sqlSafe($servicios_esp) . ",
-    " . sqlSafe($convenciones_pt) . ",
-    " . sqlSafe($convenciones_en) . ",
-    " . sqlSafe($convenciones_esp) . ",
-    " . sqlSafe($campo_extra_pt) . ",
-    " . sqlSafe($campo_extra_en) . ",
-    " . sqlSafe($campo_extra_esp) . ",
-    " . sqlSafe($complemento) . ",
-    " . sqlSafe($hotel_cham) . ",
-    " . sqlSafe($foto_fachada) . ",
-    " . sqlSafe($fotofachada_tbn) . ",
-    " . sqlSafe($fotopiscina) . ",
-    " . sqlSafe($fotoextra) . ",
-    " . sqlSafe($fotoextra_recep) . ",
-    " . sqlSafe($ft_resort1) . ",
-    " . sqlSafe($ft_resort2) . ",
-    " . sqlSafe($ft_resort3) . ",
-    " . sqlSafe($htlurl) . ",
-    " . sqlSafe($mapa) . ",
-    " . sqlSafe($map_eco) . ",
-    " . sqlSafe($url_htl_360) . ",
-    " . sqlSafe($arq_htl_360) . ",
-    " . sqlSafe($url_video) . ",
-    " . sqlSafe($arq_video) . ",
-    " . sqlSafe($obs_pt) . ",
-    " . sqlSafe($obs_en) . ",
-    " . sqlSafe($obs_esp) . ",
-    " . sqlSafe($historico_temp) . ",
-    " . sqlSafe($estrelablumar) . ",
-    " . sqlSafe($desc_mostrp_ing) . ",
-    " . sqlSafe($classif_eco) . ",
-    " . sqlSafe($flaghtl) . ",
-    " . sqlSafe($ativo_latino) . ",
-    " . sqlSafe($ativo_flat) . ",
-    " . sqlSafe($resort) . ",
-    " . sqlSafe($ecologico) . ",
-    " . sqlSafe($validafotopiscina) . ",
-    " . sqlSafe($bestdeal) . ",
-    " . sqlSafe($inet_mapa) . ",
-    " . sqlSafe($luxury) . ",
-    " . sqlSafe($novo) . ",
-    " . sqlSafe($favoritos) . ",
-    " . sqlSafe($pg6fq7) . ",
-    " . sqlSafe($pg4fq5) . ",
-    " . sqlSafe($chdgratis) . ",
-    " . sqlSafe($blumarrecomenda) . ",
-    " . sqlSafe($blumarreveillon) . ",
-    " . sqlSafe($allinclusive) . ",
-    " . sqlSafe($ativo_mostrp) . ",
-    " . sqlSafe($ativo_bnuts) . ",
-    " . sqlSafe($virtual_tour) . ",
-    " . sqlSafe($htl_num_quartos) . ",
-    " . sqlSafe($slug) . ",
-    " . sqlSafe($short_description_pt) . ",
-    " . sqlSafe($short_description_en) . ",
-    " . sqlSafe($short_description_es) . ",
-    " . sqlSafe($insight_pt) . ",
-    " . sqlSafe($insight_en) . ",
-    " . sqlSafe($insight_es) . ",
-    " . sqlSafe($price_range) . ",
-    " . sqlSafe($capacity_min) . ",
-    " . sqlSafe($capacity_max) . ",
-    " . sqlSafe($city_name) . ",
-    " . sqlSafe($state) . ",
-    " . sqlSafe($country) . ",
-    " . sqlSafe($rating) . ",
-    " . sqlSafe($rating_count) . ",
-    " . sqlSafe($gallery_images) . ",
-    " . sqlSafe($blueprint_image) . ",
-    " . sqlSafe($room_categories) . ",
-    " . sqlSafe($dining_experiences) . ",
-    " . sqlSafe($meeting_rooms_count) . ",
-    " . sqlSafe($meeting_rooms_detail) . ",
-    " . sqlSafe($has_convention_center) . ",
-    " . sqlSafe($url_360_halls) . ",
-    " . sqlSafe($latitude) . ",
-    " . sqlSafe($longitude) . ",
-    " . sqlSafe($map_iframe_url) . "
-)";
-pg_query($conn, $query_inserhotel);
+    " . getPostSafe("mneu_for") . ",
+    " . getPostSafe("descricao_pt") . ",
+    " . getPostSafe("descricao_en") . ",
+    " . getPostSafe("descricao_esp") . ",
+    " . getPostSafe("foto_fachada") . ",
+    " . getPostSafe("fotopiscina") . ",
+    " . getPostSafe("htlurl") . ",
+    " . getPostSafe("htl_num_quartos") . ",
+    " . sqlSafe(getPostValue("htlestrelablumar") ?: null) . ",
+    " . getPostSafe("resort") . ",
+    " . getPostSafe("flaghtl") . "
+) RETURNING frncod";
 
+$result_insert = pg_query($conn, $query_insert_base);
 
-echo ' - inseriu hotel ok -';
-
-
-
-
-
-// pego a chave primaria do ultimo hotel inserido
-$sql_htlcod =
-	"
-		select
-			max(frncod::int) as frncod
-		from
-			conteudo_internet.ci_hotel
-		";
-$result_htlcod = pg_exec($conn, $sql_htlcod);
-if ($result_htlcod) {
-	for ($rowcid = 0; $rowcid < pg_numrows($result_htlcod); $rowcid++) {
-
-		$frncod = pg_result($result_htlcod, $rowcid, 'frncod');
-	}
+if (!$result_insert) {
+	die("Erro ao inserir hotel: " . pg_last_error($conn));
 }
 
+$row = pg_fetch_assoc($result_insert);
+$frncod = $row['frncod'];
 
-//come�o a inser��o dos valores do cadastro de apartamentos do hotel
+echo "Hotel inserido - ID: $frncod<br>";
 
-$categ1 = pg_escape_string($_POST["categ1"]);
-$loc1 = pg_escape_string($_POST["loc1"]);
-$qtd1 = pg_escape_string($_POST["qtd1"]);
-$foto1 = pg_escape_string($_POST["foto1"]);
+// ========================================
+// PASSO 2: UPDATE - Descrições de Resort
+// ========================================
+// Use getPostValue() aqui, NÃO use variáveis criadas anteriormente
+$descesp_grpfit = getPostValue("descesp_grpfit");
+$regime_hotel_pt = getPostValue("regime_hotel_pt");
+$regime_hotel_en = getPostValue("regime_hotel_en");
+$regime_hotel_esp = getPostValue("regime_hotel_esp");
+$rec_entret_pt = getPostValue("rec_entret_pt");
+$rec_entret_en = getPostValue("rec_entret_en");
+$rec_entret_esp = getPostValue("rec_entret_esp");
 
-if (strlen($foto1) != '0') {
+// Só faz UPDATE se pelo menos um campo foi preenchido
+if ($descesp_grpfit || $regime_hotel_pt || $regime_hotel_en || $rec_entret_pt) {
+	$query_update_resort = "
+    UPDATE conteudo_internet.ci_hotel SET
+        descesp_grpfit = " . getPostSafe("descesp_grpfit") . ",
+        regime_hotel_pt = " . getPostSafe("regime_hotel_pt") . ",
+        regime_hotel_en = " . getPostSafe("regime_hotel_en") . ",
+        regime_hotel = " . getPostSafe("regime_hotel_esp") . ",
+        rec_entret_pt = " . getPostSafe("rec_entret_pt") . ",
+        rec_entret_en = " . getPostSafe("rec_entret_en") . ",
+        rec_entret = " . getPostSafe("rec_entret_esp") . "
+    WHERE frncod = $frncod";
 
-	if (!pg_connection_busy($conn)) {
-		pg_send_query($conn, " 
-			INSERT INTO
-			conteudo_internet.ci_apartamento
-					(
-					 aptocatcod,
-					 aptoloccod,
-					 aptqtd,
-					 aptoimgfoto,
-					 frncod
-					)
-			values
-					(
-					'$categ1',
-					'$loc1',
-					'$qtd1',
-					'$foto1',
-					'$frncod'
-					)
-			");
-	}
-	pg_query($conn);
-
-	$retornoapto1 = pg_get_result($conn);
-	$resultapto1 = pg_exec($conn);
-	if ($resultapto1) {
-
-		echo ' - inseriu ok -';
-	} else {
-		echo "Apartamento inserido com sucesso!<br>";
-		echo pg_result_error_field($retornoapto1, PGSQL_DIAG_SQLSTATE);
-		echo pg_result_error($retornoapto1);
-	}
+	pg_query($conn, $query_update_resort);
+	echo "Descrições de resort atualizadas<br>";
 }
 
+// ========================================
+// PASSO 3: UPDATE - Atividades e Serviços
+// ========================================
+$otras_ativ_pt = getPostValue("otras_ativ_pt");
+$alojamiento_pt = getPostValue("alojamiento_pt");
+$gastronomia_pt = getPostValue("gastronomia_pt");
+$servicios_pt = getPostValue("servicios_pt");
 
+if ($otras_ativ_pt || $alojamiento_pt || $gastronomia_pt || $servicios_pt) {
+	$query_update_servicos = "
+    UPDATE conteudo_internet.ci_hotel SET
+        otras_ativ_pt = " . getPostSafe("otras_ativ_pt") . ",
+        otras_ativ_en = " . getPostSafe("otras_ativ_en") . ",
+        otras_ativ = " . getPostSafe("otras_ativ_esp") . ",
+        alojamiento_pt = " . getPostSafe("alojamiento_pt") . ",
+        alojamiento_en = " . getPostSafe("alojamiento_en") . ",
+        alojamiento = " . getPostSafe("alojamiento_esp") . ",
+        gastronomia_pt = " . getPostSafe("gastronomia_pt") . ",
+        gastronomia_en = " . getPostSafe("gastronomia_en") . ",
+        gastronomia = " . getPostSafe("gastronomia_esp") . ",
+        servicios_pt = " . getPostSafe("servicios_pt") . ",
+        servicios_en = " . getPostSafe("servicios_en") . ",
+        servicios = " . getPostSafe("servicios_esp") . "
+    WHERE frncod = $frncod";
 
-$categ2 = pg_escape_string($_POST["categ2"]);
-$loc2 = pg_escape_string($_POST["loc2"]);
-$qtd2 = pg_escape_string($_POST["qtd2"]);
-$foto2 = pg_escape_string($_POST["foto2"]);
-
-if (strlen($foto2) != '0') {
-	if (!pg_connection_busy($conn)) {
-		pg_send_query($conn, "
-	INSERT INTO
-	conteudo_internet.ci_apartamento
-	(
-	aptocatcod,
-	aptoloccod,
-	aptqtd,
-	aptoimgfoto,
-	frncod
-	)
-	values
-	(
-	'$categ2',
-	'$loc2',
-	'$qtd2',
-	'$foto2',
-	'$frncod'
-	)
-	");
-	}
-	pg_query($conn);
-
-	$retornoapto2 = pg_get_result($conn);
-	$resultapto2 = pg_exec($conn);
-	if ($resultapto2) {
-
-		echo " - inseriu ok -";
-	} else {
-		echo " - inseriu ok apto2 -<br>";
-		echo pg_result_error_field($retornoapto2, PGSQL_DIAG_SQLSTATE);
-		echo pg_result_error($retornoapto2);
-	}
+	pg_query($conn, $query_update_servicos);
+	echo "Serviços atualizados<br>";
 }
 
+// ========================================
+// PASSO 4: UPDATE - Convenções e Extras
+// ========================================
+$convenciones_pt = getPostValue("convenciones_pt");
+$campo_extra_pt = getPostValue("campo_extra_pt");
+$complemento = getPostValue("complemento");
+$hotel_cham = getPostValue("hotel_cham");
 
+if ($convenciones_pt || $campo_extra_pt || $complemento || $hotel_cham) {
+	$query_update_extras = "
+    UPDATE conteudo_internet.ci_hotel SET
+        convenciones_pt = " . getPostSafe("convenciones_pt") . ",
+        convenciones_en = " . getPostSafe("convenciones_en") . ",
+        convenciones = " . getPostSafe("convenciones_esp") . ",
+        campo_extra_pt = " . getPostSafe("campo_extra_pt") . ",
+        campo_extra_en = " . getPostSafe("campo_extra_en") . ",
+        campo_extra = " . getPostSafe("campo_extra_esp") . ",
+        complemento = " . getPostSafe("complemento") . ",
+        hotel_cham = " . getPostSafe("hotel_cham") . "
+    WHERE frncod = $frncod";
 
-
-
-
-$categ3 = pg_escape_string($_POST["categ3"]);
-$loc3 = pg_escape_string($_POST["loc3"]);
-$qtd3 = pg_escape_string($_POST["qtd3"]);
-$foto3 = pg_escape_string($_POST["foto3"]);
-
-if (strlen($foto3) != '0') {
-	if (!pg_connection_busy($conn)) {
-		pg_send_query($conn, "
-	INSERT INTO
-	conteudo_internet.ci_apartamento
-	(
-	aptocatcod,
-	aptoloccod,
-	aptqtd,
-	aptoimgfoto,
-	frncod
-	)
-	values
-	(
-	'$categ3',
-	'$loc3',
-	'$qtd3',
-	'$foto3',
-	'$frncod'
-	)
-	");
-	}
-	pg_query($conn);
-
-	$retornoapto3 = pg_get_result($conn);
-	$resultapto3 = pg_exec($conn);
-	if ($resultapto3) {
-
-		echo " - inseriu ok -";
-	} else {
-		echo " - inseriu ok apto3 -<br>";
-		echo pg_result_error_field($retornoapto3, PGSQL_DIAG_SQLSTATE);
-		echo pg_result_error($retornoapto3);
-	}
+	pg_query($conn, $query_update_extras);
+	echo "Extras atualizados<br>";
 }
 
+// ========================================
+// PASSO 5: UPDATE - Fotos Adicionais
+// ========================================
+$fotofachada_tbn = getPostValue("fotofachada_tbn");
+$fotoextra = getPostValue("fotoextra");
+$fotoextra_recep = getPostValue("fotoextra_recep");
+$ft_resort1 = getPostValue("ft_resort1");
+$ft_resort2 = getPostValue("ft_resort2");
+$ft_resort3 = getPostValue("ft_resort3");
 
+if ($fotofachada_tbn || $fotoextra || $ft_resort1 || $ft_resort2 || $ft_resort3) {
+	$query_update_fotos = "
+    UPDATE conteudo_internet.ci_hotel SET
+        fotofachada_tbn = " . getPostSafe("fotofachada_tbn") . ",
+        fotoextra = " . getPostSafe("fotoextra") . ",
+        fotoextra_recep = " . getPostSafe("fotoextra_recep") . ",
+        ft_resort1 = " . getPostSafe("ft_resort1") . ",
+        ft_resort2 = " . getPostSafe("ft_resort2") . ",
+        ft_resort3 = " . getPostSafe("ft_resort3") . "
+    WHERE frncod = $frncod";
 
-
-$categ4 = pg_escape_string($_POST["categ4"]);
-$loc4 = pg_escape_string($_POST["loc4"]);
-$qtd4 = pg_escape_string($_POST["qtd4"]);
-$foto4 = pg_escape_string($_POST["foto4"]);
-
-if (strlen($foto4) != '0') {
-	if (!pg_connection_busy($conn)) {
-		pg_send_query($conn, "
-	INSERT INTO
-	conteudo_internet.ci_apartamento
-	(
-	aptocatcod,
-	aptoloccod,
-	aptqtd,
-	aptoimgfoto,
-	frncod
-	)
-	values
-	(
-	'$categ4',
-	'$loc4',
-	'$qtd4',
-	'$foto4',
-	'$frncod'
-	)
-	");
-	}
-	pg_query($conn);
-
-	$retornoapto4 = pg_get_result($conn);
-	$resultapto4 = pg_exec($conn);
-	if ($resultapto4) {
-
-		echo " - inseriu ok -";
-	} else {
-		echo " - inseriu ok apto4 -<br>";
-		echo pg_result_error_field($retornoapto4, PGSQL_DIAG_SQLSTATE);
-		echo pg_result_error($retornoapto4);
-	}
+	pg_query($conn, $query_update_fotos);
+	echo "Fotos adicionais atualizadas<br>";
 }
 
+// ========================================
+// PASSO 6: UPDATE - Mapas e Mídia
+// ========================================
+$mapa = getPostValue("mapa");
+$map_eco = getPostValue("map_eco");
+$url_htl_360 = getPostValue("url_htl_360");
+$arq_htl_360 = getPostValue("arq_htl_360");
+$url_video = getPostValue("url_video");
+$arq_video = getPostValue("arq_video");
+$virtual_tour = getPostValue("virtual_tour");
 
-// fim do cadastro de apartamentos do hotel
+if ($mapa || $url_htl_360 || $url_video || $virtual_tour || $map_eco) {
+	$query_update_midia = "
+    UPDATE conteudo_internet.ci_hotel SET
+        htlimgmapa = " . getPostSafe("mapa") . ",
+        map_eco = " . getPostSafe("map_eco") . ",
+        url_htl_360 = " . getPostSafe("url_htl_360") . ",
+        arq_htl_360 = " . getPostSafe("arq_htl_360") . ",
+        url_video = " . getPostSafe("url_video") . ",
+        arq_video = " . getPostSafe("arq_video") . ",
+        virtual_tour = " . getPostSafe("virtual_tour") . "
+    WHERE frncod = $frncod";
 
+	pg_query($conn, $query_update_midia);
+	echo "Mídia atualizada<br>";
+}
 
+// ========================================
+// PASSO 7: UPDATE - Observações
+// ========================================
+$obs_pt = getPostValue("obs_pt");
+$obs_en = getPostValue("obs_en");
+$obs_esp = getPostValue("obs_esp");
+$historico_temp = getPostValue("historico_temp");
 
+if ($obs_pt || $obs_en || $obs_esp || $historico_temp) {
+	$query_update_obs = "
+    UPDATE conteudo_internet.ci_hotel SET
+        htlobs = " . getPostSafe("obs_pt") . ",
+        htlobsing = " . getPostSafe("obs_en") . ",
+        htlobsesp = " . getPostSafe("obs_esp") . ",
+        historico_temp = " . getPostSafe("historico_temp") . "
+    WHERE frncod = $frncod";
 
-// modulo para inserção das facilidades do hotel	
+	pg_query($conn, $query_update_obs);
+	echo "Observações atualizadas<br>";
+}
 
-$facilities = pg_escape_string($_POST["facilities"]);
+// ========================================
+// PASSO 8: UPDATE - Flags e Marcações
+// ========================================
+$query_update_flags = "
+UPDATE conteudo_internet.ci_hotel SET
+    flaglatino = " . getPostSafe("ativo_latino") . ",
+    flat = " . getPostSafe("ativo_flat") . ",
+    ecologico = " . getPostSafe("ecologico") . ",
+    flagfotopiscina = " . getPostSafe("validafotopiscina") . ",
+    bestdeal = " . getPostSafe("bestdeal") . ",
+    flaghtlimgmapa = " . getPostSafe("inet_mapa") . ",
+    luxury = " . getPostSafe("luxury") . ",
+    novo = " . getPostSafe("novo") . ",
+    favoritos = " . getPostSafe("favoritos") . ",
+    pg6fq7 = " . getPostSafe("pg6fq7") . ",
+    pg4fq5 = " . getPostSafe("pg4fq5") . ",
+    chdgratis = " . getPostSafe("chdgratis") . ",
+    blumarrecomenda = " . getPostSafe("blumarrecomenda") . ",
+    blumarreveillon = " . getPostSafe("blumarreveillon") . ",
+    allinclusive = " . getPostSafe("allinclusive") . ",
+    ativo_mostrp = " . getPostSafe("ativo_mostrp") . ",
+    ativo_bnuts = " . getPostSafe("ativo_bnuts") . "
+WHERE frncod = $frncod";
 
-if (strlen($facilities) != '0') {
-	$array = explode(',', $facilities);
-	foreach ($array as  $tag) {
+pg_query($conn, $query_update_flags);
+echo "Flags atualizadas<br>";
 
-		if (!pg_connection_busy($conn)) {
-			pg_send_query(
-				$conn,
-				"
-											INSERT INTO
-											conteudo_internet.ci_hotel_facilidade
-											(
-											mneu_for,
-											flagfacinet,
-											tpofaccod
-									)
-											values
-											(
-											'$frncod',
-											'true',
-											'$tag' 
-									)
-											"
-			);
-		}
-		pg_query($conn);
+// ========================================
+// PASSO 9: UPDATE - Classificações
+// ========================================
+$desc_mostrp_ing = getPostValue("desc_mostrp_ing");
+$classif_eco = getPostValue("classif_eco");
+$classif_lux = getPostValue("classif_lux");
 
-		$retornfac = pg_get_result($conn);
-		$resultfac = pg_exec($conn);
-		if ($resultfac) {
-			echo " - inseriu ok -";
+if ($desc_mostrp_ing || $classif_eco || $classif_lux) {
+	$query_update_classif = "
+    UPDATE conteudo_internet.ci_hotel SET
+        desc_mostrp_ing = " . getPostSafe("desc_mostrp_ing") . ",
+        classif_eco = " . getPostSafe("classif_eco") . ",
+        classif_lux = " . getPostSafe("classif_lux") . "
+    WHERE frncod = $frncod";
+
+	pg_query($conn, $query_update_classif);
+	echo "Classificações atualizadas<br>";
+}
+
+// ========================================
+// PASSO 10: UPDATE - Campos Novos (Site)
+// ========================================
+$slug = getPostValue("slug");
+$short_description_pt = getPostValue("short_description_pt");
+$city_name = getPostValue("city_name");
+$latitude = getPostValue("latitude");
+$longitude = getPostValue("longitude");
+
+if ($slug || $short_description_pt || $city_name || $latitude || $longitude) {
+	$query_update_site = "
+    UPDATE conteudo_internet.ci_hotel SET
+        slug = " . getPostSafe("slug") . ",
+        short_description_pt = " . getPostSafe("short_description_pt") . ",
+        short_description_en = " . getPostSafe("short_description_en") . ",
+        short_description_es = " . getPostSafe("short_description_es") . ",
+        insight_pt = " . getPostSafe("insight_pt") . ",
+        insight_en = " . getPostSafe("insight_en") . ",
+        insight_es = " . getPostSafe("insight_es") . ",
+        price_range = " . getPostSafe("price_range") . ",
+        capacity_min = " . getPostSafe("capacity_min") . ",
+        capacity_max = " . getPostSafe("capacity_max") . ",
+        city_name = " . getPostSafe("city_name") . ",
+        state = " . getPostSafe("state") . ",
+        country = " . getPostSafe("country") . ",
+        rating = " . getPostSafe("rating") . ",
+        rating_count = " . getPostSafe("rating_count") . ",
+        gallery_images = " . getPostSafe("gallery_images") . ",
+        blueprint_image = " . getPostSafe("blueprint_image") . ",
+        room_categories = " . getPostSafe("room_categories") . ",
+        dining_experiences = " . getPostSafe("dining_experiences") . ",
+        meeting_rooms_count = " . getPostSafe("meeting_rooms_count") . ",
+        meeting_rooms_detail = " . getPostSafe("meeting_rooms_detail") . ",
+        has_convention_center = " . getPostSafe("has_convention_center") . ",
+        url_360_halls = " . getPostSafe("url_360_halls") . ",
+        latitude = " . getPostSafe("latitude") . ",
+        longitude = " . getPostSafe("longitude") . ",
+        map_iframe_url = " . getPostSafe("map_iframe_url") . "
+    WHERE frncod = $frncod";
+
+	pg_query($conn, $query_update_site);
+	echo "Dados do site atualizados<br>";
+}
+
+// ========================================
+// INSERÇÃO DE APARTAMENTOS
+// ========================================
+for ($i = 1; $i <= 4; $i++) {
+	$foto = getPostValue("foto$i");
+
+	if ($foto && trim($foto) !== '') {
+		$query_apto = "
+        INSERT INTO conteudo_internet.ci_apartamento
+        (aptocatcod, aptoloccod, aptqtd, aptoimgfoto, frncod)
+        VALUES
+        (" . getPostSafe("categ$i") . ", " . getPostSafe("loc$i") . ", " . getPostSafe("qtd$i") . ", " . getPostSafe("foto$i") . ", $frncod)";
+
+		$result_apto = pg_query($conn, $query_apto);
+
+		if ($result_apto) {
+			echo "Apartamento $i inserido<br>";
 		} else {
-			echo pg_result_error_field($retornfac, PGSQL_DIAG_SQLSTATE);
-			echo pg_result_error($retornfac);
+			echo "Erro ao inserir apartamento $i: " . pg_last_error($conn) . "<br>";
 		}
 	}
 }
 
+// ========================================
+// INSERÇÃO DE FACILIDADES
+// ========================================
+$facilities = isset($_POST["facilities"]) ? $_POST["facilities"] : [];
 
+if (is_array($facilities) && count($facilities) > 0) {
+	foreach ($facilities as $tpofaccod) {
+		$tpofaccod_safe = pg_escape_string($tpofaccod);
+
+		$query_fac = "
+        INSERT INTO conteudo_internet.ci_hotel_facilidade
+        (mneu_for, flagfacinet, tpofaccod)
+        VALUES
+        ($frncod, TRUE, '$tpofaccod_safe')";
+
+		$result_fac = pg_query($conn, $query_fac);
+
+		if (!$result_fac) {
+			echo "Erro ao inserir facilidade: " . pg_last_error($conn) . "<br>";
+		}
+	}
+	echo "Facilidades inseridas (" . count($facilities) . " itens)<br>";
+}
+
+// ========================================
+// LOG DE AUDITORIA
+// ========================================
 session_start();
+$pk_acesso = isset($_SESSION['user']) ? $_SESSION['user'] : 'sistema';
+$data_now = date("Y-m-d");
 
-$pk_acesso = $_SESSION['user'];
+$query_log = "
+INSERT INTO conteudo_internet.log_adm_conteudo
+(usuario, acao, data, fk_conteudo)
+VALUES
+(" . sqlSafe($pk_acesso) . ", 'Inseriu o hotel - $mneu_for-$nome_htl', " . sqlSafe($data_now) . ", 2)";
 
-//crio a data now
-$ano = date("Y");
-$mes = date("m");
-$dia =  date("d");
-$data_now =  $ano . '-' . $mes . '-' . $dia;
-
-
-$query_log =
-	"
-    INSERT INTO
-    conteudo_internet.log_adm_conteudo
-    (
-    usuario,
-    acao,
-    data,
-    fk_conteudo
-    )
-    values
-    (
-    '$pk_acesso',
-    'Inseriu o hotel  - $mneu_for-$nome_htl',
-    '$data_now',
-    '2'
-    )
-    ";
 pg_query($conn, $query_log);
 
-
-
-
-
-echo '<br><br>Hotel inserido com sucesso !!';
+echo "<br><br><strong style='color: green; font-size: 18px;'>✓ Hotel inserido com sucesso! ID: $frncod</strong>";

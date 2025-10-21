@@ -167,1088 +167,1184 @@ if (!empty($ultimo_update)) {
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 
+<style>
+	.wizard-container {
+		max-width: 1200px;
+		margin: 0 auto;
+	}
+
+	.wizard-steps {
+		display: flex;
+		justify-content: space-between;
+		margin-bottom: 30px;
+		position: relative;
+		padding: 0 20px;
+	}
+
+	.wizard-steps::before {
+		content: '';
+		position: absolute;
+		top: 20px;
+		left: 0;
+		right: 0;
+		height: 2px;
+		background: #e0e0e0;
+		z-index: 0;
+	}
+
+	.wizard-step {
+		position: relative;
+		text-align: center;
+		flex: 1;
+		z-index: 1;
+		cursor: pointer;
+	}
+
+	.wizard-step-circle {
+		width: 40px;
+		height: 40px;
+		border-radius: 50%;
+		background: #e0e0e0;
+		color: #666;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		margin: 0 auto 8px;
+		font-weight: bold;
+		transition: all 0.3s;
+		border: 3px solid #fff;
+		box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+	}
+
+	.wizard-step.active .wizard-step-circle {
+		background: #0d6efd;
+		color: white;
+	}
+
+	.wizard-step.completed .wizard-step-circle {
+		background: #198754;
+		color: white;
+	}
+
+	.wizard-step-label {
+		font-size: 12px;
+		color: #666;
+		font-weight: 500;
+	}
+
+	.wizard-step.active .wizard-step-label {
+		color: #0d6efd;
+		font-weight: 600;
+	}
+
+	.wizard-content {
+		background: white;
+		border-radius: 8px;
+		padding: 30px;
+		box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+		min-height: 400px;
+	}
+
+	.step-content {
+		display: none;
+	}
+
+	.step-content.active {
+		display: block;
+		animation: fadeIn 0.3s;
+	}
+
+	@keyframes fadeIn {
+		from {
+			opacity: 0;
+			transform: translateY(10px);
+		}
+
+		to {
+			opacity: 1;
+			transform: translateY(0);
+		}
+	}
+
+	.wizard-actions {
+		display: flex;
+		justify-content: space-between;
+		margin-top: 30px;
+		padding-top: 20px;
+		border-top: 1px solid #e0e0e0;
+	}
+
+	.progress-bar-container {
+		height: 6px;
+		background: #e0e0e0;
+		border-radius: 3px;
+		margin-bottom: 30px;
+		overflow: hidden;
+	}
+
+	.progress-bar-fill {
+		height: 100%;
+		background: linear-gradient(90deg, #0d6efd, #0dcaf0);
+		transition: width 0.3s ease;
+		border-radius: 3px;
+	}
+
+	.form-section-title {
+		font-size: 20px;
+		font-weight: 600;
+		color: #333;
+		margin-bottom: 20px;
+		padding-bottom: 10px;
+		border-bottom: 2px solid #0d6efd;
+	}
+
+	.language-tabs {
+		display: flex;
+		gap: 10px;
+		margin-bottom: 15px;
+	}
+
+	.language-tab {
+		padding: 8px 16px;
+		border: 1px solid #dee2e6;
+		border-radius: 6px;
+		background: white;
+		cursor: pointer;
+		transition: all 0.3s;
+		font-size: 14px;
+	}
+
+	.language-tab.active {
+		background: #0d6efd;
+		color: white;
+		border-color: #0d6efd;
+	}
+
+	.language-content {
+		display: none;
+	}
+
+	.language-content.active {
+		display: block;
+	}
+
+	.draft-buttons {
+		display: flex;
+		gap: 10px;
+		margin-bottom: 20px;
+	}
+
+	.hotel-info-header {
+		background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+		color: white;
+		padding: 20px;
+		border-radius: 8px;
+		margin-bottom: 30px;
+	}
+</style>
+
 <div class="container-fluid py-4">
-	<div class="row mb-4">
-		<div class="col-12">
-			<h2 class="text-center mb-3">Alteração de Hotel</h2>
-			<div class="alert alert-info text-center">
-				<strong>Nome do Hotel:</strong> <?= htmlspecialchars($nome_htl) ?> (<?= htmlspecialchars($nome_for . ' - ' . $mneu_for) ?>)<br>
-				<?= $msg_update ?>
-				<br><a href="https://www.blumar.com.br/client_area/rates/new_pop_hotel.php?cod_hotel=<?= htmlspecialchars($mneu_for) ?>&lang=2&hotel=<?= urlencode($nome_for) ?>" target="_blank" class="btn btn-sm btn-outline-primary mt-2">Ver Página >></a>
+	<div class="wizard-container">
+		<!-- Header do Hotel -->
+		<div class="hotel-info-header">
+			<h2 class="mb-2"><?= htmlspecialchars($nome_htl) ?></h2>
+			<p class="mb-0"><?= htmlspecialchars($nome_for . ' - ' . $mneu_for) ?></p>
+			<small><?= $msg_update ?></small>
+			<div class="mt-2">
+				<a href="https://www.blumar.com.br/client_area/rates/new_pop_hotel.php?cod_hotel=<?= htmlspecialchars($mneu_for) ?>&lang=2&hotel=<?= urlencode($nome_for) ?>" target="_blank" class="btn btn-sm btn-light">Ver Página</a>
 			</div>
+		</div>
+
+		<!-- Botões de Rascunho -->
+		<div class="draft-buttons">
+			<button type="button" class="btn btn-outline-secondary" id="saveDraft">
+				<i class="bi bi-save"></i> Salvar Rascunho
+			</button>
+			<button type="button" class="btn btn-outline-info" id="loadDraft">
+				<i class="bi bi-upload"></i> Carregar Rascunho
+			</button>
+		</div>
+
+		<!-- Barra de Progresso -->
+		<div class="progress-bar-container">
+			<div class="progress-bar-fill" id="progressBar" style="width: 9%"></div>
+		</div>
+
+		<!-- Indicador de Passos -->
+		<div class="wizard-steps">
+			<div class="wizard-step active" data-step="1">
+				<div class="wizard-step-circle">1</div>
+				<div class="wizard-step-label">Descrições</div>
+			</div>
+			<div class="wizard-step" data-step="2">
+				<div class="wizard-step-circle">2</div>
+				<div class="wizard-step-label">Resort</div>
+			</div>
+			<div class="wizard-step" data-step="3">
+				<div class="wizard-step-circle">3</div>
+				<div class="wizard-step-label">Fotos</div>
+			</div>
+			<div class="wizard-step" data-step="4">
+				<div class="wizard-step-circle">4</div>
+				<div class="wizard-step-label">Apartamentos</div>
+			</div>
+			<div class="wizard-step" data-step="5">
+				<div class="wizard-step-circle">5</div>
+				<div class="wizard-step-label">Mídia</div>
+			</div>
+			<div class="wizard-step" data-step="6">
+				<div class="wizard-step-circle">6</div>
+				<div class="wizard-step-label">COVID-19</div>
+			</div>
+			<div class="wizard-step" data-step="7">
+				<div class="wizard-step-circle">7</div>
+				<div class="wizard-step-label">Observações</div>
+			</div>
+			<div class="wizard-step" data-step="8">
+				<div class="wizard-step-circle">8</div>
+				<div class="wizard-step-label">Marcações</div>
+			</div>
+			<div class="wizard-step" data-step="9">
+				<div class="wizard-step-circle">9</div>
+				<div class="wizard-step-label">Classificações</div>
+			</div>
+			<div class="wizard-step" data-step="10">
+				<div class="wizard-step-circle">10</div>
+				<div class="wizard-step-label">Facilidades</div>
+			</div>
+			<div class="wizard-step" data-step="11">
+				<div class="wizard-step-circle">11</div>
+				<div class="wizard-step-label">Extras</div>
+			</div>
+		</div>
+
+		<form id="hotelEditForm">
 			<input type="hidden" name="mneu_for" id="mneu_for" value="<?= htmlspecialchars($mneu_for) ?>">
 			<input type="hidden" name="frncod" id="frncod" value="<?= htmlspecialchars($frncod) ?>">
-		</div>
-	</div>
 
-	<form id="hotelEditForm">
-		<!-- Seção 1: Descrições Principais -->
-		<div class="accordion mb-4" id="accordionDescricoes">
-			<div class="accordion-item">
-				<h2 class="accordion-header">
-					<button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseDescricoes">
-						Descritivos
-					</button>
-				</h2>
-				<div id="collapseDescricoes" class="accordion-collapse collapse show" data-bs-parent="#accordionDescricoes">
-					<div class="accordion-body">
-						<div class="row">
-							<div class="col-md-12 mb-3">
-								<label class="form-label">Português</label>
-								<textarea class="form-control" name="htldsc" id="htldsc" rows="4"><?= htmlspecialchars($htldsc) ?></textarea>
-							</div>
-							<div class="col-md-12 mb-3">
-								<label class="form-label">Inglês</label>
-								<textarea class="form-control" name="htldscing" id="htldscing" rows="4"><?= htmlspecialchars($htldscing) ?></textarea>
-							</div>
-							<div class="col-md-12 mb-3">
-								<label class="form-label">Espanhol (FIT e GRP)</label>
-								<textarea class="form-control" name="htldscesp" id="htldscesp" rows="4"><?= htmlspecialchars($htldscesp) ?></textarea>
-							</div>
-							<div class="col-md-12 mb-3">
-								<label class="form-label">Espanhol (GRP)</label>
-								<textarea class="form-control" name="descesp_grpfit" id="descesp_grpfit" rows="4"><?= htmlspecialchars($descesp_grpfit) ?></textarea>
-							</div>
+			<div class="wizard-content">
+				<!-- Passo 1: Descrições -->
+				<div class="step-content active" data-step="1">
+					<h3 class="form-section-title">Descrições do Hotel</h3>
+					<div class="row g-3">
+						<div class="col-md-12">
+							<label class="form-label fw-bold">Português</label>
+							<textarea class="form-control" name="htldsc" id="htldsc" rows="4"><?= htmlspecialchars($htldsc) ?></textarea>
+						</div>
+						<div class="col-md-12">
+							<label class="form-label fw-bold">Inglês</label>
+							<textarea class="form-control" name="htldscing" id="htldscing" rows="4"><?= htmlspecialchars($htldscing) ?></textarea>
+						</div>
+						<div class="col-md-12">
+							<label class="form-label fw-bold">Espanhol (FIT e GRP)</label>
+							<textarea class="form-control" name="htldscesp" id="htldscesp" rows="4"><?= htmlspecialchars($htldscesp) ?></textarea>
+						</div>
+						<div class="col-md-12">
+							<label class="form-label fw-bold">Espanhol (GRP)</label>
+							<textarea class="form-control" name="descesp_grpfit" id="descesp_grpfit" rows="4"><?= htmlspecialchars($descesp_grpfit) ?></textarea>
+						</div>
+						<div class="col-md-12">
+							<label class="form-label fw-bold">Chamada Destaque (Site Nacional) <small class="text-muted">Máx. 200 caracteres</small></label>
+							<textarea class="form-control" name="hotel_cham" id="hotel_cham" rows="3"><?= htmlspecialchars($hotel_cham) ?></textarea>
 						</div>
 					</div>
 				</div>
-			</div>
-		</div>
 
-		<!-- Seção 2: Conteúdo para Resorts -->
-		<div class="accordion mb-4" id="accordionResorts">
-			<div class="accordion-item">
-				<h2 class="accordion-header">
-					<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseResorts">
-						Conteúdo para Resorts
-					</button>
-				</h2>
-				<div id="collapseResorts" class="accordion-collapse collapse" data-bs-parent="#accordionResorts">
-					<div class="accordion-body">
-						<div class="row g-3">
-							<div class="col-md-4">
-								<h6>Régimen de Comidas</h6>
-								<div class="mb-2">
-									<label class="form-label small">Português</label>
-									<textarea class="form-control form-control-sm" name="regime_hotel_pt" id="regime_hotel_pt" rows="5"><?= htmlspecialchars($regime_hotel_pt) ?></textarea>
-								</div>
-								<div class="mb-2">
-									<label class="form-label small">Inglês</label>
-									<textarea class="form-control form-control-sm" name="regime_hotel_en" id="regime_hotel_en" rows="5"><?= htmlspecialchars($regime_hotel_en) ?></textarea>
-								</div>
-								<div class="mb-2">
-									<label class="form-label small">Espanhol</label>
-									<textarea class="form-control form-control-sm" name="regime_hotel" id="regime_hotel" rows="5"><?= htmlspecialchars($regime_hotel) ?></textarea>
-								</div>
-							</div>
-							<div class="col-md-4">
-								<h6>Recreación & Entretenimiento</h6>
-								<div class="mb-2">
-									<label class="form-label small">Português</label>
-									<textarea class="form-control form-control-sm" name="rec_entret_pt" id="rec_entret_pt" rows="5"><?= htmlspecialchars($rec_entret_pt) ?></textarea>
-								</div>
-								<div class="mb-2">
-									<label class="form-label small">Inglês</label>
-									<textarea class="form-control form-control-sm" name="rec_entret_en" id="rec_entret_en" rows="5"><?= htmlspecialchars($rec_entret_en) ?></textarea>
-								</div>
-								<div class="mb-2">
-									<label class="form-label small">Espanhol</label>
-									<textarea class="form-control form-control-sm" name="rec_entret" id="rec_entret" rows="5"><?= htmlspecialchars($rec_entret) ?></textarea>
-								</div>
-							</div>
-							<div class="col-md-4">
-								<h6>Otras Actividades</h6>
-								<div class="mb-2">
-									<label class="form-label small">Português</label>
-									<textarea class="form-control form-control-sm" name="otras_ativ_pt" id="otras_ativ_pt" rows="5"><?= htmlspecialchars($otras_ativ_pt) ?></textarea>
-								</div>
-								<div class="mb-2">
-									<label class="form-label small">Inglês</label>
-									<textarea class="form-control form-control-sm" name="otras_ativ_en" id="otras_ativ_en" rows="5"><?= htmlspecialchars($otras_ativ_en) ?></textarea>
-								</div>
-								<div class="mb-2">
-									<label class="form-label small">Espanhol</label>
-									<textarea class="form-control form-control-sm" name="otras_ativ" id="otras_ativ" rows="5"><?= htmlspecialchars($otras_ativ) ?></textarea>
-								</div>
-							</div>
-							<div class="col-md-4">
-								<h6>Alojamiento</h6>
-								<div class="mb-2">
-									<label class="form-label small">Português</label>
-									<textarea class="form-control form-control-sm" name="alojamiento_pt" id="alojamiento_pt" rows="5"><?= htmlspecialchars($alojamiento_pt) ?></textarea>
-								</div>
-								<div class="mb-2">
-									<label class="form-label small">Inglês</label>
-									<textarea class="form-control form-control-sm" name="alojamiento_en" id="alojamiento_en" rows="5"><?= htmlspecialchars($alojamiento_en) ?></textarea>
-								</div>
-								<div class="mb-2">
-									<label class="form-label small">Espanhol</label>
-									<textarea class="form-control form-control-sm" name="alojamiento" id="alojamiento" rows="5"><?= htmlspecialchars($alojamiento) ?></textarea>
-								</div>
-							</div>
-							<div class="col-md-4">
-								<h6>Gastronomia</h6>
-								<div class="mb-2">
-									<label class="form-label small">Português</label>
-									<textarea class="form-control form-control-sm" name="gastronomia_pt" id="gastronomia_pt" rows="5"><?= htmlspecialchars($gastronomia_pt) ?></textarea>
-								</div>
-								<div class="mb-2">
-									<label class="form-label small">Inglês</label>
-									<textarea class="form-control form-control-sm" name="gastronomia_en" id="gastronomia_en" rows="5"><?= htmlspecialchars($gastronomia_en) ?></textarea>
-								</div>
-								<div class="mb-2">
-									<label class="form-label small">Espanhol</label>
-									<textarea class="form-control form-control-sm" name="gastronomia" id="gastronomia" rows="5"><?= htmlspecialchars($gastronomia) ?></textarea>
-								</div>
-							</div>
-							<div class="col-md-4">
-								<h6>Servicios</h6>
-								<div class="mb-2">
-									<label class="form-label small">Português</label>
-									<textarea class="form-control form-control-sm" name="servicios_pt" id="servicios_pt" rows="5"><?= htmlspecialchars($servicios_pt) ?></textarea>
-								</div>
-								<div class="mb-2">
-									<label class="form-label small">Inglês</label>
-									<textarea class="form-control form-control-sm" name="servicios_en" id="servicios_en" rows="5"><?= htmlspecialchars($servicios_en) ?></textarea>
-								</div>
-								<div class="mb-2">
-									<label class="form-label small">Espanhol</label>
-									<textarea class="form-control form-control-sm" name="servicios" id="servicios" rows="5"><?= htmlspecialchars($servicios) ?></textarea>
-								</div>
-							</div>
-							<div class="col-md-4">
-								<h6>Convenciones</h6>
-								<div class="mb-2">
-									<label class="form-label small">Português</label>
-									<textarea class="form-control form-control-sm" name="convenciones_pt" id="convenciones_pt" rows="5"><?= htmlspecialchars($convenciones_pt) ?></textarea>
-								</div>
-								<div class="mb-2">
-									<label class="form-label small">Inglês</label>
-									<textarea class="form-control form-control-sm" name="convenciones_en" id="convenciones_en" rows="5"><?= htmlspecialchars($convenciones_en) ?></textarea>
-								</div>
-								<div class="mb-2">
-									<label class="form-label small">Espanhol</label>
-									<textarea class="form-control form-control-sm" name="convenciones" id="convenciones" rows="5"><?= htmlspecialchars($convenciones) ?></textarea>
-								</div>
-							</div>
-							<div class="col-md-4">
-								<h6>Servicios Adicionales</h6>
-								<div class="mb-2">
-									<label class="form-label small">Português</label>
-									<textarea class="form-control form-control-sm" name="campo_extra_pt" id="campo_extra_pt" rows="5"><?= htmlspecialchars($campo_extra_pt) ?></textarea>
-								</div>
-								<div class="mb-2">
-									<label class="form-label small">Inglês</label>
-									<textarea class="form-control form-control-sm" name="campo_extra_en" id="campo_extra_en" rows="5"><?= htmlspecialchars($campo_extra_en) ?></textarea>
-								</div>
-								<div class="mb-2">
-									<label class="form-label small">Espanhol</label>
-									<textarea class="form-control form-control-sm" name="campo_extra" id="campo_extra" rows="5"><?= htmlspecialchars($campo_extra) ?></textarea>
-								</div>
-							</div>
-							<div class="col-md-4">
-								<h6>Conteúdo Complementar Ecológico</h6>
-								<textarea class="form-control" name="complemento" id="complemento" rows="5"><?= htmlspecialchars($complemento) ?></textarea>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-
-		<!-- Seção 3: Destaques e Chamadas -->
-		<div class="row mb-4">
-			<div class="col-md-12">
-				<div class="card">
-					<div class="card-header">
-						<h6>Chamada Destaque (Site Nacional) <small class="text-muted">Máx. 200 caracteres, incluindo espaços</small></h6>
-					</div>
-					<div class="card-body">
-						<textarea class="form-control" name="hotel_cham" id="hotel_cham" rows="4"><?= htmlspecialchars($hotel_cham) ?></textarea>
-					</div>
-				</div>
-			</div>
-		</div>
-
-		<!-- Seção 4: Fotos e Galeria -->
-		<div class="accordion mb-4" id="accordionFotos">
-			<div class="accordion-item">
-				<h2 class="accordion-header">
-					<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFotos">
-						Fotos e Galeria
-					</button>
-				</h2>
-				<div id="collapseFotos" class="accordion-collapse collapse" data-bs-parent="#accordionFotos">
-					<div class="accordion-body">
-						<div class="row g-3">
-							<div class="col-md-6">
-								<label class="form-label">Fachada</label>
-								<input type="text" class="form-control" name="htlimgfotofachada" id="htlimgfotofachada" maxlength="150" value="<?= htmlspecialchars($htlimgfotofachada) ?>">
-							</div>
-							<div class="col-md-6">
-								<label class="form-label">Fachada TBN</label>
-								<input type="text" class="form-control" name="fotofachada_tbn" id="fotofachada_tbn" maxlength="150" value="<?= htmlspecialchars($fotofachada_tbn) ?>">
-							</div>
-							<div class="col-md-6">
-								<label class="form-label">Piscina</label>
-								<input type="text" class="form-control" name="htlfotopiscina" id="htlfotopiscina" maxlength="150" value="<?= htmlspecialchars($htlfotopiscina) ?>">
-							</div>
-							<div class="col-md-6">
-								<label class="form-label">Foto Extra 1</label>
-								<input type="text" class="form-control" name="fotoextra" id="fotoextra" maxlength="150" value="<?= htmlspecialchars($fotoextra) ?>">
-							</div>
-							<div class="col-md-6">
-								<label class="form-label">Foto Extra 2 (Recepção)</label>
-								<input type="text" class="form-control" name="fotoextra_recep" id="fotoextra_recep" maxlength="150" value="<?= htmlspecialchars($fotoextra_recep) ?>">
-							</div>
-							<div class="col-md-6">
-								<label class="form-label">Foto Extra 3</label>
-								<input type="text" class="form-control" name="ft_resort1" id="ft_resort1" maxlength="150" value="<?= htmlspecialchars($ft_resort1) ?>">
-							</div>
-							<div class="col-md-6">
-								<label class="form-label">Foto Extra 4</label>
-								<input type="text" class="form-control" name="ft_resort2" id="ft_resort2" maxlength="150" value="<?= htmlspecialchars($ft_resort2) ?>">
-							</div>
-							<div class="col-md-6">
-								<label class="form-label">Foto Extra 5</label>
-								<input type="text" class="form-control" name="ft_resort3" id="ft_resort3" maxlength="150" value="<?= htmlspecialchars($ft_resort3) ?>">
-							</div>
-							<div class="col-md-12">
-								<label class="form-label">Imagens da Galeria (URLs separadas por vírgula)</label>
-								<textarea class="form-control" name="gallery_images" id="gallery_images" rows="3"><?= htmlspecialchars($gallery_images) ?></textarea>
-							</div>
-							<div class="col-md-12">
-								<label class="form-label">Imagem da Planta Baixa</label>
-								<input type="text" class="form-control" name="blueprint_image" id="blueprint_image" maxlength="255" value="<?= htmlspecialchars($blueprint_image) ?>">
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-
-		<!-- Seção 5: Apartamentos Já Cadastrados -->
-		<div class="accordion mb-4" id="accordionApartamentos">
-			<div class="accordion-item">
-				<h2 class="accordion-header">
-					<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseApartamentos">
-						Apartamentos Já Cadastrados
-					</button>
-				</h2>
-				<div id="collapseApartamentos" class="accordion-collapse collapse" data-bs-parent="#accordionApartamentos">
-					<div class="accordion-body">
+				<!-- Passo 2: Conteúdo para Resorts -->
+				<div class="step-content" data-step="2">
+					<h3 class="form-section-title">Conteúdo para Resorts</h3>
+					<div class="row g-4">
 						<?php
-						$query_aptos = "
-                            SELECT frncod, aptocatcod, aptoimgfoto, aptqtd, aptoloccod, pk_aptcod
-                            FROM conteudo_internet.ci_apartamento
-                            WHERE frncod = $frncod
-                            ORDER BY pk_aptcod
-                        ";
-						$result_aptos = pg_exec($conn, $query_aptos);
-						if ($result_aptos && pg_numrows($result_aptos) > 0) {
-							for ($rowapto = 0; $rowapto < pg_numrows($result_aptos); $rowapto++) {
-								$aptocatcod = pg_result($result_aptos, $rowapto, 'aptocatcod');
-								$aptoimgfoto = pg_result($result_aptos, $rowapto, 'aptoimgfoto');
-								$aptqtd = pg_result($result_aptos, $rowapto, 'aptqtd');
-								$aptoloccod = pg_result($result_aptos, $rowapto, 'aptoloccod');
-								$pk_aptcod = pg_result($result_aptos, $rowapto, 'pk_aptcod');
+						$resort_fields = [
+							['name' => 'regime_hotel', 'label' => 'Régimen de Comidas', 'pt' => 'regime_hotel_pt', 'en' => 'regime_hotel_en', 'es' => 'regime_hotel'],
+							['name' => 'rec_entret', 'label' => 'Recreación & Entretenimiento', 'pt' => 'rec_entret_pt', 'en' => 'rec_entret_en', 'es' => 'rec_entret'],
+							['name' => 'otras_ativ', 'label' => 'Otras Actividades', 'pt' => 'otras_ativ_pt', 'en' => 'otras_ativ_en', 'es' => 'otras_ativ'],
+							['name' => 'alojamiento', 'label' => 'Alojamiento', 'pt' => 'alojamiento_pt', 'en' => 'alojamiento_en', 'es' => 'alojamiento'],
+							['name' => 'gastronomia', 'label' => 'Gastronomia', 'pt' => 'gastronomia_pt', 'en' => 'gastronomia_en', 'es' => 'gastronomia'],
+							['name' => 'servicios', 'label' => 'Servicios', 'pt' => 'servicios_pt', 'en' => 'servicios_en', 'es' => 'servicios'],
+							['name' => 'convenciones', 'label' => 'Convenciones', 'pt' => 'convenciones_pt', 'en' => 'convenciones_en', 'es' => 'convenciones'],
+							['name' => 'campo_extra', 'label' => 'Servicios Adicionales', 'pt' => 'campo_extra_pt', 'en' => 'campo_extra_en', 'es' => 'campo_extra'],
+						];
 
-								$catdscing = '';
-								$query_aptocateg = "SELECT catdscing FROM conteudo_internet.apto_categoria WHERE aptocatcod = $aptocatcod";
-								$result_aptocateg = pg_exec($conn, $query_aptocateg);
-								if ($result_aptocateg && pg_numrows($result_aptocateg) > 0) {
-									$catdscing = pg_result($result_aptocateg, 0, 'catdscing');
-								}
-
-								$aptolocdscing = '';
-								$query_aptoloc = "SELECT aptolocdscing FROM conteudo_internet.apto_localizacao WHERE aptoloccod = $aptoloccod";
-								$result_aptoloc = pg_exec($conn, $query_aptoloc);
-								if ($result_aptoloc && pg_numrows($result_aptoloc) > 0) {
-									$aptolocdscing = pg_result($result_aptoloc, 0, 'aptolocdscing');
-								}
+						foreach ($resort_fields as $field):
+							// Obter os valores das variáveis corretamente usando variáveis variáveis
+							$value_pt = ${$field['pt']};
+							$value_en = ${$field['en']};
+							$value_es = ${$field['es']};
 						?>
-								<div class="row mb-3 border-bottom pb-3">
-									<div class="col-md-3">
-										<label class="form-label">Categoria</label>
-										<input type="text" class="form-control-plaintext" value="<?= htmlspecialchars($catdscing) ?>" readonly>
+							<div class="col-md-6">
+								<div class="card">
+									<div class="card-header">
+										<h6 class="mb-0"><?= htmlspecialchars($field['label']) ?></h6>
 									</div>
-									<div class="col-md-3">
-										<label class="form-label">Localização</label>
-										<input type="text" class="form-control-plaintext" value="<?= htmlspecialchars($aptolocdscing) ?>" readonly>
+									<div class="card-body">
+										<div class="language-tabs">
+											<button type="button" class="language-tab active" data-lang="pt" data-group="<?= htmlspecialchars($field['name']) ?>">PT</button>
+											<button type="button" class="language-tab" data-lang="en" data-group="<?= htmlspecialchars($field['name']) ?>">EN</button>
+											<button type="button" class="language-tab" data-lang="es" data-group="<?= htmlspecialchars($field['name']) ?>">ES</button>
+										</div>
+										<div class="language-content active" data-lang="pt" data-group="<?= htmlspecialchars($field['name']) ?>">
+											<textarea class="form-control" name="<?= htmlspecialchars($field['pt']) ?>" rows="4"><?= htmlspecialchars($value_pt) ?></textarea>
+										</div>
+										<div class="language-content" data-lang="en" data-group="<?= htmlspecialchars($field['name']) ?>">
+											<textarea class="form-control" name="<?= htmlspecialchars($field['en']) ?>" rows="4"><?= htmlspecialchars($value_en) ?></textarea>
+										</div>
+										<div class="language-content" data-lang="es" data-group="<?= htmlspecialchars($field['name']) ?>">
+											<textarea class="form-control" name="<?= htmlspecialchars($field['es']) ?>" rows="4"><?= htmlspecialchars($value_es) ?></textarea>
+										</div>
 									</div>
-									<div class="col-md-2">
-										<label class="form-label">Qtd.</label>
-										<input type="text" class="form-control-plaintext" value="<?= htmlspecialchars($aptqtd) ?>" readonly>
-									</div>
-									<div class="col-md-4">
-										<label class="form-label">Foto</label>
-										<input type="text" class="form-control-plaintext" value="<?= htmlspecialchars($aptoimgfoto) ?>" readonly>
-									</div>
 								</div>
-						<?php
-							}
-						} else {
-							echo '<div class="col-12"><p class="text-muted">Nenhum apartamento cadastrado.</p></div>';
-						}
-						?>
-						<div class="row mt-3">
-							<div class="col-12 text-center">
-								<a href="#" class="btn btn-outline-primary me-2" onclick="javascript:altera_apto();">Alterar Conteúdo de Apartamentos >></a>
-								<a href="javascript:apaga_apto();" class="btn btn-outline-danger me-2">Exclusão de Apartamentos >></a>
-								<a href="javascript:add_apto();" class="btn btn-outline-success">Acrescentar Apartamentos >></a>
 							</div>
+						<?php endforeach; ?>
+						<div class="col-md-12">
+							<label class="form-label fw-bold">Conteúdo Complementar Ecológico</label>
+							<textarea class="form-control" name="complemento" id="complemento" rows="4"><?= htmlspecialchars($complemento) ?></textarea>
 						</div>
 					</div>
 				</div>
-			</div>
-		</div>
 
-		<!-- Seção 6: Mapas e Vídeos -->
-		<div class="row mb-4">
-			<div class="col-md-6">
-				<div class="card">
-					<div class="card-header">
-						<h6>Mapas</h6>
-					</div>
-					<div class="card-body">
-						<div class="mb-3">
-							<label class="form-label">Mapa Google</label>
-							<textarea class="form-control" name="htlurl" id="htlurl" rows="4"><?= htmlspecialchars($htlurl) ?></textarea>
+				<!-- Passo 3: Fotos e Galeria -->
+				<div class="step-content" data-step="3">
+					<h3 class="form-section-title">Fotos e Galeria</h3>
+					<div class="row g-3">
+						<div class="col-md-6">
+							<label class="form-label">Fachada</label>
+							<input type="text" class="form-control" name="htlimgfotofachada" maxlength="150" value="<?= htmlspecialchars($htlimgfotofachada) ?>">
 						</div>
-						<div class="mb-3">
-							<label class="form-label">Mapa</label>
-							<input type="text" class="form-control" name="htlimgmapa" id="htlimgmapa" maxlength="150" value="<?= htmlspecialchars($htlimgmapa) ?>">
+						<div class="col-md-6">
+							<label class="form-label">Fachada TBN</label>
+							<input type="text" class="form-control" name="fotofachada_tbn" maxlength="150" value="<?= htmlspecialchars($fotofachada_tbn) ?>">
 						</div>
-						<div class="mb-3">
-							<label class="form-label">Mapa Ecológico</label>
-							<input type="text" class="form-control" name="map_eco" id="map_eco" maxlength="150" value="<?= htmlspecialchars($map_eco) ?>">
+						<div class="col-md-6">
+							<label class="form-label">Piscina</label>
+							<input type="text" class="form-control" name="htlfotopiscina" maxlength="150" value="<?= htmlspecialchars($htlfotopiscina) ?>">
 						</div>
-						<div class="mb-3">
-							<label class="form-label">URL do Iframe do Mapa</label>
-							<input type="text" class="form-control" name="map_iframe_url" id="map_iframe_url" maxlength="500" value="<?= htmlspecialchars($map_iframe_url) ?>">
+						<div class="col-md-6">
+							<label class="form-label">Foto Extra 1</label>
+							<input type="text" class="form-control" name="fotoextra" maxlength="150" value="<?= htmlspecialchars($fotoextra) ?>">
 						</div>
-						<div class="row g-2">
-							<div class="col-6">
-								<label class="form-label">Latitude</label>
-								<input type="number" class="form-control" name="latitude" id="latitude" step="0.000001" value="<?= htmlspecialchars($latitude) ?>">
-							</div>
-							<div class="col-6">
-								<label class="form-label">Longitude</label>
-								<input type="number" class="form-control" name="longitude" id="longitude" step="0.000001" value="<?= htmlspecialchars($longitude) ?>">
-							</div>
+						<div class="col-md-6">
+							<label class="form-label">Foto Extra 2 (Recepção)</label>
+							<input type="text" class="form-control" name="fotoextra_recep" maxlength="150" value="<?= htmlspecialchars($fotoextra_recep) ?>">
 						</div>
-					</div>
-				</div>
-			</div>
-			<div class="col-md-6">
-				<div class="card">
-					<div class="card-header">
-						<h6>Vídeos e 360°</h6>
-					</div>
-					<div class="card-body">
-						<div class="mb-3">
-							<label class="form-label">Endereço Foto 360</label>
-							<input type="text" class="form-control" name="url_htl_360" id="url_htl_360" maxlength="150" value="<?= htmlspecialchars($url_htl_360) ?>">
+						<div class="col-md-6">
+							<label class="form-label">Foto Extra 3</label>
+							<input type="text" class="form-control" name="ft_resort1" maxlength="150" value="<?= htmlspecialchars($ft_resort1) ?>">
 						</div>
-						<div class="mb-3">
-							<label class="form-label">Arquivo Foto 360</label>
-							<input type="text" class="form-control" name="arq_htl_360" id="arq_htl_360" maxlength="150" value="<?= htmlspecialchars($arq_htl_360) ?>">
+						<div class="col-md-6">
+							<label class="form-label">Foto Extra 4</label>
+							<input type="text" class="form-control" name="ft_resort2" maxlength="150" value="<?= htmlspecialchars($ft_resort2) ?>">
 						</div>
-						<div class="mb-3">
-							<label class="form-label">Endereço Vídeo</label>
-							<input type="text" class="form-control" name="url_video" id="url_video" maxlength="150" value="<?= htmlspecialchars($url_video) ?>">
+						<div class="col-md-6">
+							<label class="form-label">Foto Extra 5</label>
+							<input type="text" class="form-control" name="ft_resort3" maxlength="150" value="<?= htmlspecialchars($ft_resort3) ?>">
 						</div>
-						<div class="mb-3">
-							<label class="form-label">Arquivo do Vídeo</label>
-							<input type="text" class="form-control" name="arq_video" id="arq_video" maxlength="150" value="<?= htmlspecialchars($arq_video) ?>">
+						<div class="col-md-12">
+							<label class="form-label">Imagens da Galeria <small class="text-muted">(URLs separadas por vírgula)</small></label>
+							<textarea class="form-control" name="gallery_images" rows="3"><?= htmlspecialchars($gallery_images) ?></textarea>
 						</div>
-						<div class="mb-3">
-							<label class="form-label">Tour Virtual sem Flash</label>
-							<input type="text" class="form-control" name="virtual_tour" id="virtual_tour" maxlength="150" value="<?= htmlspecialchars($virtual_tour) ?>">
-						</div>
-						<div class="mb-3">
-							<label class="form-label">URL 360 das Salas</label>
-							<input type="text" class="form-control" name="url_360_halls" id="url_360_halls" maxlength="255" value="<?= htmlspecialchars($url_360_halls) ?>">
+						<div class="col-md-12">
+							<label class="form-label">Imagem da Planta Baixa</label>
+							<input type="text" class="form-control" name="blueprint_image" maxlength="255" value="<?= htmlspecialchars($blueprint_image) ?>">
 						</div>
 					</div>
 				</div>
-			</div>
-		</div>
 
-		<!-- Seção 7: Documentos COVID-19 -->
-		<div class="accordion mb-4" id="accordionCovid">
-			<div class="accordion-item">
-				<h2 class="accordion-header">
-					<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseCovid">
-						Documentos Procedimentos COVID-19
-					</button>
-				</h2>
-				<div id="collapseCovid" class="accordion-collapse collapse" data-bs-parent="#accordionCovid">
-					<div class="accordion-body">
-						<div class="row g-3">
-							<div class="col-md-6">
-								<h6>Arquivo em PDF em Português</h6>
-								<div id="del_covid19pt">
-									<?php if (!empty($covid_19_pt)): ?>
-										<input type="text" class="form-control mb-2" name="covid_19_pt" id="covid_19_pt" maxlength="150" value="<?= htmlspecialchars($covid_19_pt) ?>">
-										<a href="#" onclick="javascript: del_covid19pt();" class="btn btn-sm btn-outline-danger">Excluir</a>
-									<?php else: ?>
-										<p class="text-muted">Nenhum arquivo inserido!</p>
-									<?php endif; ?>
-								</div>
-								<label class="form-label">Inserir novo arquivo em PDF em Português</label>
-								<iframe src="hotel/mioloiframe1.php" height="140" width="100%" frameborder="0"></iframe>
-							</div>
-							<div class="col-md-6">
-								<h6>Arquivo em PDF em Inglês</h6>
-								<div id="del_covid19en">
-									<?php if (!empty($covid_19_en)): ?>
-										<input type="text" class="form-control mb-2" name="covid_19_en" id="covid_19_en" maxlength="150" value="<?= htmlspecialchars($covid_19_en) ?>">
-										<a href="#" onclick="javascript: del_covid19en();" class="btn btn-sm btn-outline-danger">Excluir</a>
-									<?php else: ?>
-										<p class="text-muted">Nenhum arquivo inserido!</p>
-									<?php endif; ?>
-								</div>
-								<label class="form-label">Inserir novo arquivo em PDF em Inglês</label>
-								<iframe src="hotel/mioloiframe2.php" height="140" width="100%" frameborder="0"></iframe>
-							</div>
-							<div class="col-md-6">
-								<label class="form-label">URL Procedimento PT</label>
-								<input type="text" class="form-control" name="covid_19_pt_url" id="covid_19_pt_url" maxlength="250" value="<?= htmlspecialchars($covid_19_pt_url) ?>">
-							</div>
-							<div class="col-md-6">
-								<label class="form-label">URL Procedimento EN</label>
-								<input type="text" class="form-control" name="covid_19_en_url" id="covid_19_en_url" maxlength="250" value="<?= htmlspecialchars($covid_19_en_url) ?>">
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
+				<!-- Passo 4: Apartamentos -->
+				<div class="step-content" data-step="4">
+					<h3 class="form-section-title">Apartamentos Cadastrados</h3>
+					<div class="table-responsive">
+						<table class="table table-hover">
+							<thead>
+								<tr>
+									<th>Categoria</th>
+									<th>Localização</th>
+									<th>Qtd.</th>
+									<th>Foto</th>
+								</tr>
+							</thead>
+							<tbody>
+								<?php
+								$query_aptos = "
+									SELECT frncod, aptocatcod, aptoimgfoto, aptqtd, aptoloccod, pk_aptcod
+									FROM conteudo_internet.ci_apartamento
+									WHERE frncod = $frncod
+									ORDER BY pk_aptcod
+								";
+								$result_aptos = pg_exec($conn, $query_aptos);
+								if ($result_aptos && pg_numrows($result_aptos) > 0) {
+									for ($rowapto = 0; $rowapto < pg_numrows($result_aptos); $rowapto++) {
+										$aptocatcod = pg_result($result_aptos, $rowapto, 'aptocatcod');
+										$aptoimgfoto = pg_result($result_aptos, $rowapto, 'aptoimgfoto');
+										$aptqtd = pg_result($result_aptos, $rowapto, 'aptqtd');
+										$aptoloccod = pg_result($result_aptos, $rowapto, 'aptoloccod');
 
-		<!-- Seção 8: Observações -->
-		<div class="accordion mb-4" id="accordionObservacoes">
-			<div class="accordion-item">
-				<h2 class="accordion-header">
-					<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseObservacoes">
-						Observações
-					</button>
-				</h2>
-				<div id="collapseObservacoes" class="accordion-collapse collapse" data-bs-parent="#accordionObservacoes">
-					<div class="accordion-body">
-						<div class="row g-3">
-							<div class="col-md-12 mb-3">
-								<label class="form-label">Em Inglês</label>
-								<textarea class="form-control" name="htlobsing" id="htlobsing" rows="15"><?= htmlspecialchars($htlobsing) ?></textarea>
-							</div>
-							<div class="col-md-6 mb-3">
-								<label class="form-label">Em Português</label>
-								<textarea class="form-control" name="htlobs" id="htlobs" rows="4"><?= htmlspecialchars($htlobs) ?></textarea>
-							</div>
-							<div class="col-md-6 mb-3">
-								<label class="form-label">Em Espanhol (Blumar Opina)</label>
-								<textarea class="form-control" name="htlobsesp" id="htlobsesp" rows="4"><?= htmlspecialchars($htlobsesp) ?></textarea>
-							</div>
-							<div class="col-md-12 mb-3">
-								<label class="form-label">Histórico de Alterações de Templates</label>
-								<textarea class="form-control" name="historico_temp" id="historico_temp" rows="4"><?= htmlspecialchars($historico_temp) ?></textarea>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
+										$catdscing = '';
+										$query_aptocateg = "SELECT catdscing FROM conteudo_internet.apto_categoria WHERE aptocatcod = $aptocatcod";
+										$result_aptocateg = pg_exec($conn, $query_aptocateg);
+										if ($result_aptocateg && pg_numrows($result_aptocateg) > 0) {
+											$catdscing = pg_result($result_aptocateg, 0, 'catdscing');
+										}
 
-		<!-- Seção 9: Marcações e Checkboxes -->
-		<div class="accordion mb-4" id="accordionMarcacoes">
-			<div class="accordion-item">
-				<h2 class="accordion-header">
-					<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseMarcacoes">
-						Marcações e Flags
-					</button>
-				</h2>
-				<div id="collapseMarcacoes" class="accordion-collapse collapse" data-bs-parent="#accordionMarcacoes">
-					<div class="accordion-body">
-						<div class="row">
-							<div class="col-md-6">
-								<h6>Marcações Gerais</h6>
-								<div class="form-check mb-2">
-									<input class="form-check-input" type="checkbox" name="flaghtl" id="flaghtl" <?= ($flaghtl == 't' ? 'checked' : '') ?>>
-									<label class="form-check-label small" for="flaghtl">Ativo na Internet Blumar <small>(Aparecerá na internet se marcado)</small></label>
-								</div>
-								<div class="form-check mb-2">
-									<input class="form-check-input" type="checkbox" name="flaglatino" id="flaglatino" <?= ($flaglatino == 't' ? 'checked' : '') ?>>
-									<label class="form-check-label small" for="flaglatino">Não aparecer Template no Tarifário Latino <small>(Não aparece o descritivo do Hotel no tarifário)</small></label>
-								</div>
-								<div class="form-check mb-2">
-									<input class="form-check-input" type="checkbox" name="flat" id="flat" <?= ($flat == 't' ? 'checked' : '') ?>>
-									<label class="form-check-label" for="flat">É Flat</label>
-								</div>
-								<div class="form-check mb-2">
-									<input class="form-check-input" type="checkbox" name="resort" id="resort" <?= ($resort == 't' ? 'checked' : '') ?>>
-									<label class="form-check-label" for="resort">É Resort</label>
-								</div>
-								<div class="form-check mb-2">
-									<input class="form-check-input" type="checkbox" name="ecologico" id="ecologico" <?= ($ecologico == 't' ? 'checked' : '') ?>>
-									<label class="form-check-label" for="ecologico">É Ecológico</label>
-								</div>
-								<div class="form-check mb-2">
-									<input class="form-check-input" type="checkbox" name="flagfotopiscina" id="flagfotopiscina" <?= ($flagfotopiscina == 't' ? 'checked' : '') ?>>
-									<label class="form-check-label" for="flagfotopiscina">É destaque no tarifário Latino</label>
-								</div>
-								<div class="form-check mb-2">
-									<input class="form-check-input" type="checkbox" name="bestdeal" id="bestdeal" <?= ($bestdeal == 't' ? 'checked' : '') ?>>
-									<label class="form-check-label" for="bestdeal">Best Deal</label>
-								</div>
-								<div class="form-check mb-2">
-									<input class="form-check-input" type="checkbox" name="ativo_bnuts" id="ativo_bnuts" <?= ($ativo_bnuts == 't' ? 'checked' : '') ?>>
-									<label class="form-check-label small" for="ativo_bnuts">Ativo site Bnuts <small>(Aparecerá na internet se marcado)</small></label>
-								</div>
-							</div>
-							<div class="col-md-6">
-								<h6>Destaques para o Tarifário FIT (Selos - Selecionar somente 3 opções)</h6>
-								<div class="form-check mb-2">
-									<input class="form-check-input" type="checkbox" name="flaghtlimgmapa" id="flaghtlimgmapa" <?= ($flaghtlimgmapa == 't' ? 'checked' : '') ?>>
-									<label class="form-check-label" for="flaghtlimgmapa">Unique</label>
-								</div>
-								<div class="form-check mb-2">
-									<input class="form-check-input" type="checkbox" name="luxury" id="luxury" <?= ($luxury == 't' ? 'checked' : '') ?>>
-									<label class="form-check-label" for="luxury">Eco Friendly</label>
-								</div>
-								<div class="form-check mb-2">
-									<input class="form-check-input" type="checkbox" name="novo" id="novo" <?= ($novo == 't' ? 'checked' : '') ?>>
-									<label class="form-check-label" for="novo">New</label>
-								</div>
-								<div class="form-check mb-2">
-									<input class="form-check-input" type="checkbox" name="favoritos" id="favoritos" <?= ($favoritos == 't' ? 'checked' : '') ?>>
-									<label class="form-check-label" for="favoritos">Favorite</label>
-								</div>
-								<h6 class="mt-3">Marcações para o Site Nacional</h6>
-								<div class="form-check mb-2">
-									<input class="form-check-input" type="checkbox" name="pg6fq7" id="pg6fq7" <?= ($pg6fq7 == 't' ? 'checked' : '') ?>>
-									<label class="form-check-label" for="pg6fq7">Promo especial</label>
-								</div>
-								<div class="form-check mb-2">
-									<input class="form-check-input" type="checkbox" name="pg4fq5" id="pg4fq5" <?= ($pg4fq5 == 't' ? 'checked' : '') ?>>
-									<label class="form-check-label" for="pg4fq5">Bonus Blumar</label>
-								</div>
-								<div class="form-check mb-2">
-									<input class="form-check-input" type="checkbox" name="chdgratis" id="chdgratis" <?= ($chdgratis == 't' ? 'checked' : '') ?>>
-									<label class="form-check-label" for="chdgratis">Criança Grátis</label>
-								</div>
-								<div class="form-check mb-2">
-									<input class="form-check-input" type="checkbox" name="blumarrecomenda" id="blumarrecomenda" <?= ($blumarrecomenda == 't' ? 'checked' : '') ?>>
-									<label class="form-check-label" for="blumarrecomenda">Blumar Recomenda</label>
-								</div>
-								<div class="form-check mb-2">
-									<input class="form-check-input" type="checkbox" name="blumarreveillon" id="blumarreveillon" <?= ($blumarreveillon == 't' ? 'checked' : '') ?>>
-									<label class="form-check-label" for="blumarreveillon">Reveillon</label>
-								</div>
-								<div class="form-check mb-2">
-									<input class="form-check-input" type="checkbox" name="allinclusive" id="allinclusive" <?= ($allinclusive == 't' ? 'checked' : '') ?>>
-									<label class="form-check-label" for="allinclusive">All Inclusive</label>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-
-		<!-- Seção 10: Classificações -->
-		<div class="row mb-4 g-3">
-			<div class="col-md-4">
-				<div class="card">
-					<div class="card-header">
-						<h6>Classificação de Estrelas Blumar <small>Somente para hotéis</small></h6>
-					</div>
-					<div class="card-body text-center">
-						<input type="text" class="form-control" name="htlestrelablumar" id="htlestrelablumar" maxlength="1" value="<?= htmlspecialchars($htlestrelablumar) ?>">
-					</div>
-				</div>
-			</div>
-			<div class="col-md-4">
-				<div class="card">
-					<div class="card-header">
-						<h6>Classificação Eco <small>Somente para ecológico</small></h6>
-					</div>
-					<div class="card-body">
-						<select class="form-select" name="classif_eco" id="classif_eco">
-							<option value="0" <?= ($classif_eco == '0' ? 'selected' : '') ?>>None</option>
-							<option value="1" <?= ($classif_eco == '1' ? 'selected' : '') ?>>Very Rustic</option>
-							<option value="2" <?= ($classif_eco == '2' ? 'selected' : '') ?>>Basic</option>
-							<option value="3" <?= ($classif_eco == '3' ? 'selected' : '') ?>>Superior</option>
-							<option value="4" <?= ($classif_eco == '4' ? 'selected' : '') ?>>Friendly</option>
-						</select>
-					</div>
-				</div>
-			</div>
-		</div>
-
-		<!-- Seção 11: Marcações de Estilos -->
-		<div class="row mb-4">
-			<div class="col-md-12">
-				<div class="card">
-					<div class="card-header">
-						<h6>Marcações de Estilos para o Site Nacional</h6>
-					</div>
-					<div class="card-body">
-						<div class="mb-3">
-							<label class="form-label">Inserir um estilo</label>
-							<select class="form-select" name="estilo" id="estilo" onchange="javascript:insere_estilo_htl();">
-								<option value="0">Selecione</option>
-								<option value="1">Ecologico</option>
-								<option value="2">Familia</option>
-								<option value="3">Praia</option>
-								<option value="4">Resort</option>
-								<option value="5">Lua de mel</option>
-								<option value="6">Safari</option>
-								<option value="7">Cruzeiros</option>
-								<option value="8">Tudo incluido</option>
-								<option value="9">Gastronomia</option>
-								<option value="10">Aventura</option>
-								<option value="11">Cultural</option>
-							</select>
-						</div>
-						<div id="estilos_do_htl" class="list-group list-group-flush">
-							<?php
-							$pega_estilos = "SELECT cod_estilo, pk_estilo_htl FROM conteudo_internet.ci_hotel_estilo WHERE mneu_for = '$mneu_for'";
-							$result_tour = pg_exec($conn, $pega_estilos);
-							if ($result_tour && pg_numrows($result_tour) > 0) {
-								for ($rowcid = 0; $rowcid < pg_numrows($result_tour); $rowcid++) {
-									$cod_estilo = pg_result($result_tour, $rowcid, 'cod_estilo');
-									$pk_estilo = pg_result($result_tour, $rowcid, 'pk_estilo_htl');
-									$estilo_text = '';
-									switch ($cod_estilo) {
-										case 1:
-											$estilo_text = 'Ecologico';
-											break;
-										case 2:
-											$estilo_text = 'Familia';
-											break;
-										case 3:
-											$estilo_text = 'Praia';
-											break;
-										case 4:
-											$estilo_text = 'Resort';
-											break;
-										case 5:
-											$estilo_text = 'Lua de mel';
-											break;
-										case 6:
-											$estilo_text = 'Safari';
-											break;
-										case 7:
-											$estilo_text = 'Cruzeiros';
-											break;
-										case 8:
-											$estilo_text = 'Tudo incluido';
-											break;
-										case 9:
-											$estilo_text = 'Gastronomia';
-											break;
-										case 10:
-											$estilo_text = 'Aventura';
-											break;
-										case 11:
-											$estilo_text = 'Cultural';
-											break;
+										$aptolocdscing = '';
+										$query_aptoloc = "SELECT aptolocdscing FROM conteudo_internet.apto_localizacao WHERE aptoloccod = $aptoloccod";
+										$result_aptoloc = pg_exec($conn, $query_aptoloc);
+										if ($result_aptoloc && pg_numrows($result_aptoloc) > 0) {
+											$aptolocdscing = pg_result($result_aptoloc, 0, 'aptolocdscing');
+										}
+								?>
+										<tr>
+											<td><?= htmlspecialchars($catdscing) ?></td>
+											<td><?= htmlspecialchars($aptolocdscing) ?></td>
+											<td><?= htmlspecialchars($aptqtd) ?></td>
+											<td><small><?= htmlspecialchars($aptoimgfoto) ?></small></td>
+										</tr>
+								<?php
 									}
-									echo '<div class="list-group-item d-flex justify-content-between align-items-center">
-                                            ' . htmlspecialchars($estilo_text) . '
-                                            <a href="#" class="pkestilohtl btn btn-sm btn-outline-danger" title="Apagar estilo htl">
-                                                <input type="hidden" class="pkestilohtlvalue" value="' . $pk_estilo . '">X
-                                            </a>
-                                          </div>';
+								} else {
+									echo '<tr><td colspan="4" class="text-center text-muted">Nenhum apartamento cadastrado</td></tr>';
 								}
-							} else {
-								echo '<p class="text-muted">Nenhum estilo cadastrado.</p>';
-							}
-							?>
-						</div>
+								?>
+							</tbody>
+						</table>
+					</div>
+					<div class="text-center mt-3">
+						<a href="#" class="btn btn-outline-primary me-2" onclick="javascript:altera_apto();">Alterar Apartamentos</a>
+						<a href="javascript:apaga_apto();" class="btn btn-outline-danger me-2">Excluir Apartamentos</a>
+						<a href="javascript:add_apto();" class="btn btn-success">Adicionar Apartamentos</a>
 					</div>
 				</div>
-			</div>
-		</div>
 
-		<!-- Seção 12: Most Recommended Properties -->
-		<div class="row mb-4">
-			<div class="col-md-8">
-				<div class="card">
-					<div class="card-header">
-						<h6>Descritivo Most Recommended (Inglês)</h6>
-					</div>
-					<div class="card-body">
-						<textarea class="form-control" name="desc_mostrp_ing" id="desc_mostrp_ing" rows="4"><?= htmlspecialchars($desc_mostrp_ing) ?></textarea>
-					</div>
-				</div>
-			</div>
-			<div class="col-md-4">
-				<div class="card">
-					<div class="card-header">
-						<h6>Flag Most Recommended</h6>
-					</div>
-					<div class="card-body">
-						<div class="form-check">
-							<input class="form-check-input" type="checkbox" name="ativo_mostrp" id="ativo_mostrp" <?= ($ativo_mostrp == 't' ? 'checked' : '') ?>>
-							<label class="form-check-label" for="ativo_mostrp">É Most Recommended Properties</label>
+				<!-- Passo 5: Mapas e Vídeos -->
+				<div class="step-content" data-step="5">
+					<h3 class="form-section-title">Mídia e Localização</h3>
+					<div class="row g-4">
+						<div class="col-md-6">
+							<div class="card h-100">
+								<div class="card-header bg-primary text-white">
+									<h6 class="mb-0">Mapas</h6>
+								</div>
+								<div class="card-body">
+									<div class="mb-3">
+										<label class="form-label">Mapa Google</label>
+										<textarea class="form-control" name="htlurl" rows="3"><?= htmlspecialchars($htlurl) ?></textarea>
+									</div>
+									<div class="mb-3">
+										<label class="form-label">Imagem do Mapa</label>
+										<input type="text" class="form-control" name="htlimgmapa" maxlength="150" value="<?= htmlspecialchars($htlimgmapa) ?>">
+									</div>
+									<div class="mb-3">
+										<label class="form-label">Mapa Ecológico</label>
+										<input type="text" class="form-control" name="map_eco" maxlength="150" value="<?= htmlspecialchars($map_eco) ?>">
+									</div>
+									<div class="mb-3">
+										<label class="form-label">URL do Iframe do Mapa</label>
+										<input type="text" class="form-control" name="map_iframe_url" maxlength="500" value="<?= htmlspecialchars($map_iframe_url) ?>">
+									</div>
+									<div class="row">
+										<div class="col-6">
+											<label class="form-label">Latitude</label>
+											<input type="number" class="form-control" name="latitude" step="0.000001" value="<?= htmlspecialchars($latitude) ?>">
+										</div>
+										<div class="col-6">
+											<label class="form-label">Longitude</label>
+											<input type="number" class="form-control" name="longitude" step="0.000001" value="<?= htmlspecialchars($longitude) ?>">
+										</div>
+									</div>
+								</div>
+							</div>
 						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-
-		<!-- Seção 13: Facilidades do Hotel Já Cadastradas -->
-		<div class="accordion mb-4" id="accordionFacHotel">
-			<div class="accordion-item">
-				<h2 class="accordion-header">
-					<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFacHotel">
-						Facilidades do Hotel Já Cadastradas
-					</button>
-				</h2>
-				<div id="collapseFacHotel" class="accordion-collapse collapse" data-bs-parent="#accordionFacHotel">
-					<div class="accordion-body">
-						<div class="list-group list-group-flush">
-							<?php
-							$query_fachtl1 = "
-                                SELECT ci_hotel_facilidade.tpofaccod, tpofacdsc
-                                FROM conteudo_internet.ci_hotel_facilidade
-                                INNER JOIN conteudo_internet.ci_tipo_facilidade ON ci_hotel_facilidade.tpofaccod = ci_tipo_facilidade.tpofaccod
-                                WHERE tipo = 1 AND ativo = true AND mneu_for = '$frncod'
-                                ORDER BY ci_hotel_facilidade.tpofaccod ASC
-                            ";
-							$result_fachtl1 = pg_exec($conn, $query_fachtl1);
-							if ($result_fachtl1 && pg_numrows($result_fachtl1) > 0) {
-								for ($rowfac1 = 0; $rowfac1 < pg_numrows($result_fachtl1); $rowfac1++) {
-									$tpofaccod1 = pg_result($result_fachtl1, $rowfac1, 'tpofaccod');
-									$tpofacdsc1 = pg_result($result_fachtl1, $rowfac1, 'tpofacdsc');
-									echo '<div class="list-group-item d-flex justify-content-between align-items-center">
-                                            ' . htmlspecialchars($tpofacdsc1) . '
-                                            <a href="javascript:apaga_fac_htl(' . $tpofaccod1 . ');" class="btn btn-sm btn-outline-danger" title="Excluir">X</a>
-                                          </div>';
-								}
-							} else {
-								echo '<div class="list-group-item text-muted">Nenhuma facilidade cadastrada.</div>';
-							}
-							?>
-						</div>
-						<div class="row mt-3">
-							<div class="col-12 text-center">
-								<a href="javascript:apaga_fac_htl();" class="btn btn-outline-danger me-2">Exclusão de Facilidades do Hotel >></a>
-								<a href="javascript:add_fac_htl();" class="btn btn-outline-success">Acrescentar Facilidades do Hotel >></a>
+						<div class="col-md-6">
+							<div class="card h-100">
+								<div class="card-header bg-info text-white">
+									<h6 class="mb-0">Vídeos e 360°</h6>
+								</div>
+								<div class="card-body">
+									<div class="mb-3">
+										<label class="form-label">Endereço Foto 360</label>
+										<input type="text" class="form-control" name="url_htl_360" maxlength="150" value="<?= htmlspecialchars($url_htl_360) ?>">
+									</div>
+									<div class="mb-3">
+										<label class="form-label">Arquivo Foto 360</label>
+										<input type="text" class="form-control" name="arq_htl_360" maxlength="150" value="<?= htmlspecialchars($arq_htl_360) ?>">
+									</div>
+									<div class="mb-3">
+										<label class="form-label">Endereço Vídeo</label>
+										<input type="text" class="form-control" name="url_video" maxlength="150" value="<?= htmlspecialchars($url_video) ?>">
+									</div>
+									<div class="mb-3">
+										<label class="form-label">Arquivo do Vídeo</label>
+										<input type="text" class="form-control" name="arq_video" maxlength="150" value="<?= htmlspecialchars($arq_video) ?>">
+									</div>
+									<div class="mb-3">
+										<label class="form-label">Tour Virtual sem Flash</label>
+										<input type="text" class="form-control" name="virtual_tour" maxlength="150" value="<?= htmlspecialchars($virtual_tour) ?>">
+									</div>
+									<div class="mb-3">
+										<label class="form-label">URL 360 das Salas</label>
+										<input type="text" class="form-control" name="url_360_halls" maxlength="255" value="<?= htmlspecialchars($url_360_halls) ?>">
+									</div>
+								</div>
 							</div>
 						</div>
 					</div>
 				</div>
-			</div>
-		</div>
 
-		<!-- Seção 14: Facilidades do Apartamento Já Cadastradas -->
-		<div class="accordion mb-4" id="accordionFacApto">
-			<div class="accordion-item">
-				<h2 class="accordion-header">
-					<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFacApto">
-						Facilidades do Apartamento Já Cadastradas
-					</button>
-				</h2>
-				<div id="collapseFacApto" class="accordion-collapse collapse" data-bs-parent="#accordionFacApto">
-					<div class="accordion-body">
-						<div class="list-group list-group-flush">
-							<?php
-							$query_fachtl2 = "
-                                SELECT ci_hotel_facilidade.tpofaccod, tpofacdsc
-                                FROM conteudo_internet.ci_hotel_facilidade
-                                INNER JOIN conteudo_internet.ci_tipo_facilidade ON ci_hotel_facilidade.tpofaccod = ci_tipo_facilidade.tpofaccod
-                                WHERE tipo = 2 AND ativo = true AND mneu_for = '$frncod'
-                                ORDER BY ci_hotel_facilidade.tpofaccod ASC
-                            ";
-							$result_fachtl2 = pg_exec($conn, $query_fachtl2);
-							if ($result_fachtl2 && pg_numrows($result_fachtl2) > 0) {
-								for ($rowfac2 = 0; $rowfac2 < pg_numrows($result_fachtl2); $rowfac2++) {
-									$tpofaccod2 = pg_result($result_fachtl2, $rowfac2, 'tpofaccod');
-									$tpofacdsc2 = pg_result($result_fachtl2, $rowfac2, 'tpofacdsc');
-									echo '<div class="list-group-item d-flex justify-content-between align-items-center">
-                                            ' . htmlspecialchars($tpofacdsc2) . '
-                                            <a href="javascript:apaga_fac_apto(' . $tpofaccod2 . ');" class="btn btn-sm btn-outline-danger" title="Excluir">X</a>
-                                          </div>';
-								}
-							} else {
-								echo '<div class="list-group-item text-muted">Nenhuma facilidade cadastrada.</div>';
-							}
-							?>
+				<!-- Passo 6: COVID-19 -->
+				<div class="step-content" data-step="6">
+					<h3 class="form-section-title">Documentos COVID-19</h3>
+					<div class="row g-4">
+						<div class="col-md-6">
+							<div class="card">
+								<div class="card-header">
+									<h6 class="mb-0">Arquivo em PDF - Português</h6>
+								</div>
+								<div class="card-body">
+									<div id="del_covid19pt">
+										<?php if (!empty($covid_19_pt)): ?>
+											<input type="text" class="form-control mb-2" name="covid_19_pt" maxlength="150" value="<?= htmlspecialchars($covid_19_pt) ?>">
+											<a href="#" onclick="javascript: del_covid19pt();" class="btn btn-sm btn-danger">Excluir</a>
+										<?php else: ?>
+											<p class="text-muted">Nenhum arquivo inserido</p>
+										<?php endif; ?>
+									</div>
+									<label class="form-label mt-3">Inserir novo arquivo PDF</label>
+									<iframe src="hotel/mioloiframe1.php" height="140" width="100%" frameborder="0"></iframe>
+								</div>
+							</div>
 						</div>
-						<div class="row mt-3">
-							<div class="col-12 text-center">
-								<a href="javascript:apaga_fac_apto();" class="btn btn-outline-danger me-2">Exclusão de Facilidades do Apartamento >></a>
-								<a href="javascript:add_fac_apto();" class="btn btn-outline-success">Acrescentar Facilidades do Apartamento >></a>
+						<div class="col-md-6">
+							<div class="card">
+								<div class="card-header">
+									<h6 class="mb-0">Arquivo em PDF - Inglês</h6>
+								</div>
+								<div class="card-body">
+									<div id="del_covid19en">
+										<?php if (!empty($covid_19_en)): ?>
+											<input type="text" class="form-control mb-2" name="covid_19_en" maxlength="150" value="<?= htmlspecialchars($covid_19_en) ?>">
+											<a href="#" onclick="javascript: del_covid19en();" class="btn btn-sm btn-danger">Excluir</a>
+										<?php else: ?>
+											<p class="text-muted">Nenhum arquivo inserido</p>
+										<?php endif; ?>
+									</div>
+									<label class="form-label mt-3">Inserir novo arquivo PDF</label>
+									<iframe src="hotel/mioloiframe2.php" height="140" width="100%" frameborder="0"></iframe>
+								</div>
+							</div>
+						</div>
+						<div class="col-md-6">
+							<label class="form-label">URL Procedimento PT</label>
+							<input type="text" class="form-control" name="covid_19_pt_url" maxlength="250" value="<?= htmlspecialchars($covid_19_pt_url) ?>">
+						</div>
+						<div class="col-md-6">
+							<label class="form-label">URL Procedimento EN</label>
+							<input type="text" class="form-control" name="covid_19_en_url" maxlength="250" value="<?= htmlspecialchars($covid_19_en_url) ?>">
+						</div>
+					</div>
+				</div>
+
+				<!-- Passo 7: Observações -->
+				<div class="step-content" data-step="7">
+					<h3 class="form-section-title">Observações</h3>
+					<div class="row g-3">
+						<div class="col-md-12">
+							<label class="form-label fw-bold">Em Inglês</label>
+							<textarea class="form-control" name="htlobsing" rows="8"><?= htmlspecialchars($htlobsing) ?></textarea>
+						</div>
+						<div class="col-md-6">
+							<label class="form-label fw-bold">Em Português</label>
+							<textarea class="form-control" name="htlobs" rows="5"><?= htmlspecialchars($htlobs) ?></textarea>
+						</div>
+						<div class="col-md-6">
+							<label class="form-label fw-bold">Em Espanhol (Blumar Opina)</label>
+							<textarea class="form-control" name="htlobsesp" rows="5"><?= htmlspecialchars($htlobsesp) ?></textarea>
+						</div>
+						<div class="col-md-12">
+							<label class="form-label fw-bold">Histórico de Alterações de Templates</label>
+							<textarea class="form-control" name="historico_temp" rows="4"><?= htmlspecialchars($historico_temp) ?></textarea>
+						</div>
+					</div>
+				</div>
+
+				<!-- Passo 8: Marcações -->
+				<div class="step-content" data-step="8">
+					<h3 class="form-section-title">Marcações e Flags</h3>
+					<div class="row g-4">
+						<div class="col-md-6">
+							<div class="card">
+								<div class="card-header">
+									<h6 class="mb-0">Marcações Gerais</h6>
+								</div>
+								<div class="card-body">
+									<div class="form-check mb-2">
+										<input class="form-check-input" type="checkbox" name="flaghtl" id="flaghtl" <?= ($flaghtl == 't' ? 'checked' : '') ?>>
+										<label class="form-check-label" for="flaghtl">Ativo na Internet Blumar</label>
+									</div>
+									<div class="form-check mb-2">
+										<input class="form-check-input" type="checkbox" name="flaglatino" id="flaglatino" <?= ($flaglatino == 't' ? 'checked' : '') ?>>
+										<label class="form-check-label" for="flaglatino">Não aparecer Template no Tarifário Latino</label>
+									</div>
+									<div class="form-check mb-2">
+										<input class="form-check-input" type="checkbox" name="flat" id="flat" <?= ($flat == 't' ? 'checked' : '') ?>>
+										<label class="form-check-label" for="flat">É Flat</label>
+									</div>
+									<div class="form-check mb-2">
+										<input class="form-check-input" type="checkbox" name="resort" id="resort" <?= ($resort == 't' ? 'checked' : '') ?>>
+										<label class="form-check-label" for="resort">É Resort</label>
+									</div>
+									<div class="form-check mb-2">
+										<input class="form-check-input" type="checkbox" name="ecologico" id="ecologico" <?= ($ecologico == 't' ? 'checked' : '') ?>>
+										<label class="form-check-label" for="ecologico">É Ecológico</label>
+									</div>
+									<div class="form-check mb-2">
+										<input class="form-check-input" type="checkbox" name="flagfotopiscina" id="flagfotopiscina" <?= ($flagfotopiscina == 't' ? 'checked' : '') ?>>
+										<label class="form-check-label" for="flagfotopiscina">É destaque no tarifário Latino</label>
+									</div>
+									<div class="form-check mb-2">
+										<input class="form-check-input" type="checkbox" name="bestdeal" id="bestdeal" <?= ($bestdeal == 't' ? 'checked' : '') ?>>
+										<label class="form-check-label" for="bestdeal">Best Deal</label>
+									</div>
+									<div class="form-check mb-2">
+										<input class="form-check-input" type="checkbox" name="ativo_bnuts" id="ativo_bnuts" <?= ($ativo_bnuts == 't' ? 'checked' : '') ?>>
+										<label class="form-check-label" for="ativo_bnuts">Ativo site Bnuts</label>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="card">
+								<div class="card-header">
+									<h6 class="mb-0">Destaques Tarifário FIT (Máx. 3)</h6>
+								</div>
+								<div class="card-body">
+									<div class="form-check mb-2">
+										<input class="form-check-input" type="checkbox" name="flaghtlimgmapa" id="flaghtlimgmapa" <?= ($flaghtlimgmapa == 't' ? 'checked' : '') ?>>
+										<label class="form-check-label" for="flaghtlimgmapa">Unique</label>
+									</div>
+									<div class="form-check mb-2">
+										<input class="form-check-input" type="checkbox" name="luxury" id="luxury" <?= ($luxury == 't' ? 'checked' : '') ?>>
+										<label class="form-check-label" for="luxury">Eco Friendly</label>
+									</div>
+									<div class="form-check mb-2">
+										<input class="form-check-input" type="checkbox" name="novo" id="novo" <?= ($novo == 't' ? 'checked' : '') ?>>
+										<label class="form-check-label" for="novo">New</label>
+									</div>
+									<div class="form-check mb-2">
+										<input class="form-check-input" type="checkbox" name="favoritos" id="favoritos" <?= ($favoritos == 't' ? 'checked' : '') ?>>
+										<label class="form-check-label" for="favoritos">Favorite</label>
+									</div>
+								</div>
+							</div>
+							<div class="card mt-3">
+								<div class="card-header">
+									<h6 class="mb-0">Site Nacional</h6>
+								</div>
+								<div class="card-body">
+									<div class="form-check mb-2">
+										<input class="form-check-input" type="checkbox" name="pg6fq7" id="pg6fq7" <?= ($pg6fq7 == 't' ? 'checked' : '') ?>>
+										<label class="form-check-label" for="pg6fq7">Promo especial</label>
+									</div>
+									<div class="form-check mb-2">
+										<input class="form-check-input" type="checkbox" name="pg4fq5" id="pg4fq5" <?= ($pg4fq5 == 't' ? 'checked' : '') ?>>
+										<label class="form-check-label" for="pg4fq5">Bonus Blumar</label>
+									</div>
+									<div class="form-check mb-2">
+										<input class="form-check-input" type="checkbox" name="chdgratis" id="chdgratis" <?= ($chdgratis == 't' ? 'checked' : '') ?>>
+										<label class="form-check-label" for="chdgratis">Criança Grátis</label>
+									</div>
+									<div class="form-check mb-2">
+										<input class="form-check-input" type="checkbox" name="blumarrecomenda" id="blumarrecomenda" <?= ($blumarrecomenda == 't' ? 'checked' : '') ?>>
+										<label class="form-check-label" for="blumarrecomenda">Blumar Recomenda</label>
+									</div>
+									<div class="form-check mb-2">
+										<input class="form-check-input" type="checkbox" name="blumarreveillon" id="blumarreveillon" <?= ($blumarreveillon == 't' ? 'checked' : '') ?>>
+										<label class="form-check-label" for="blumarreveillon">Reveillon</label>
+									</div>
+									<div class="form-check mb-2">
+										<input class="form-check-input" type="checkbox" name="allinclusive" id="allinclusive" <?= ($allinclusive == 't' ? 'checked' : '') ?>>
+										<label class="form-check-label" for="allinclusive">All Inclusive</label>
+									</div>
+								</div>
 							</div>
 						</div>
 					</div>
 				</div>
+
+				<!-- Passo 9: Classificações e Estilos -->
+				<div class="step-content" data-step="9">
+					<h3 class="form-section-title">Classificações e Estilos</h3>
+					<div class="row g-4">
+						<div class="col-md-6">
+							<div class="card">
+								<div class="card-header">
+									<h6 class="mb-0">Classificação de Estrelas Blumar</h6>
+								</div>
+								<div class="card-body">
+									<input type="text" class="form-control" name="htlestrelablumar" maxlength="1" value="<?= htmlspecialchars($htlestrelablumar) ?>">
+								</div>
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="card">
+								<div class="card-header">
+									<h6 class="mb-0">Classificação Ecológico</h6>
+								</div>
+								<div class="card-body">
+									<select class="form-select" name="classif_eco">
+										<option value="0" <?= ($classif_eco == '0' ? 'selected' : '') ?>>None</option>
+										<option value="1" <?= ($classif_eco == '1' ? 'selected' : '') ?>>Very Rustic</option>
+										<option value="2" <?= ($classif_eco == '2' ? 'selected' : '') ?>>Basic</option>
+										<option value="3" <?= ($classif_eco == '3' ? 'selected' : '') ?>>Superior</option>
+										<option value="4" <?= ($classif_eco == '4' ? 'selected' : '') ?>>Friendly</option>
+									</select>
+								</div>
+							</div>
+						</div>
+						<div class="col-md-12">
+							<div class="card">
+								<div class="card-header">
+									<h6 class="mb-0">Estilos do Hotel</h6>
+								</div>
+								<div class="card-body">
+									<div class="mb-3">
+										<select class="form-select" name="estilo" id="estilo" onchange="javascript:insere_estilo_htl();">
+											<option value="0">Selecione um estilo</option>
+											<option value="1">Ecologico</option>
+											<option value="2">Familia</option>
+											<option value="3">Praia</option>
+											<option value="4">Resort</option>
+											<option value="5">Lua de mel</option>
+											<option value="6">Safari</option>
+											<option value="7">Cruzeiros</option>
+											<option value="8">Tudo incluido</option>
+											<option value="9">Gastronomia</option>
+											<option value="10">Aventura</option>
+											<option value="11">Cultural</option>
+										</select>
+									</div>
+									<div id="estilos_do_htl" class="list-group">
+										<?php
+										$pega_estilos = "SELECT cod_estilo, pk_estilo_htl FROM conteudo_internet.ci_hotel_estilo WHERE mneu_for = '$mneu_for'";
+										$result_tour = pg_exec($conn, $pega_estilos);
+										if ($result_tour && pg_numrows($result_tour) > 0) {
+											for ($rowcid = 0; $rowcid < pg_numrows($result_tour); $rowcid++) {
+												$cod_estilo = pg_result($result_tour, $rowcid, 'cod_estilo');
+												$pk_estilo = pg_result($result_tour, $rowcid, 'pk_estilo_htl');
+												$estilos = ['', 'Ecologico', 'Familia', 'Praia', 'Resort', 'Lua de mel', 'Safari', 'Cruzeiros', 'Tudo incluido', 'Gastronomia', 'Aventura', 'Cultural'];
+												$estilo_text = $estilos[$cod_estilo] ?? '';
+												echo '<div class="list-group-item d-flex justify-content-between align-items-center">
+													<span>' . htmlspecialchars($estilo_text) . '</span>
+													<a href="#" class="pkestilohtl btn btn-sm btn-danger">
+														<input type="hidden" class="pkestilohtlvalue" value="' . $pk_estilo . '">X
+													</a>
+												</div>';
+											}
+										}
+										?>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="col-md-8">
+							<div class="card">
+								<div class="card-header">
+									<h6 class="mb-0">Most Recommended (Inglês)</h6>
+								</div>
+								<div class="card-body">
+									<textarea class="form-control" name="desc_mostrp_ing" rows="4"><?= htmlspecialchars($desc_mostrp_ing) ?></textarea>
+								</div>
+							</div>
+						</div>
+						<div class="col-md-4">
+							<div class="card">
+								<div class="card-header">
+									<h6 class="mb-0">Flag</h6>
+								</div>
+								<div class="card-body">
+									<div class="form-check">
+										<input class="form-check-input" type="checkbox" name="ativo_mostrp" id="ativo_mostrp" <?= ($ativo_mostrp == 't' ? 'checked' : '') ?>>
+										<label class="form-check-label" for="ativo_mostrp">É Most Recommended</label>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<!-- Passo 10: Facilidades -->
+				<div class="step-content" data-step="10">
+					<h3 class="form-section-title">Facilidades do Hotel e Apartamento</h3>
+					<div class="row g-4">
+						<div class="col-md-6">
+							<div class="card">
+								<div class="card-header bg-success text-white">
+									<h6 class="mb-0">Facilidades do Hotel</h6>
+								</div>
+								<div class="card-body">
+									<div class="list-group list-group-flush mb-3">
+										<?php
+										$query_fachtl1 = "
+											SELECT ci_hotel_facilidade.tpofaccod, tpofacdsc
+											FROM conteudo_internet.ci_hotel_facilidade
+											INNER JOIN conteudo_internet.ci_tipo_facilidade ON ci_hotel_facilidade.tpofaccod = ci_tipo_facilidade.tpofaccod
+											WHERE tipo = 1 AND ativo = true AND mneu_for = '$frncod'
+											ORDER BY ci_hotel_facilidade.tpofaccod ASC
+										";
+										$result_fachtl1 = pg_exec($conn, $query_fachtl1);
+										if ($result_fachtl1 && pg_numrows($result_fachtl1) > 0) {
+											for ($rowfac1 = 0; $rowfac1 < pg_numrows($result_fachtl1); $rowfac1++) {
+												$tpofaccod1 = pg_result($result_fachtl1, $rowfac1, 'tpofaccod');
+												$tpofacdsc1 = pg_result($result_fachtl1, $rowfac1, 'tpofacdsc');
+												echo '<div class="list-group-item d-flex justify-content-between align-items-center">
+													<span>' . htmlspecialchars($tpofacdsc1) . '</span>
+													<a href="javascript:apaga_fac_htl(' . $tpofaccod1 . ');" class="btn btn-sm btn-danger">X</a>
+												</div>';
+											}
+										} else {
+											echo '<div class="list-group-item text-muted">Nenhuma facilidade cadastrada</div>';
+										}
+										?>
+									</div>
+									<div class="d-grid gap-2">
+										<a href="javascript:add_fac_htl();" class="btn btn-success">Adicionar Facilidades</a>
+										<a href="javascript:apaga_fac_htl();" class="btn btn-outline-danger">Excluir Facilidades</a>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="card">
+								<div class="card-header bg-info text-white">
+									<h6 class="mb-0">Facilidades do Apartamento</h6>
+								</div>
+								<div class="card-body">
+									<div class="list-group list-group-flush mb-3">
+										<?php
+										$query_fachtl2 = "
+											SELECT ci_hotel_facilidade.tpofaccod, tpofacdsc
+											FROM conteudo_internet.ci_hotel_facilidade
+											INNER JOIN conteudo_internet.ci_tipo_facilidade ON ci_hotel_facilidade.tpofaccod = ci_tipo_facilidade.tpofaccod
+											WHERE tipo = 2 AND ativo = true AND mneu_for = '$frncod'
+											ORDER BY ci_hotel_facilidade.tpofaccod ASC
+										";
+										$result_fachtl2 = pg_exec($conn, $query_fachtl2);
+										if ($result_fachtl2 && pg_numrows($result_fachtl2) > 0) {
+											for ($rowfac2 = 0; $rowfac2 < pg_numrows($result_fachtl2); $rowfac2++) {
+												$tpofaccod2 = pg_result($result_fachtl2, $rowfac2, 'tpofaccod');
+												$tpofacdsc2 = pg_result($result_fachtl2, $rowfac2, 'tpofacdsc');
+												echo '<div class="list-group-item d-flex justify-content-between align-items-center">
+													<span>' . htmlspecialchars($tpofacdsc2) . '</span>
+													<a href="javascript:apaga_fac_apto(' . $tpofaccod2 . ');" class="btn btn-sm btn-danger">X</a>
+												</div>';
+											}
+										} else {
+											echo '<div class="list-group-item text-muted">Nenhuma facilidade cadastrada</div>';
+										}
+										?>
+									</div>
+									<div class="d-grid gap-2">
+										<a href="javascript:add_fac_apto();" class="btn btn-info">Adicionar Facilidades</a>
+										<a href="javascript:apaga_fac_apto();" class="btn btn-outline-danger">Excluir Facilidades</a>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<!-- Passo 11: Dados Extras -->
+				<div class="step-content" data-step="11">
+					<h3 class="form-section-title">Dados Adicionais</h3>
+					<div class="row g-3">
+						<div class="col-md-4">
+							<label class="form-label">Número de Quartos</label>
+							<input type="text" class="form-control" name="htl_num_quartos" maxlength="10" value="<?= htmlspecialchars($htl_num_quartos) ?>">
+						</div>
+						<div class="col-md-4">
+							<label class="form-label">Slug</label>
+							<input type="text" class="form-control" name="slug" maxlength="255" value="<?= htmlspecialchars($slug) ?>">
+						</div>
+						<div class="col-md-4">
+							<label class="form-label">Price Range</label>
+							<input type="text" class="form-control" name="price_range" maxlength="20" value="<?= htmlspecialchars($price_range) ?>">
+						</div>
+						<div class="col-md-4">
+							<label class="form-label">Short Description PT</label>
+							<textarea class="form-control" name="short_description_pt" rows="3"><?= htmlspecialchars($short_description_pt) ?></textarea>
+						</div>
+						<div class="col-md-4">
+							<label class="form-label">Short Description EN</label>
+							<textarea class="form-control" name="short_description_en" rows="3"><?= htmlspecialchars($short_description_en) ?></textarea>
+						</div>
+						<div class="col-md-4">
+							<label class="form-label">Short Description ES</label>
+							<textarea class="form-control" name="short_description_es" rows="3"><?= htmlspecialchars($short_description_es) ?></textarea>
+						</div>
+						<div class="col-md-4">
+							<label class="form-label">Insight PT</label>
+							<textarea class="form-control" name="insight_pt" rows="3"><?= htmlspecialchars($insight_pt) ?></textarea>
+						</div>
+						<div class="col-md-4">
+							<label class="form-label">Insight EN</label>
+							<textarea class="form-control" name="insight_en" rows="3"><?= htmlspecialchars($insight_en) ?></textarea>
+						</div>
+						<div class="col-md-4">
+							<label class="form-label">Insight ES</label>
+							<textarea class="form-control" name="insight_es" rows="3"><?= htmlspecialchars($insight_es) ?></textarea>
+						</div>
+						<div class="col-md-3">
+							<label class="form-label">City Name</label>
+							<input type="text" class="form-control" name="city_name" maxlength="255" value="<?= htmlspecialchars($city_name) ?>">
+						</div>
+						<div class="col-md-3">
+							<label class="form-label">State</label>
+							<input type="text" class="form-control" name="state" maxlength="50" value="<?= htmlspecialchars($state) ?>">
+						</div>
+						<div class="col-md-3">
+							<label class="form-label">Country</label>
+							<input type="text" class="form-control" name="country" maxlength="50" value="<?= htmlspecialchars($country) ?>">
+						</div>
+						<div class="col-md-3">
+							<label class="form-label">Rating (0-5)</label>
+							<input type="number" class="form-control" name="rating" step="0.1" min="0" max="5" value="<?= htmlspecialchars($rating) ?>">
+						</div>
+						<div class="col-md-3">
+							<label class="form-label">Rating Count</label>
+							<input type="number" class="form-control" name="rating_count" value="<?= htmlspecialchars($rating_count) ?>">
+						</div>
+						<div class="col-md-3">
+							<label class="form-label">Capacity Min</label>
+							<input type="number" class="form-control" name="capacity_min" value="<?= htmlspecialchars($capacity_min) ?>">
+						</div>
+						<div class="col-md-3">
+							<label class="form-label">Capacity Max</label>
+							<input type="number" class="form-control" name="capacity_max" value="<?= htmlspecialchars($capacity_max) ?>">
+						</div>
+						<div class="col-md-3">
+							<label class="form-label">Meeting Rooms Count</label>
+							<input type="number" class="form-control" name="meeting_rooms_count" value="<?= htmlspecialchars($meeting_rooms_count) ?>">
+						</div>
+						<div class="col-md-12">
+							<label class="form-label">Meeting Rooms Detail</label>
+							<textarea class="form-control" name="meeting_rooms_detail" rows="3"><?= htmlspecialchars($meeting_rooms_detail) ?></textarea>
+						</div>
+						<div class="col-md-12">
+							<label class="form-label">Dining Experiences</label>
+							<textarea class="form-control" name="dining_experiences" rows="3"><?= htmlspecialchars($dining_experiences) ?></textarea>
+						</div>
+						<div class="col-md-4">
+							<div class="form-check">
+								<input class="form-check-input" type="checkbox" name="has_convention_center" id="has_convention_center" <?= ($has_convention_center == 't' ? 'checked' : '') ?>>
+								<label class="form-check-label" for="has_convention_center">
+									Has Convention Center
+								</label>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<!-- Navegação do Wizard -->
+				<div class="wizard-actions">
+					<button type="button" class="btn btn-secondary" id="prevBtn">
+						← Anterior
+					</button>
+					<div>
+						<button type="button" class="btn btn-outline-primary me-2" id="saveBtn" onclick="javascript:update_hotel();">
+							💾 Salvar Alterações
+						</button>
+						<button type="button" class="btn btn-primary" id="nextBtn">
+							Próximo →
+						</button>
+					</div>
+				</div>
 			</div>
-		</div>
+		</form>
 
 		<?php if (isset($update_apto)): ?>
-			<div class="row mb-4">
-				<div class="col-12">
-					<div class="alert alert-success">
-						<h5>HOTEL ATUALIZADO COM SUCESSO!</h5>
-					</div>
-				</div>
+			<div class="alert alert-success mt-4">
+				<h5>✓ HOTEL ATUALIZADO COM SUCESSO!</h5>
 			</div>
 		<?php endif; ?>
-
-		<!-- Seção 15: Dados Adicionais e Novos Campos -->
-		<div class="row mb-4">
-			<div class="col-md-12">
-				<div class="card">
-					<div class="card-header">
-						<h6>Dados Adicionais</h6>
-					</div>
-					<div class="card-body">
-						<div class="mb-3">
-							<label class="form-label">Número de Quartos/Capacidade (Ex: 220)</label>
-							<input type="text" class="form-control" name="htl_num_quartos" id="htl_num_quartos" maxlength="10" value="<?= htmlspecialchars($htl_num_quartos) ?>">
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-
-		<div class="row mb-4 g-3">
-			<div class="col-md-4">
-				<div class="card">
-					<div class="card-header">
-						<h6>Slug</h6>
-					</div>
-					<div class="card-body">
-						<input type="text" class="form-control" name="slug" id="slug" maxlength="255" value="<?= htmlspecialchars($slug) ?>">
-					</div>
-				</div>
-			</div>
-			<div class="col-md-4">
-				<div class="card">
-					<div class="card-header">
-						<h6>Short Description PT</h6>
-					</div>
-					<div class="card-body">
-						<textarea class="form-control" name="short_description_pt" id="short_description_pt" rows="2"><?= htmlspecialchars($short_description_pt) ?></textarea>
-					</div>
-				</div>
-			</div>
-			<div class="col-md-4">
-				<div class="card">
-					<div class="card-header">
-						<h6>Short Description EN</h6>
-					</div>
-					<div class="card-body">
-						<textarea class="form-control" name="short_description_en" id="short_description_en" rows="2"><?= htmlspecialchars($short_description_en) ?></textarea>
-					</div>
-				</div>
-			</div>
-			<div class="col-md-4">
-				<div class="card">
-					<div class="card-header">
-						<h6>Short Description ES</h6>
-					</div>
-					<div class="card-body">
-						<textarea class="form-control" name="short_description_es" id="short_description_es" rows="2"><?= htmlspecialchars($short_description_es) ?></textarea>
-					</div>
-				</div>
-			</div>
-		</div>
-
-		<div class="row mb-4 g-3">
-			<div class="col-md-4">
-				<div class="card">
-					<div class="card-header">
-						<h6>Insight PT</h6>
-					</div>
-					<div class="card-body">
-						<textarea class="form-control" name="insight_pt" id="insight_pt" rows="3"><?= htmlspecialchars($insight_pt) ?></textarea>
-					</div>
-				</div>
-			</div>
-			<div class="col-md-4">
-				<div class="card">
-					<div class="card-header">
-						<h6>Insight EN</h6>
-					</div>
-					<div class="card-body">
-						<textarea class="form-control" name="insight_en" id="insight_en" rows="3"><?= htmlspecialchars($insight_en) ?></textarea>
-					</div>
-				</div>
-			</div>
-			<div class="col-md-4">
-				<div class="card">
-					<div class="card-header">
-						<h6>Insight ES</h6>
-					</div>
-					<div class="card-body">
-						<textarea class="form-control" name="insight_es" id="insight_es" rows="3"><?= htmlspecialchars($insight_es) ?></textarea>
-					</div>
-				</div>
-			</div>
-			<div class="col-md-12">
-				<div class="card">
-					<div class="card-header">
-						<h6>Price Range</h6>
-					</div>
-					<div class="card-body">
-						<input type="text" class="form-control" name="price_range" id="price_range" maxlength="20" value="<?= htmlspecialchars($price_range) ?>">
-					</div>
-				</div>
-			</div>
-		</div>
-
-		<div class="row mb-4">
-			<div class="col-md-12">
-				<div class="card">
-					<div class="card-header">
-						<h6>Localização e Capacidade</h6>
-					</div>
-					<div class="card-body">
-						<div class="row g-3">
-							<div class="col-md-3">
-								<label class="form-label">City Name</label>
-								<input type="text" class="form-control" name="city_name" id="city_name" maxlength="255" value="<?= htmlspecialchars($city_name) ?>">
-							</div>
-							<div class="col-md-3">
-								<label class="form-label">State</label>
-								<input type="text" class="form-control" name="state" id="state" maxlength="50" value="<?= htmlspecialchars($state) ?>">
-							</div>
-							<div class="col-md-3">
-								<label class="form-label">Country</label>
-								<input type="text" class="form-control" name="country" id="country" maxlength="50" value="<?= htmlspecialchars($country) ?>">
-							</div>
-							<div class="col-md-3">
-								<label class="form-label">Capacity Min</label>
-								<input type="number" class="form-control" name="capacity_min" id="capacity_min" value="<?= htmlspecialchars($capacity_min) ?>">
-							</div>
-							<div class="col-md-3">
-								<label class="form-label">Capacity Max</label>
-								<input type="number" class="form-control" name="capacity_max" id="capacity_max" value="<?= htmlspecialchars($capacity_max) ?>">
-							</div>
-							<div class="col-md-3">
-								<label class="form-label">Rating (0-5)</label>
-								<input type="number" class="form-control" name="rating" id="rating" step="0.1" min="0" max="5" value="<?= htmlspecialchars($rating) ?>">
-							</div>
-							<div class="col-md-3">
-								<label class="form-label">Rating Count</label>
-								<input type="number" class="form-control" name="rating_count" id="rating_count" value="<?= htmlspecialchars($rating_count) ?>">
-							</div>
-							<div class="col-md-3">
-								<label class="form-label">Has Convention Center</label>
-								<div class="form-check">
-									<input class="form-check-input" type="checkbox" name="has_convention_center" id="has_convention_center" <?= ($has_convention_center == 't' ? 'checked' : '') ?> value="true">
-									<label class="form-check-label">Sim</label>
-								</div>
-							</div>
-						</div>
-						<div class="row g-3 mt-3">
-							<div class="col-md-4">
-								<label class="form-label">Meeting Rooms Count</label>
-								<input type="number" class="form-control" name="meeting_rooms_count" id="meeting_rooms_count" value="<?= htmlspecialchars($meeting_rooms_count) ?>">
-							</div>
-							<div class="col-md-8">
-								<label class="form-label">Meeting Rooms Detail</label>
-								<textarea class="form-control" name="meeting_rooms_detail" id="meeting_rooms_detail" rows="3"><?= htmlspecialchars($meeting_rooms_detail) ?></textarea>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-
-		<div class="row mb-4">
-			<div class="col-md-12">
-				<div class="card">
-					<div class="card-header">
-						<h6>Experiências Culinárias</h6>
-					</div>
-					<div class="card-body">
-						<textarea class="form-control" name="dining_experiences" id="dining_experiences" rows="3"><?= htmlspecialchars($dining_experiences) ?></textarea>
-					</div>
-				</div>
-			</div>
-		</div>
-
-		<div class="row mb-4">
-			<div class="col-12 text-center">
-				<input type="button" class="btn btn-primary btn-lg me-2" name="Go" value="Alterar" onclick="javascript:update_hotel();">
-				<button type="button" class="btn btn-secondary btn-lg me-2" id="saveDraft">Salvar Rascunho</button>
-				<button type="button" class="btn btn-info btn-lg" id="loadDraft">Carregar Rascunho</button>
-			</div>
-		</div>
-	</form>
+	</div>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 <script>
-	// Função para serializar o form
-	function getFormData() {
-		return $('#hotelEditForm').serialize();
-	}
+	(function() {
+		// Encapsular tudo em uma função auto-executável para evitar conflitos
+		'use strict';
 
-	// Salvar rascunho no localStorage (específico para este hotel)
-	$('#saveDraft').click(function() {
-		const formData = $('#hotelEditForm').serialize();
-		const hotelKey = 'hotelDraft_' + <?= json_encode($mneu_for) ?>;
-		localStorage.setItem(hotelKey, formData);
-		alert('Rascunho salvo com sucesso!');
-	});
+		// Wizard State
+		var currentStep = 1;
+		var totalSteps = 11;
 
-	// Carregar rascunho do localStorage
-	$('#loadDraft').click(function() {
-		const hotelKey = 'hotelDraft_' + <?= json_encode($mneu_for) ?>;
-		const savedData = localStorage.getItem(hotelKey);
-		if (savedData) {
-			$('#hotelEditForm')[0].reset();
-			const pairs = savedData.split('&');
-			const checkboxValues = {};
+		// Limpar eventos anteriores se existirem
+		$('#hotelEditForm').off();
+		$('.wizard-step').off();
+		$('#nextBtn').off();
+		$('#prevBtn').off();
+		$('#saveDraft').off();
+		$('#loadDraft').off();
+		$('.language-tab').off();
 
-			pairs.forEach(function(pair) {
-				const [name, value] = pair.split('=');
-				const decodedName = decodeURIComponent(name.replace(/%5B%5D/g, '[]'));
-				const decodedValue = decodeURIComponent(value || '');
+		// Inicialização
+		$(document).ready(function() {
+			updateWizard();
 
-				if (decodedName.endsWith('[]') && $('[name="' + decodedName + '"]').is(':checkbox')) {
-					const baseName = decodedName.replace('[]', '');
-					if (!checkboxValues[baseName]) checkboxValues[baseName] = [];
-					checkboxValues[baseName].push(decodedValue);
-				} else {
-					const $elements = $('[name="' + decodedName + '"]');
-					if ($elements.length === 0) return;
+			// Language tabs
+			$('.language-tab').on('click', function() {
+				var lang = $(this).data('lang');
+				var group = $(this).data('group');
 
-					if ($elements.is(':checkbox')) {
-						const isChecked = (decodedValue === 'on' || $elements.val() === decodedValue);
-						$elements.prop('checked', isChecked);
-					} else if ($elements.is('select')) {
-						$elements.val(decodedValue);
-					} else {
-						$elements.val(decodedValue);
-					}
+				$('.language-tab[data-group="' + group + '"]').removeClass('active');
+				$(this).addClass('active');
+
+				$('.language-content[data-group="' + group + '"]').removeClass('active');
+				$('.language-content[data-lang="' + lang + '"][data-group="' + group + '"]').addClass('active');
+			});
+
+			// Navigation
+			$('#nextBtn').on('click', function() {
+				if (currentStep < totalSteps) {
+					currentStep++;
+					updateWizard();
 				}
 			});
 
-			Object.keys(checkboxValues).forEach(function(baseName) {
-				const values = checkboxValues[baseName];
-				values.forEach(function(val) {
-					$('[name="' + baseName + '[]"][value="' + val + '"]').prop('checked', true);
-				});
+			$('#prevBtn').on('click', function() {
+				if (currentStep > 1) {
+					currentStep--;
+					updateWizard();
+				}
 			});
 
-			$('#hotelEditForm select, #hotelEditForm textarea').trigger('change');
-			alert('Rascunho carregado com sucesso!');
-		} else {
-			alert('Nenhum rascunho encontrado para este hotel.');
-		}
-	});
+			// Click nos steps
+			$('.wizard-step').on('click', function() {
+				var step = parseInt($(this).data('step'));
+				currentStep = step;
+				updateWizard();
+			});
+		});
 
-	// Auto-save a cada 5 minutos
-	setInterval(function() {
-		const formData = $('#hotelEditForm').serialize();
-		const hotelKey = 'hotelDraft_' + <?= json_encode($mneu_for) ?>;
-		localStorage.setItem(hotelKey, formData);
-	}, 300000);
+		function updateWizard() {
+			// Atualizar conteúdo
+			$('.step-content').removeClass('active');
+			$('.step-content[data-step="' + currentStep + '"]').addClass('active');
+
+			// Atualizar steps
+			$('.wizard-step').removeClass('active completed');
+			$('.wizard-step').each(function() {
+				var step = parseInt($(this).data('step'));
+				if (step < currentStep) {
+					$(this).addClass('completed');
+				} else if (step === currentStep) {
+					$(this).addClass('active');
+				}
+			});
+
+			// Atualizar botões
+			$('#prevBtn').prop('disabled', currentStep === 1);
+			if (currentStep === totalSteps) {
+				$('#nextBtn').text('Finalizar ✓');
+			} else {
+				$('#nextBtn').text('Próximo →');
+			}
+
+			// Atualizar progress bar
+			var progress = (currentStep / totalSteps) * 100;
+			$('#progressBar').css('width', progress + '%');
+
+			// Scroll to top
+			$('.wizard-content').animate({
+				scrollTop: 0
+			}, 300);
+		}
+
+		// Salvar rascunho
+		$('#saveDraft').on('click', function() {
+			var formData = $('#hotelEditForm').serialize();
+			var hotelKey = 'hotelDraft_' + <?= json_encode($mneu_for) ?>;
+			localStorage.setItem(hotelKey, formData);
+
+			// Feedback visual
+			var $btn = $(this);
+			$btn.html('<i class="bi bi-check"></i> Salvo!').addClass('btn-success').removeClass('btn-outline-secondary');
+			setTimeout(function() {
+				$btn.html('<i class="bi bi-save"></i> Salvar Rascunho').removeClass('btn-success').addClass('btn-outline-secondary');
+			}, 2000);
+		});
+
+		// Carregar rascunho
+		$('#loadDraft').on('click', function() {
+			var hotelKey = 'hotelDraft_' + <?= json_encode($mneu_for) ?>;
+			var savedData = localStorage.getItem(hotelKey);
+
+			if (savedData) {
+				if (!confirm('Deseja carregar o rascunho salvo? Isso substituirá os dados atuais do formulário.')) {
+					return;
+				}
+
+				$('#hotelEditForm')[0].reset();
+				var pairs = savedData.split('&');
+
+				pairs.forEach(function(pair) {
+					var parts = pair.split('=');
+					var name = decodeURIComponent(parts[0]);
+					var value = decodeURIComponent(parts[1] || '');
+
+					var $elements = $('[name="' + name + '"]');
+					if ($elements.length === 0) return;
+
+					if ($elements.is(':checkbox')) {
+						$elements.prop('checked', value === 'on' || value === $elements.val());
+					} else {
+						$elements.val(value);
+					}
+				});
+
+				// Feedback visual
+				var $btn = $(this);
+				$btn.html('<i class="bi bi-check"></i> Carregado!').addClass('btn-success').removeClass('btn-outline-info');
+				setTimeout(function() {
+					$btn.html('<i class="bi bi-upload"></i> Carregar Rascunho').removeClass('btn-success').addClass('btn-outline-info');
+				}, 2000);
+			} else {
+				alert('Nenhum rascunho encontrado para este hotel.');
+			}
+		});
+
+		// Auto-save a cada 5 minutos
+		var autoSaveInterval = setInterval(function() {
+			var formData = $('#hotelEditForm').serialize();
+			var hotelKey = 'hotelDraft_' + <?= json_encode($mneu_for) ?>;
+			localStorage.setItem(hotelKey, formData);
+			console.log('Auto-save realizado');
+		}, 300000);
+
+		// Limpar interval quando sair da página
+		$(window).on('beforeunload', function() {
+			clearInterval(autoSaveInterval);
+		});
+
+		// Atalhos de teclado
+		$(document).off('keydown.wizard').on('keydown.wizard', function(e) {
+			// Alt + Seta Direita = Próximo
+			if (e.altKey && e.keyCode === 39 && currentStep < totalSteps) {
+				currentStep++;
+				updateWizard();
+				e.preventDefault();
+			}
+			// Alt + Seta Esquerda = Anterior
+			if (e.altKey && e.keyCode === 37 && currentStep > 1) {
+				currentStep--;
+				updateWizard();
+				e.preventDefault();
+			}
+			// Alt + S = Salvar
+			if (e.altKey && e.keyCode === 83) {
+				$('#saveDraft').click();
+				e.preventDefault();
+			}
+		});
+	})();
 </script>

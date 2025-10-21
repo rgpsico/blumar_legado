@@ -321,7 +321,7 @@ function insere_novo_hotel() {
 
 
 
-function altera_hotel() {
+function altera_hotelv2() {
 
 	$.ajax({
 		dataType: "html",
@@ -474,7 +474,7 @@ function insere_fac() {
 
 function update_hotel() {
 
-
+	var formData = $('#hotelEditForm').serialize();
 
 	if ($("#flaghtl").is(":checked")) {
 		var flaghtl = "true";
@@ -601,136 +601,143 @@ function update_hotel() {
 
 
 
-
-
-
-
 	$.ajax({
-		dataType: "html",
 		url: "hotelv2/update_hotel.php",
 		type: 'POST',
-		data: {
-			frncod: $("#frncod").val(),
-			mneu_for: $("#mneu_for").val(),
-			//nome_htl: $("#nome_htl").val(),
-			//estrelas_htl: $("#estrelas_htl").val(),
-			//cidade_htl: $("#cidade_htl").val(),
-			//htlendrua: $("#htlendrua").val(),
-			htldsc: $("#htldsc").val(),
-			htldscing: $("#htldscing").val(),
-			htldscesp: $("#htldscesp").val(),
-			descesp_grpfit: $("#descesp_grpfit").val(),
-			regime_hotel_pt: $("#regime_hotel_pt").val(),
-			regime_hotel_en: $("#regime_hotel_en").val(),
-			regime_hotel: $("#regime_hotel").val(),
-			rec_entret_pt: $("#rec_entret_pt").val(),
-			rec_entret_en: $("#rec_entret_en").val(),
-			rec_entret: $("#rec_entret").val(),
-			otras_ativ_pt: $("#otras_ativ_pt").val(),
-			otras_ativ_en: $("#otras_ativ_en").val(),
-			otras_ativ: $("#otras_ativ").val(),
-			alojamiento_pt: $("#alojamiento_pt").val(),
-			alojamiento_en: $("#alojamiento_en").val(),
-			alojamiento: $("#alojamiento").val(),
-			gastronomia_pt: $("#gastronomia_pt").val(),
-			gastronomia_en: $("#gastronomia_en").val(),
-			gastronomia: $("#gastronomia").val(),
-			servicios_pt: $("#servicios_pt").val(),
-			servicios_en: $("#servicios_en").val(),
-			servicios: $("#servicios").val(),
-			convenciones_pt: $("#convenciones_pt").val(),
-			convenciones_en: $("#convenciones_en").val(),
-			convenciones: $("#convenciones").val(),
-			campo_extra_pt: $("#campo_extra_pt").val(),
-			campo_extra_en: $("#campo_extra_en").val(),
-			campo_extra: $("#campo_extra").val(),
-			complemento: $("#complemento").val(),
-			hotel_cham: $("#hotel_cham").val(),
-			htlimgfotofachada: $("#htlimgfotofachada").val(),
-			fotofachada_tbn: $("#fotofachada_tbn").val(),
-			htlfotopiscina: $("#htlfotopiscina").val(),
-			fotoextra: $("#fotoextra").val(),
-			fotoextra_recep: $("#fotoextra_recep").val(),
-			ft_resort1: $("#ft_resort1").val(),
-			ft_resort2: $("#ft_resort2").val(),
-			ft_resort3: $("#ft_resort3").val(),
-			htlurl: $("#htlurl").val(),
-			htlimgmapa: $("#htlimgmapa").val(),
-			map_eco: $("#map_eco").val(),
-			url_htl_360: $("#url_htl_360").val(),
-			arq_htl_360: $("#arq_htl_360").val(),
-			url_video: $("#url_video").val(),
-			arq_video: $("#arq_video").val(),
-			virtual_tour: $("#virtual_tour").val(),
-			htlobs: $("#htlobs").val(),
-			htlobsing: $("#htlobsing").val(),
-			htlobsesp: $("#htlobsesp").val(),
-			historico_temp: $("#historico_temp").val(),
-			htlestrelablumar: $("#htlestrelablumar").val(),
-			classif_eco: $("#classif_eco").val(),
-			desc_mostrp_ing: $("#desc_mostrp_ing").val(),
-			flaghtl: flaghtl,
-			flaglatino: flaglatino,
-			flat: flat,
-			resort: resort,
-			ecologico: ecologico,
-			flagfotopiscina: flagfotopiscina,
-			bestdeal: bestdeal,
-			ativo_bnuts: ativo_bnuts,
-			flaghtlimgmapa: flaghtlimgmapa,
-			luxury: luxury,
-			novo: novo,
-			favoritos: favoritos,
-			pg6fq7: pg6fq7,
-			pg4fq5: pg4fq5,
-			chdgratis: chdgratis,
-			blumarrecomenda: blumarrecomenda,
-			blumarreveillon: blumarreveillon,
-			allinclusive: allinclusive,
-			ativo_mostrp: ativo_mostrp,
-			covid_19_pt_url: $("#covid_19_pt_url").val(),
-			htl_num_quartos: $("#htl_num_quartos").val(),
-			slug: $("#slug").val(),
-			short_description_pt: $("#short_description_pt").val(),
-			short_description_en: $("#short_description_en").val(),
-			short_description_es: $("#short_description_es").val(),
-			insight_pt: $("#insight_pt").val(),
-			insight_en: $("#insight_en").val(),
-			insight_es: $("#insight_es").val(),
-			price_range: $("#price_range").val(),
-			capacity_min: $("#capacity_min").val(),
-			capacity_max: $("#capacity_max").val(),
-			city_name: $("#city_name").val(),
-			state: $("#state").val(),
-			country: $("#country").val(),
-			rating: $("#rating").val(),
-			rating_count: $("#rating_count").val(),
-			gallery_images: $("#gallery_images").val(),
-			blueprint_image: $("#blueprint_image").val(),
-			room_categories: $("#room_categories").val(),
-			dining_experiences: $("#dining_experiences").val(),
-			meeting_rooms_count: $("#meeting_rooms_count").val(),
-			meeting_rooms_detail: $("#meeting_rooms_detail").val(),
-			has_convention_center: has_convention_center,
-			url_360_halls: $("#url_360_halls").val(),
-			latitude: $("#latitude").val(),
-			longitude: $("#longitude").val(),
-			map_iframe_url: $("#map_iframe_url").val()
-
-
-		},
-
-		error: function () {
-			alert("Error when inserting City content!");
-		},
-
+		data: formData, // Envia TODOS os campos
 		success: function (resposta) {
 			$("#container_miolo").html(resposta);
-
 		}
-
-
 	});
+
+
+
+	// $.ajax({
+	// 	dataType: "html",
+	// 	url: "hotelv2/update_hotel.php",
+	// 	type: 'POST',
+	// 	data: {
+	// 		frncod: $("#frncod").val(),
+	// 		mneu_for: $("#mneu_for").val(),
+	// 		//nome_htl: $("#nome_htl").val(),
+	// 		//estrelas_htl: $("#estrelas_htl").val(),
+	// 		//cidade_htl: $("#cidade_htl").val(),
+	// 		//htlendrua: $("#htlendrua").val(),
+	// 		htldsc: $("#htldsc").val(),
+	// 		htldscing: $("#htldscing").val(),
+	// 		htldscesp: $("#htldscesp").val(),
+	// 		descesp_grpfit: $("#descesp_grpfit").val(),
+	// 		regime_hotel_pt: $("#regime_hotel_pt").val(),
+	// 		regime_hotel_en: $("#regime_hotel_en").val(),
+	// 		regime_hotel: $("#regime_hotel").val(),
+	// 		rec_entret_pt: $("#rec_entret_pt").val(),
+	// 		rec_entret_en: $("#rec_entret_en").val(),
+	// 		rec_entret: $("#rec_entret").val(),
+	// 		otras_ativ_pt: $("#otras_ativ_pt").val(),
+	// 		otras_ativ_en: $("#otras_ativ_en").val(),
+	// 		otras_ativ: $("#otras_ativ").val(),
+	// 		alojamiento_pt: $("#alojamiento_pt").val(),
+	// 		alojamiento_en: $("#alojamiento_en").val(),
+	// 		alojamiento: $("#alojamiento").val(),
+	// 		gastronomia_pt: $("#gastronomia_pt").val(),
+	// 		gastronomia_en: $("#gastronomia_en").val(),
+	// 		gastronomia: $("#gastronomia").val(),
+	// 		servicios_pt: $("#servicios_pt").val(),
+	// 		servicios_en: $("#servicios_en").val(),
+	// 		servicios: $("#servicios").val(),
+	// 		convenciones_pt: $("#convenciones_pt").val(),
+	// 		convenciones_en: $("#convenciones_en").val(),
+	// 		convenciones: $("#convenciones").val(),
+	// 		campo_extra_pt: $("#campo_extra_pt").val(),
+	// 		campo_extra_en: $("#campo_extra_en").val(),
+	// 		campo_extra: $("#campo_extra").val(),
+	// 		complemento: $("#complemento").val(),
+	// 		hotel_cham: $("#hotel_cham").val(),
+	// 		htlimgfotofachada: $("#htlimgfotofachada").val(),
+	// 		fotofachada_tbn: $("#fotofachada_tbn").val(),
+	// 		htlfotopiscina: $("#htlfotopiscina").val(),
+	// 		fotoextra: $("#fotoextra").val(),
+	// 		fotoextra_recep: $("#fotoextra_recep").val(),
+	// 		ft_resort1: $("#ft_resort1").val(),
+	// 		ft_resort2: $("#ft_resort2").val(),
+	// 		ft_resort3: $("#ft_resort3").val(),
+	// 		htlurl: $("#htlurl").val(),
+	// 		htlimgmapa: $("#htlimgmapa").val(),
+	// 		map_eco: $("#map_eco").val(),
+	// 		url_htl_360: $("#url_htl_360").val(),
+	// 		arq_htl_360: $("#arq_htl_360").val(),
+	// 		url_video: $("#url_video").val(),
+	// 		arq_video: $("#arq_video").val(),
+	// 		virtual_tour: $("#virtual_tour").val(),
+	// 		htlobs: $("#htlobs").val(),
+	// 		htlobsing: $("#htlobsing").val(),
+	// 		htlobsesp: $("#htlobsesp").val(),
+	// 		historico_temp: $("#historico_temp").val(),
+	// 		htlestrelablumar: $("#htlestrelablumar").val(),
+	// 		classif_eco: $("#classif_eco").val(),
+	// 		desc_mostrp_ing: $("#desc_mostrp_ing").val(),
+	// 		flaghtl: flaghtl,
+	// 		flaglatino: flaglatino,
+	// 		flat: flat,
+	// 		resort: resort,
+	// 		ecologico: ecologico,
+	// 		flagfotopiscina: flagfotopiscina,
+	// 		bestdeal: bestdeal,
+	// 		ativo_bnuts: ativo_bnuts,
+	// 		flaghtlimgmapa: flaghtlimgmapa,
+	// 		luxury: luxury,
+	// 		novo: novo,
+	// 		favoritos: favoritos,
+	// 		pg6fq7: pg6fq7,
+	// 		pg4fq5: pg4fq5,
+	// 		chdgratis: chdgratis,
+	// 		blumarrecomenda: blumarrecomenda,
+	// 		blumarreveillon: blumarreveillon,
+	// 		allinclusive: allinclusive,
+	// 		ativo_mostrp: ativo_mostrp,
+	// 		covid_19_pt_url: $("#covid_19_pt_url").val(),
+	// 		htl_num_quartos: $("#htl_num_quartos").val(),
+	// 		slug: $("#slug").val(),
+	// 		short_description_pt: $("#short_description_pt").val(),
+	// 		short_description_en: $("#short_description_en").val(),
+	// 		short_description_es: $("#short_description_es").val(),
+	// 		insight_pt: $("#insight_pt").val(),
+	// 		insight_en: $("#insight_en").val(),
+	// 		insight_es: $("#insight_es").val(),
+	// 		price_range: $("#price_range").val(),
+	// 		capacity_min: $("#capacity_min").val(),
+	// 		capacity_max: $("#capacity_max").val(),
+	// 		city_name: $("#city_name").val(),
+	// 		state: $("#state").val(),
+	// 		country: $("#country").val(),
+	// 		rating: $("#rating").val(),
+	// 		rating_count: $("#rating_count").val(),
+	// 		gallery_images: $("#gallery_images").val(),
+	// 		blueprint_image: $("#blueprint_image").val(),
+	// 		room_categories: $("#room_categories").val(),
+	// 		dining_experiences: $("#dining_experiences").val(),
+	// 		meeting_rooms_count: $("#meeting_rooms_count").val(),
+	// 		meeting_rooms_detail: $("#meeting_rooms_detail").val(),
+	// 		has_convention_center: has_convention_center,
+	// 		url_360_halls: $("#url_360_halls").val(),
+	// 		latitude: $("#latitude").val(),
+	// 		longitude: $("#longitude").val(),
+	// 		map_iframe_url: $("#map_iframe_url").val()
+
+
+	// 	},
+
+	// 	error: function () {
+	// 		alert("Error when inserting City content!");
+	// 	},
+
+	// 	success: function (resposta) {
+	// 		$("#container_miolo").html(resposta);
+
+	// 	}
+
+
+	// });
 
 }
 
