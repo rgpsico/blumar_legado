@@ -46,12 +46,7 @@ function insere_novo_postv2() {
 
 
 
-    if ($("#ativo").is(":checked")) {
-        var ativo = "true";
-    } else {
-        var ativo = "false";
-    }
-
+    let ativo = $("#ativo").is(":checked") ? "true" : "false";
 
 
     $.ajax({

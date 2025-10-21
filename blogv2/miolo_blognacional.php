@@ -56,8 +56,8 @@ $result_posts = pg_exec($conn, $sql_posts);
           echo '<td>' . ($row['data_post'] ?? '-') . '</td>';
           echo '<td>' . ($row['ativo'] === 't' ? '✅' : '❌') . '</td>';
           echo '<td>
-                  <button class="btn btn-primary btn-sm" onclick="editarPost(' . $row['pk_blognacional'] . ')">Editar</button>
-                  <button class="btn btn-danger btn-sm" onclick="excluirPost(' . $row['pk_blognacional'] . ')">Excluir</button>
+                  <button class="btn btn-primary btn-sm" onclick="editarPostv2(' . $row['pk_blognacional'] . ')">Editar</button>
+                  <button class="btn btn-danger btn-sm" onclick="excluirPostv2(' . $row['pk_blognacional'] . ')">Excluir</button>
                 </td>';
           echo '</tr>';
         }
@@ -81,10 +81,10 @@ $result_posts = pg_exec($conn, $sql_posts);
 </div>
 
 <script>
-  function editarPost(id) {
+  function editarPostv2(id) {
     // envia o ID via POST para carregar o formulário de edição
     $.ajax({
-      url: "blog/form_altera_post.php",
+      url: "blogv2/form_altera_post.php",
       type: "POST",
       data: {
         pk_blognacional: id
@@ -98,10 +98,10 @@ $result_posts = pg_exec($conn, $sql_posts);
     });
   }
 
-  function excluirPost(id) {
+  function excluirPostv2(id) {
     if (confirm("Tem certeza que deseja excluir este post?")) {
       $.ajax({
-        url: "blog/excluir_post.php",
+        url: "blogv2/excluir_post.php",
         type: "POST",
         data: {
           pk_blognacional: id
@@ -118,7 +118,7 @@ $result_posts = pg_exec($conn, $sql_posts);
 
   function carregarPagina(pagina) {
     $.ajax({
-      url: "blog/miolo_blognacional.php",
+      url: "blogv2/miolo_blognacional.php",
       type: "GET",
       data: {
         pagina: pagina

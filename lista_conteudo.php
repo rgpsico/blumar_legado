@@ -745,18 +745,18 @@ if (isset($_SESSION['conteudo'])) {
 
 		<script type="text/javascript">
 			// Função para salvar estado
+			let userSession = "<?php echo isset($_SESSION['pk_acesso']) ? $_SESSION['pk_acesso'] : ''; ?>";
+
 			function saveState(section) {
 				localStorage.setItem("currentSection", section);
-				localStorage.setItem("userSession", "' . $_SESSION["
-					pk_acesso "] . '"); // Para validar sessão
+				localStorage.setItem("userSession", userSession); // Para validar sessão
 			}
 
 			// No load da página, restaura o estado salvo (se válido)
 			$(document).ready(function() {
 				var savedSection = localStorage.getItem("currentSection");
 				var savedSession = localStorage.getItem("userSession");
-				if (savedSection && savedSession === "' . $_SESSION["
-					pk_acesso "] . '") {
+				if (savedSection && savedSession === $_SESSION["pk_acesso "]) {
 					// Chama a função correspondente para recarregar
 					switch (savedSection) {
 						case "cidade":
