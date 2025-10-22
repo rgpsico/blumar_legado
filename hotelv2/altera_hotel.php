@@ -435,7 +435,7 @@ if (!empty($ultimo_update)) {
 
 		<form id="hotelEditForm">
 			<input type="hidden" name="mneu_for" id="mneu_for" value="<?= htmlspecialchars($mneu_for) ?>">
-			<input type="text" name="frncod" id="frncod" value="<?= htmlspecialchars($frncod) ?>">
+			<input type="hidden" name="frncod" id="frncod" value="<?= htmlspecialchars($frncod) ?>">
 
 			<div class="wizard-content">
 				<!-- Passo 1: Descrições -->

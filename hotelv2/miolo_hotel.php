@@ -1,277 +1,153 @@
- <?php
+<?php
+session_start();
+require_once '../util/connection.php';
 
-	if (session_id() == '') {
-		session_start();
-	}
+// ================================
+// CONSULTAS INICIAIS
+// ================================
 
-	require_once '../util/connection.php';
-
-	echo '<b>ADMINISTRA&Ccedil;&Atilde;O DE CONTEUDO DE HOTEIS</b><br><br>';
-
-
-
-	$hoteis_pendentes = "select nome_for, mneu_for
-			from sbd95.fornec 
-			where 
-			categ = 'Hotel' 
-			and status = 'true'
-			and sbd95.fornec.mneu_for not in (select mneu_for from conteudo_internet.ci_hotel)
-			order by nome_for";
-	$result_hoteis_pendentes = pg_exec($conn, $hoteis_pendentes);
-	$lista_pendentes = "";
-	for ($htl = 0; $htl < pg_numrows($result_hoteis_pendentes); $htl++) {
-		$nome_for = pg_result($result_hoteis_pendentes, $htl, 'nome_for');
-		$mneu_for = pg_result($result_hoteis_pendentes, $htl, 'mneu_for');
-
-		$lista_pendentes = $lista_pendentes . ' <option value="' . $mneu_for . '" >' . $nome_for . '</option>';
-	}
-
-
-
-
-
-
-
-
-
-
-	/*    inicio da area de edição de conteudo   */
-	if ($_SESSION['consulta'] != 't') {
-		//
-		echo '	    
-			    Inserir novo Hotel <br>
-			    <select name="mneu_for" id="mneu_for"    onChange="javascript:novo_hotelv2();"> 
-			    <option value="0" selected>Escolha um hotel para cadastrar</option>
-			    ' . $lista_pendentes . '
-			    </select>
-			    
-			    <br><br>
-			    <form name="frmcities" method="post" action="##"  >
-			    <br>Altera&ccedil;&atilde;o de Hoteis<br>
-			    <select name="frncod" id="frncod"    onChange="javascript:altera_hotelv2();"> 
-			    <option value="0" selected>Escolha um hotel para alterar</option>
-		     ';
-
-
-
-		$query_htl =
-			"
-		    SELECT
-		        conteudo_internet.ci_hotel.nome_htl,
-				conteudo_internet.ci_hotel.frncod,
-			    sbd95.fornec.nome_for,
-			    sbd95.fornec.mneu_for
-			FROM
-				conteudo_internet.ci_hotel
-			left outer JOIN 
-			    sbd95.fornec 
-			ON 
-			    ci_hotel.mneu_for = sbd95.fornec.mneu_for
-			order by nome_for    
-		     ";
-
-		$result_htl = pg_exec($conn, $query_htl);
-		if ($result_htl) {
-			for ($rowhtl = 0; $rowhtl < pg_numrows($result_htl); $rowhtl++) {
-
-				$nome_htl = pg_result($result_htl, $rowhtl, 'nome_htl');
-				$frncod = pg_result($result_htl, $rowhtl, 'frncod');
-				$nome_for = pg_result($result_htl, $rowhtl, 'nome_for');
-
-				echo '<option value="' . $frncod . '">';
-				if (strlen($nome_for) != '0') {
-					echo 	$nome_for;
-				} else {
-					echo  $nome_htl;
-				}
-
-				echo '</option> ';
-			}
-		}
-		echo '</select>
-		   <br> 
-		   <br>Alteração de Hoteis por cidades<br>
-		   <select name="frncod2" id="frncod2"  onChange="javascript:altera_hotel2();">
-		   <option value="0" selected>--------------------</option>
-		   ';
-
-
-
-		echo $query_cid_htl =
-			"
-		select
-			trim(upper(tarifario.cidade_tpo.nome_en)) as nome_cidade,
-			tarifario.cidade_tpo.tpocidcod,
-			sbd95.cidades.nome_cid,
-			sbd95.cidades.cid
-		from sbd95.cidades
-			inner join tarifario.cidade_tpo on sbd95.cidades.nome_cid = trim(upper(tarifario.cidade_tpo.nome_en))
-		order by nome_en
-	";
-
-		$result_cid_htl = pg_exec($conn, $query_cid_htl);
-		if ($result_cid_htl) {
-			for ($rowcidhtl = 0; $rowcidhtl < pg_numrows($result_cid_htl); $rowcidhtl++) {
-
-				$nome_cidade = pg_result($result_cid_htl, $rowcidhtl, 'nome_cidade');
-				$cid = pg_result($result_cid_htl, $rowcidhtl, 'cid');
-
-				echo '
-		   <option value=" "  > </option> 
-		   <option value=" "    >' . $nome_cidade . '</option>
-		   <option value=" "  >--------------------------------------- </option> 
-		   ';
-
-				$query_cid_hoteis =
-					"
-			   
-			   
-			      SELECT
-				        conteudo_internet.ci_hotel.nome_htl,
-						conteudo_internet.ci_hotel.frncod,
-					    sbd95.fornec.nome_for
-					FROM
-						conteudo_internet.ci_hotel
-					left outer JOIN 
-					    sbd95.fornec 
-					ON 
-					    ci_hotel.mneu_for = sbd95.fornec.mneu_for
-				where categ = 'Hotel' and status = 'true' and cid = '$cid' 
-				   ORDER BY nome_for ASC   
-				 
-			
-			   ";
-
-				$result_cid_hoteis = pg_exec($conn, $query_cid_hoteis);
-				if ($result_cid_hoteis) {
-					for ($rowcidhtls = 0; $rowcidhtls < pg_numrows($result_cid_hoteis); $rowcidhtls++) {
-
-						$frncod = pg_result($result_cid_hoteis, $rowcidhtls, 'frncod');
-						$nome_for = pg_result($result_cid_hoteis, $rowcidhtls, 'nome_for');
-						$nome_htl = pg_result($result_cid_hoteis, $rowcidhtls, 'nome_htl');
-
-						echo '<option value="' . $frncod . '">';
-						if (strlen($nome_for) != '0') {
-							echo 	$nome_for;
-						} else {
-							echo  $nome_htl;
-						}
-
-						echo '</option> ';
-					}
-				}
-			}
-		}
-
-
-
-		echo '
-			</select>
-			<br><br>
-			<a href="##"  onclick="javascript:cadastro_fac();">Cadastro de facilidades >></a>
-			';
-	}
-	/*    fim da area de edição de conteudo   */
-
-
-
-
-
-	echo '<br>
-<br>
-<b>PARA CONSULTA</b>
-<br>
-
-Listagem de Cadastrados (em inglês)<br>  
-  <select name="cidcod" id="cidcod"  onChange="javascript:listagem_htl_ingles();">
-   <option value="0" selected>--------------------</option>';
-
-
-	$query_cid_ing =
-		"
-			select
-				trim(upper(tarifario.cidade_tpo.nome_en)) as nome_cidade,
-				tarifario.cidade_tpo.tpocidcod,
-				sbd95.cidades.nome_cid,
-				sbd95.cidades.cid
-			from sbd95.cidades
-				inner join tarifario.cidade_tpo on sbd95.cidades.nome_cid = trim(upper(tarifario.cidade_tpo.nome_en))
-			order by nome_en
-		";
-
-	$result_cid_ing = pg_exec($conn, $query_cid_ing);
-	if ($result_cid_ing) {
-		for ($rowciding = 0; $rowciding < pg_numrows($result_cid_ing); $rowciding++) {
-
-			$nome_cidade = pg_result($result_cid_ing, $rowciding, 'nome_cidade');
-			$cid = pg_result($result_cid_ing, $rowciding, 'cid');
-
-			echo ' <option value="' . $cid . '" >' . $nome_cidade . '</option> ';
-		}
-	}
-
-
-	echo '</select> 
-
-<br><br><b>RELATORIOS</b><br>
-<a href="hotel/relatorio-hoteis-nacional.php"   >- Listagem de hoteis  <b>NACIONAL</b> >></a><br> 
-<a href="##"  onclick="javascript:listagem_selo_new();">- Listagem de hoteis com selo <b>"NEW"</b> >></a><br>
-<a href="##"  onclick="javascript:listagem_selo_unique();">- Listagem de hoteis com selo <b>"UNIQUE"</b> >></a><br>
-<a href="##"  onclick="javascript:listagem_selo_luxury();">- Listagem de hoteis com selo <b>"Eco Friendly"</b> >></a><br>   		
-<a href="##"  onclick="javascript:listagem_selo_favoritos();">- Listagem de hoteis com selo <b>"FAVORITO"</b> >></a><br>  		
-<a href="##"  onclick="javascript:listagem_health_safe();">- Listagem de hoteis com formulário <b>"HEALTH & SAFE"</b> >></a><br>  		
-<a href="##"  onclick="javascript:listagem_shealth_safe();">- Listagem de hoteis do tarifario 172 sem formulário <b>"HEALTH & SAFE"</b> >></a><br>  		   		
-   		
-   		
-   		
-<br>Template de Hoteis<br>
-<select name="consultahotel" id="consultahotel"    onChange="javascript:consulta_hotelv2();">
-<option value="0" selected>Escolha um hotel para ver o template</option>
-';
-
-
-
-	$query_htl =
-		"
-SELECT
-conteudo_internet.ci_hotel.nome_htl,
-conteudo_internet.ci_hotel.frncod,
-sbd95.fornec.nome_for,
-sbd95.fornec.mneu_for
-FROM
-conteudo_internet.ci_hotel
-left outer JOIN
-sbd95.fornec
-ON
-ci_hotel.mneu_for = sbd95.fornec.mneu_for
-order by nome_for
+// Hotéis pendentes
+$sqlPendentes = "
+    SELECT nome_for, mneu_for
+    FROM sbd95.fornec
+    WHERE categ = 'Hotel'
+      AND status = 'true'
+      AND mneu_for NOT IN (SELECT mneu_for FROM conteudo_internet.ci_hotel)
+    ORDER BY nome_for
 ";
+$pendentes = pg_query($conn, $sqlPendentes);
 
-	$result_htl = pg_exec($conn, $query_htl);
-	if ($result_htl) {
-		for ($rowhtl = 0; $rowhtl < pg_numrows($result_htl); $rowhtl++) {
+// Hotéis cadastrados
+$sqlHoteis = "
+    SELECT h.nome_htl, h.frncod, f.nome_for, f.mneu_for
+    FROM conteudo_internet.ci_hotel h
+    LEFT JOIN sbd95.fornec f ON h.mneu_for = f.mneu_for
+    ORDER BY f.nome_for
+";
+$hoteis = pg_query($conn, $sqlHoteis);
 
-			$nome_htl = pg_result($result_htl, $rowhtl, 'nome_htl');
-			$frncod = pg_result($result_htl, $rowhtl, 'frncod');
-			$nome_for = pg_result($result_htl, $rowhtl, 'nome_for');
-			$mneu_for = pg_result($result_htl, $rowhtl, 'mneu_for');
-			echo '<option value="' . $mneu_for . '">';
-			if (strlen($nome_for) != '0') {
-				echo 	$nome_for;
-			} else {
-				echo  $nome_htl;
-			}
+// Cidades
+$sqlCidades = "
+    SELECT TRIM(UPPER(t.nome_en)) AS nome_cidade, c.cid
+    FROM sbd95.cidades c
+    INNER JOIN tarifario.cidade_tpo t ON c.nome_cid = TRIM(UPPER(t.nome_en))
+    ORDER BY t.nome_en
+";
+$cidades = pg_query($conn, $sqlCidades);
+?>
 
-			echo '</option> ';
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+	<meta charset="utf-8">
+	<title>Administração de Hotéis</title>
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+	<style>
+		body {
+			background: #f9f9f9;
+			padding: 30px;
 		}
-	}
-	echo '</select>
-<br>
- 
 
-';
+		.card {
+			margin-bottom: 20px;
+		}
 
+		.select-large {
+			width: 100%;
+			max-width: 500px;
+		}
+	</style>
+</head>
 
+<body>
 
-	?>
- <br><br>
+	<div class="container">
+		<h2 class="mb-4 text-primary fw-bold">Administração de Conteúdo de Hotéis</h2>
+
+		<ul class="nav nav-tabs" id="hotelTabs" role="tablist">
+			<li class="nav-item" role="presentation">
+				<button class="nav-link active" id="cadastro-tab" data-bs-toggle="tab" data-bs-target="#cadastro" type="button" role="tab">Novo Hotel</button>
+			</li>
+			<li class="nav-item" role="presentation">
+				<button class="nav-link" id="alteracao-tab" data-bs-toggle="tab" data-bs-target="#alteracao" type="button" role="tab">Alterar Hotel</button>
+			</li>
+			<li class="nav-item" role="presentation">
+				<button class="nav-link" id="consulta-tab" data-bs-toggle="tab" data-bs-target="#consulta" type="button" role="tab">Consultas e Relatórios</button>
+			</li>
+		</ul>
+
+		<div class="tab-content mt-3" id="hotelTabsContent">
+			<!-- ===================== NOVO HOTEL ===================== -->
+			<div class="tab-pane fade show active" id="cadastro" role="tabpanel">
+				<div class="card p-3 shadow-sm">
+					<h5>Inserir novo hotel</h5>
+					<select class="form-select select-large mt-2" id="mneu_for" onchange="novo_hotelv2()">
+						<option value="0" selected>Escolha um hotel para cadastrar</option>
+						<?php while ($row = pg_fetch_assoc($pendentes)): ?>
+							<option value="<?= htmlspecialchars($row['mneu_for']) ?>">
+								<?= htmlspecialchars($row['nome_for']) ?>
+							</option>
+						<?php endwhile; ?>
+					</select>
+				</div>
+			</div>
+
+			<!-- ===================== ALTERAÇÃO ===================== -->
+			<div class="tab-pane fade" id="alteracao" role="tabpanel">
+				<div class="card p-3 shadow-sm">
+					<h5>Alterar hotel existente</h5>
+					<select class="form-select select-large mt-2" id="frncod" onchange="altera_hotelv2()">
+						<option value="0" selected>Escolha um hotel para alterar</option>
+						<?php while ($row = pg_fetch_assoc($hoteis)): ?>
+							<option value="<?= htmlspecialchars($row['frncod']) ?>">
+								<?= htmlspecialchars($row['nome_for'] ?: $row['nome_htl']) ?>
+							</option>
+						<?php endwhile; ?>
+					</select>
+				</div>
+
+				<div class="card p-3 shadow-sm">
+					<h5>Alterar hotéis por cidade</h5>
+					<select class="form-select select-large mt-2" id="frncod2" onchange="altera_hotel2()">
+						<option value="0" selected>Selecione uma cidade</option>
+						<?php while ($row = pg_fetch_assoc($cidades)): ?>
+							<option value="<?= htmlspecialchars($row['cid']) ?>"><?= htmlspecialchars($row['nome_cidade']) ?></option>
+						<?php endwhile; ?>
+					</select>
+				</div>
+			</div>
+
+			<!-- ===================== CONSULTAS ===================== -->
+			<div class="tab-pane fade" id="consulta" role="tabpanel">
+				<div class="card p-3 shadow-sm">
+					<h5>Listagem de Hotéis por Cidade</h5>
+					<select class="form-select select-large mt-2" id="cidcod" onchange="listagem_htl_ingles()">
+						<option value="0" selected>Selecione uma cidade</option>
+						<?php
+						pg_result_seek($cidades, 0);
+						while ($row = pg_fetch_assoc($cidades)): ?>
+							<option value="<?= htmlspecialchars($row['cid']) ?>"><?= htmlspecialchars($row['nome_cidade']) ?></option>
+						<?php endwhile; ?>
+					</select>
+				</div>
+
+				<div class="card p-3 shadow-sm">
+					<h5>Relatórios Rápidos</h5>
+					<ul>
+						<li><a href="hotel/relatorio-hoteis-nacional.php">Listagem Nacional</a></li>
+						<li><a href="#" onclick="listagem_selo_new()">Hotéis com selo <b>NEW</b></a></li>
+						<li><a href="#" onclick="listagem_selo_unique()">Hotéis com selo <b>UNIQUE</b></a></li>
+						<li><a href="#" onclick="listagem_selo_luxury()">Hotéis <b>Eco Friendly</b></a></li>
+						<li><a href="#" onclick="listagem_selo_favoritos()">Hotéis <b>Favoritos</b></a></li>
+						<li><a href="#" onclick="listagem_health_safe()">Formulário <b>Health & Safe</b></a></li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>
