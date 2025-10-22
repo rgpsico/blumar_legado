@@ -12,13 +12,28 @@ require_once '../util/connection.php';
 $frncod = pg_escape_string($_POST["frncod"] ?? '');
 $_SESSION['frncod'] = $frncod;
 
+// Verifica se o valor é numérico e não vazio
+if (empty($frncod) || !is_numeric($frncod)) {
+	echo '<div class="alert alert-warning">Código do hotel inválido ou não informado.</div>';
+	exit;
+}
+
 $query_htl = "
     SELECT *
     FROM conteudo_internet.ci_hotel
-    WHERE frncod = $frncod
+    WHERE frncod = $1
 ";
 
-$result_htl = pg_exec($conn, $query_htl);
+$result_htl = pg_query_params($conn, $query_htl, [$frncod]);
+
+if (!$result_htl || pg_num_rows($result_htl) === 0) {
+	echo '<div class="alert alert-info">Hotel não encontrado.</div>';
+	exit;
+}
+
+// Se chegou aqui, pode exibir o formulário
+$hotel = pg_fetch_assoc($result_htl);
+
 
 // Initialize variables to empty strings to avoid undefined notices
 $nome_htl = $mneu_for = $htldsc = $htldscing = $htldscesp = $url_htl_360 = $arq_htl_360 = $htlimgfotofachada = $htlestrelablumar = $htlimgmapa = $htlfotopiscina = $flaghtlimgmapa = $flagfotopiscina = $htlurl = $url_video = $arq_video = $htlobs = $htlobsing = $htlobsesp = $htlendrua = $hotel_cham = $flaghtl = $descesp_grpfit = $flaglatino = $flat = $historico_temp = $resort = $regime_hotel = $rec_entret = $otras_ativ = $alojamiento = $gastronomia = $servicios = $convenciones = $campo_extra = $ft_resort1 = $ft_resort2 = $ft_resort3 = $fotoextra = $ecologico = $complemento = $fotoextra_recep = $regime_hotel_pt = $regime_hotel_en = $rec_entret_pt = $rec_entret_en = $otras_ativ_pt = $otras_ativ_en = $alojamiento_pt = $alojamiento_en = $gastronomia_pt = $gastronomia_en = $servicios_pt = $servicios_en = $convenciones_pt = $convenciones_en = $campo_extra_pt = $campo_extra_en = $bestdeal = $favoritos = $luxury = $novo = $desc_mostrp_ing = $ativo_mostrp = $pg6fq7 = $pg4fq5 = $chdgratis = $allinclusive = $blumarrecomenda = $blumarreveillon = $estrelas_htl = $cidade_htl = $fotofachada_tbn = $classif_eco = $map_eco = $virtual_tour = $ativo_bnuts = $covid_19_pt = $covid_19_en = $covid_19_pt_url = $covid_19_en_url = $htl_num_quartos = $slug = $short_description_pt = $short_description_en = $short_description_es = $insight_pt = $insight_en = $insight_es = $price_range = $capacity_min = $capacity_max = $city_name = $state = $country = $rating = $rating_count = $gallery_images = $blueprint_image = $room_categories = $dining_experiences = $meeting_rooms_count = $meeting_rooms_detail = $has_convention_center = $url_360_halls = $latitude = $longitude = $map_iframe_url = '';
@@ -420,7 +435,7 @@ if (!empty($ultimo_update)) {
 
 		<form id="hotelEditForm">
 			<input type="hidden" name="mneu_for" id="mneu_for" value="<?= htmlspecialchars($mneu_for) ?>">
-			<input type="hidden" name="frncod" id="frncod" value="<?= htmlspecialchars($frncod) ?>">
+			<input type="text" name="frncod" id="frncod" value="<?= htmlspecialchars($frncod) ?>">
 
 			<div class="wizard-content">
 				<!-- Passo 1: Descrições -->
