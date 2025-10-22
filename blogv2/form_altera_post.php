@@ -136,19 +136,19 @@ $post = pg_fetch_assoc($result);
                 toolbar: "undo redo | formatselect | bold italic underline | alignleft aligncenter alignright alignjustify | " +
                     "bullist numlist outdent indent | link image media | fullscreen preview code",
                 image_title: true,
-                automatic_uploads: false, // você pode deixar true se quiser upload via input file
+                automatic_uploads: true, // você pode deixar true se quiser upload via input file
                 file_picker_types: "image",
                 image_caption: true,
                 // 🔹 Permite inserir imagem por URL
-                images_upload_url: false,
+
                 image_advtab: true,
                 // 🔹 Permite colar imagens externas (caso queira futuramente)
                 paste_data_images: true,
                 // 🔹 Configura o idioma e estilo visual
-                language: "pt_BR",
+                language: "pt-BR",
                 branding: false,
                 content_style: "body { font-family:Helvetica,Arial,sans-serif; font-size:14px }",
             });
         }
-    }, 200);
+    }, 500);
 </script>

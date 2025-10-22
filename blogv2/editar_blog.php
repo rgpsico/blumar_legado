@@ -72,7 +72,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       menubar: false,
       plugins: 'link image code lists table media',
       toolbar: 'undo redo | styles | bold italic underline | alignleft aligncenter alignright | bullist numlist | link image media | code',
-      language: 'pt_BR'
+      language: 'pt-BR'
     });
   </script>
 

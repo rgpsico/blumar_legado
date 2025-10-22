@@ -736,27 +736,27 @@ if (isset($_SESSION['conteudo'])) {
 
 
 		pg_close($conn);
-
-		echo '	  
-							  
+		$pk_acesso = $_SESSION['pk_acesso'] ?? '';
+		echo '	   <input type="hidden" id="pk_acesso" value="' . $pk_acesso . '">
+							   
 							</div> 
 						</div> <br> 
 						'; ?>
 
 		<script type="text/javascript">
 			// Função para salvar estado
-			let userSession = "<?php echo isset($_SESSION['pk_acesso']) ? $_SESSION['pk_acesso'] : ''; ?>";
+			let pk_acessoSession = document.getElementById('pk_acesso').value;
 
 			function saveState(section) {
 				localStorage.setItem("currentSection", section);
-				localStorage.setItem("userSession", userSession); // Para validar sessão
+				localStorage.setItem("userSession", pk_acessoSession); // Para validar sessão
 			}
 
 			// No load da página, restaura o estado salvo (se válido)
 			$(document).ready(function() {
 				var savedSection = localStorage.getItem("currentSection");
 				var savedSession = localStorage.getItem("userSession");
-				if (savedSection && savedSession === $_SESSION["pk_acesso "]) {
+				if (savedSection && savedSession === pk_acessoSession) {
 					// Chama a função correspondente para recarregar
 					switch (savedSection) {
 						case "cidade":
