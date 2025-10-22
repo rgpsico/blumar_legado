@@ -90,44 +90,38 @@ error_reporting(~0);
             tinymce.remove();
             tinymce.init({
                 selector: "#descritivo_blumar, #descritivo_be",
-                height: 500,
-                menubar: "file edit view insert format tools table help",
-                plugins: [
-                    "advlist",
-                    "autolink",
-                    "lists",
-                    "link",
-                    "image",
-                    "charmap",
-                    "preview",
-                    "anchor",
-                    "searchreplace",
-                    "visualblocks",
-                    "code",
-                    "fullscreen",
-                    "insertdatetime",
-                    "media",
-                    "table",
-                    "code",
-                    "help",
-                    "wordcount"
-                ],
-                toolbar: "undo redo | formatselect | bold italic underline | alignleft aligncenter alignright alignjustify | " +
-                    "bullist numlist outdent indent | link image media | fullscreen preview code",
-                image_title: true,
-                automatic_uploads: false, // você pode deixar true se quiser upload via input file
-                file_picker_types: "image",
-                image_caption: true,
-                // 🔹 Permite inserir imagem por URL
-                images_upload_url: false,
-                image_advtab: true,
-                // 🔹 Permite colar imagens externas (caso queira futuramente)
-                paste_data_images: true,
-                // 🔹 Configura o idioma e estilo visual
+                plugins: "image link media code fullscreen lists table",
+                toolbar: "undo redo | bold italic | alignleft aligncenter alignright | bullist numlist | link image media | fullscreen code",
                 language: "pt_BR",
                 branding: false,
-                content_style: "body { font-family:Helvetica,Arial,sans-serif; font-size:14px }",
+
+                images_upload_url: 'blogv2/upload_image.php',
+                automatic_uploads: true,
+
+                file_picker_callback: function(cb, value, meta) {
+                    if (meta.filetype === 'image') {
+                        const input = document.createElement('input');
+                        input.type = 'file';
+                        input.accept = 'image/*';
+                        input.onchange = function() {
+                            const file = this.files[0];
+                            const formData = new FormData();
+                            formData.append('file', file);
+                            fetch('blogv2/upload_image.php', {
+                                    method: 'POST',
+                                    body: formData
+                                })
+                                .then(res => res.json())
+                                .then(data => cb(data.location, {
+                                    title: file.name
+                                }))
+                                .catch(err => alert('Erro: ' + err));
+                        };
+                        input.click();
+                    }
+                }
             });
+
         }
-    }, 200);
+    }, 500);
 </script>

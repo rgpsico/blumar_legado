@@ -54,7 +54,7 @@ $result_posts = pg_query_params($conn, $sql_posts, $params);
 <div class="container-fluid bg-white p-4 shadow-sm rounded">
   <div class="d-flex justify-content-between align-items-center mb-4">
     <h4 class="m-0">📰 Blog Nacional</h4>
-    <button class="btn btn-success btn-sm" onclick="novo_post()">+ Novo Post</button>
+    <button class="btn btn-success btn-sm" onclick="novo_postv2()">+ Novo Post</button>
   </div>
 
   <!-- Filtro -->
