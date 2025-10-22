@@ -1,0 +1,53 @@
+html, body           {  font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif; color:#787250; margin: 0px 0px 0px 0px ; padding: 0;  font-size:12px;  background-color:#F6F4E8;  }
+a                    {  text-decoration: none;  color:#787250;}
+#container            {  width: 1030px; height: auto;  margin: auto;    }
+#container_conteudo  {  width: 1030px; height: auto;   float:left;   margin: 15px  0px 0px 0px;  background-color:#F7F7F0;  border: solid 1px #D3D6CE;   border-radius: 5px 5px 5px 5px;   }
+
+#diplay_banco1     { width:250px; height:650px;  float:left;  margin: 7px 0px 0px 5px;  }
+#diplay_banco2     { width:770px; height:650px;  float:right; margin: 7px 0px 0px 5px;  overflow:scroll;   }
+
+#loading             { width:72px;    float:left; height:12px;  margin: 0px  10px 0px 0px; padding: 0 0 0 0px;   display: none;}  
+
+#navega_bancoimg  {  width: 190px; height: 680px; float: left; margin: 5px  0px 0px 0px;   border-right: solid 1px #D3D6CE;     }
+#miolo_bancoimg   {  width: 830px; height: 680px; float: left; margin: 5px  0px 0px 8px;   overflow:auto;        }
+#cabeca_bancoimg  {  width: 750px; height: 20px;  float: left; margin: 5px  0px 5px 0px;   font-size: 14px;      }
+#tumb_bancoimg    {  width: 135px; height: 135px; float: left; margin: 8px  5px 15px 5px;        }
+#img_bancoimg     {  width: 135px; height: 90px;  float: left; margin: 5px  5px 2px 5px;        }
+#bt_zip           {  width: 16px;  height: 14px;  float: left; margin: 2px 3px 2px 2px;  background-color:#c0c0c0;  border: solid 1px #000; text-align: center; color: #000; font-size: 10px; }
+#bt_zip   a       { color: #000;}
+#bt_zip2          {  width: 16px;  height: 14px;  float: left; margin: 2px 0px 2px 2px;  background-color:#c0c0c0;  text-align: center; color: #000; }
+#bt_imgstp        {  width: 135px; height: 20px;  float: left; margin: 4px  0px 0px 2px; padding: 0px 0px 0px 3px; }
+
+.bt_download { height: 10px; width: 135px;float: left; margin: 2px  0px 2px 3px;  }
+.bt_download  a:link {background-image: url("../images/bt_downloadimg.jpg");  border: medium none; text-decoration: none;}
+.bt_download a {display: block;  cursor: pointer; height: 20px; width: 135px;}
+.bt_download a:hover{background-position:135px 0;}
+.bt_id { height: 10px; width: 135px;float: left; margin: 2px  0px 2px 3px;  }
+
+#box_img {  width: 440px; height: 390px;  float: left;      background-color:#F6F4E8;     border: solid 1px #D3D6CE;   border-radius: 5px 5px 5px 5px;     }
+#img {  width: 300px; height: 300px;    margin: 25px  auto;     }
+
+#fundo_t2   {  width: 420px; height: 400px;  background-color:#F6F4E8;  }
+#linha1_t2  {  width: 400px; height: 25px;  margin: 0px  0px 0px 4px; font-size: 14px; font-weight: bold;}
+#linha2_t2  {  width: 400px; height:300px;  margin: 4px  0px 0px 4px; text-align: center; }
+#linha2_t23 {  width: 460px; height:450px;  margin: 4px  0px 0px 4px; text-align: center; }
+#linha3_t2  {  width: 400px; height:20px;   margin: 4px  0px 0px 4px;  font-size: 12px; }
+
+#fundo_t3  {  width: 460px; height: 420px;  background-color:#F6F4E8;  }
+#fundo_t32 {  width: 460px; height: 530px;  background-color:#F6F4E8;  }
+
+#fundo_t4  {  width: 870px; height: 700px;  background-color:#F6F4E8;  }
+#linha1_t4 {  width: 850px; height: 25px;  margin: 0px  0px 0px 4px; font-size: 14px; font-weight: bold;}
+#linha2_t4 {  width: 860px; height:600px;  margin: 4px  0px 0px 4px; text-align: center;   overflow:scroll; }
+#linha3_t4 {  width: 850px; height:30px;  margin: 4px  0px 0px 4px;  font-size: 12px; }
+
+#fundo_t5  {  width: 1000px; height: 700px;  background-color:#F6F4E8;  }
+#linha2_t5 {  width: 995px; height: 670px; margin: 0px  0px 0px 4px;   background-color:#F6F4E8;  overflow:scroll;  }
+
+/*  css para o modal   faço na proxima  */
+#mapa-eco {display:none;     }
+#simplemodal-overlay {background-color:#000; cursor:wait;}
+#simplemodal-container a.modalCloseImg { background:url("../../images/close_bhouse.png") no-repeat;  width:95px; height:27px; display:inline; z-index:3200; position:absolute; top:0px; right:10px; cursor:pointer;}
+
+
+

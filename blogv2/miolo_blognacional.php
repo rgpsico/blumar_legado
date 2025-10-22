@@ -1,8 +1,13 @@
 <?php
 ini_set('display_errors', 1);
 error_reporting(~0);
-
 require_once '../util/connection.php';
+
+// ================================
+// FILTROS
+// ================================
+$filtro_titulo = isset($_GET['titulo']) ? trim($_GET['titulo']) : '';
+$filtro_status = isset($_GET['ativo']) ? $_GET['ativo'] : '';
 
 // ================================
 // PAGINAÇÃO
@@ -12,20 +17,36 @@ $paginaAtual = isset($_GET['pagina']) ? max(1, intval($_GET['pagina'])) : 1;
 $offset = ($paginaAtual - 1) * $registrosPorPagina;
 
 // ================================
+// CONDIÇÕES DINÂMICAS
+// ================================
+$where = [];
+$params = [];
+if ($filtro_titulo !== '') {
+  $where[] = "titulo ILIKE $" . (count($params) + 1);
+  $params[] = "%{$filtro_titulo}%";
+}
+if ($filtro_status !== '') {
+  $where[] = "ativo = $" . (count($params) + 1);
+  $params[] = ($filtro_status === 't') ? 't' : 'f';
+}
+$whereSQL = count($where) > 0 ? 'WHERE ' . implode(' AND ', $where) : '';
+
+// ================================
 // CONSULTA PRINCIPAL
 // ================================
-$sql_total = "SELECT COUNT(*) AS total FROM conteudo_internet.blog_nacional";
-$result_total = pg_query($conn, $sql_total);
+$sql_total = "SELECT COUNT(*) AS total FROM conteudo_internet.blog_nacional $whereSQL";
+$result_total = pg_query_params($conn, $sql_total, $params);
 $totalRegistros = pg_fetch_result($result_total, 0, 'total');
 $totalPaginas = ceil($totalRegistros / $registrosPorPagina);
 
 $sql_posts = "
-    SELECT pk_blognacional, titulo, data_post, ativo
-    FROM conteudo_internet.blog_nacional
-    ORDER BY pk_blognacional DESC
-    LIMIT $registrosPorPagina OFFSET $offset
+  SELECT pk_blognacional, titulo, data_post, ativo
+  FROM conteudo_internet.blog_nacional
+  $whereSQL
+  ORDER BY pk_blognacional DESC
+  LIMIT $registrosPorPagina OFFSET $offset
 ";
-$result_posts = pg_exec($conn, $sql_posts);
+$result_posts = pg_query_params($conn, $sql_posts, $params);
 ?>
 
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -36,6 +57,27 @@ $result_posts = pg_exec($conn, $sql_posts);
     <button class="btn btn-success btn-sm" onclick="novo_post()">+ Novo Post</button>
   </div>
 
+  <!-- Filtro -->
+  <form id="formFiltro" class="row g-2 mb-4">
+    <div class="col-md-5">
+      <input type="text" name="titulo" id="titulo" class="form-control" placeholder="Buscar por título" value="<?php echo htmlspecialchars($filtro_titulo); ?>">
+    </div>
+    <div class="col-md-3">
+      <select name="ativo" id="ativo" class="form-select">
+        <option value="">-- Status --</option>
+        <option value="t" <?php echo ($filtro_status === 't') ? 'selected' : ''; ?>>Ativos</option>
+        <option value="f" <?php echo ($filtro_status === 'f') ? 'selected' : ''; ?>>Inativos</option>
+      </select>
+    </div>
+    <div class="col-md-2">
+      <button type="submit" class="btn btn-primary w-100">Filtrar</button>
+    </div>
+    <div class="col-md-2">
+      <button type="button" class="btn btn-secondary w-100" onclick="limparFiltro()">Limpar</button>
+    </div>
+  </form>
+
+  <!-- Tabela -->
   <table class="table table-bordered table-hover align-middle">
     <thead>
       <tr>
@@ -80,52 +122,44 @@ $result_posts = pg_exec($conn, $sql_posts);
   </nav>
 </div>
 
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 <script>
+  $("#formFiltro").on("submit", function(e) {
+    e.preventDefault();
+    const params = $(this).serialize();
+    $.get("blogv2/miolo_blognacional.php", params, function(resposta) {
+      $("#container_miolo").html(resposta);
+    });
+  });
+
+  function limparFiltro() {
+    $("#titulo").val('');
+    $("#ativo").val('');
+    $("#formFiltro").submit();
+  }
+
   function editarPostv2(id) {
-    // envia o ID via POST para carregar o formulário de edição
-    $.ajax({
-      url: "blogv2/form_altera_post.php",
-      type: "POST",
-      data: {
-        pk_blognacional: id
-      },
-      success: function(resposta) {
-        $("#container_miolo").html(resposta);
-      },
-      error: function() {
-        alert("Erro ao carregar post para edição!");
-      }
+    $.post("blogv2/form_altera_post.php", {
+      pk_blognacional: id
+    }, function(resposta) {
+      $("#container_miolo").html(resposta);
     });
   }
 
   function excluirPostv2(id) {
     if (confirm("Tem certeza que deseja excluir este post?")) {
-      $.ajax({
-        url: "blogv2/excluir_post.php",
-        type: "POST",
-        data: {
-          pk_blognacional: id
-        },
-        success: function(resposta) {
-          $("#container_miolo").html(resposta);
-        },
-        error: function() {
-          alert("Erro ao excluir post!");
-        }
+      $.post("blogv2/excluir_post.php", {
+        pk_blognacional: id
+      }, function(resposta) {
+        $("#container_miolo").html(resposta);
       });
     }
   }
 
   function carregarPagina(pagina) {
-    $.ajax({
-      url: "blogv2/miolo_blognacional.php",
-      type: "GET",
-      data: {
-        pagina: pagina
-      },
-      success: function(resposta) {
-        $("#container_miolo").html(resposta);
-      }
+    const params = $("#formFiltro").serialize() + "&pagina=" + pagina;
+    $.get("blogv2/miolo_blognacional.php", params, function(resposta) {
+      $("#container_miolo").html(resposta);
     });
   }
 </script>

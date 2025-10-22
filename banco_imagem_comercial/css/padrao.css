@@ -1,0 +1,31 @@
+html, body           {  font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif; color:#787250; margin: 0px 0px 0px 0px ; padding: 0;  font-size:12px;  background-color:#F6F4E8;  }
+a                    {  text-decoration: none;  color:#787250;}
+#container           {  width: 1030px; height: auto;  margin: auto;    }
+ 
+
+
+
+
+
+#navega_bancoimg  {  width: 200px; height: 680px; float: left; margin: 5px  0px 0px 0px;   border-right: solid 1px #D3D6CE;    overflow:auto;    }
+#miolo_bancoimg   {  width: 820px; height: 680px; float: left; margin: 5px  0px 0px 8px;   overflow:auto;        }
+#cabeca_bancoimg  {  width: 810px; height: 20px;  float: left; margin: 5px  0px 5px 0px;   font-size: 14px;      }
+#tumb_bancoimg    {  width: 135px; height: 135px; float: left; margin: 8px  8px 8px 8px;        }
+#img_bancoimg     {  width: 135px; height: 90px;  float: left; margin: 5px  5px 5px 5px;        }
+
+
+
+.bt_download { height: 20px; width: 135px;float: left; margin: 5px  0px 0px 5px;  }
+.bt_download  a:link {background-image: url("../images/bt_downloadimg.jpg");  border: medium none; text-decoration: none;}
+.bt_download a {display: block;  cursor: pointer; height: 20px; width: 135px;}
+.bt_download a:hover{background-position:135px 0;}
+
+#box_img {  width: 440px; height: 390px;  float: left;      background-color:#F6F4E8;     border: solid 1px #D3D6CE;   border-radius: 5px 5px 5px 5px;     }
+#img {  width: 300px; height: 300px;    margin: 25px  auto;     }
+
+#mapa-eco {display:none;     }
+#simplemodal-overlay {background-color:#000; cursor:wait;}
+#simplemodal-container a.modalCloseImg { background:url("../images/close_bhouse.png") no-repeat;  width:95px; height:27px; display:inline; z-index:3200; position:absolute; top:0px; right:10px; cursor:pointer;}
+
+
+
