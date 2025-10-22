@@ -85,16 +85,42 @@ error_reporting(~0);
 
 <script>
     setTimeout(function() {
-        if (typeof tinymce !== 'undefined') {
+        if (typeof tinymce !== "undefined") {
             tinymce.remove();
             tinymce.init({
-                selector: '#descritivo_blumar, #descritivo_be',
-                height: 300,
-                menubar: false,
-                plugins: 'link image code lists table media',
-                toolbar: 'undo redo | styles | bold italic underline | alignleft aligncenter alignright | bullist numlist | link image media | code',
-                language: 'pt_BR'
+                selector: "#descritivo_blumar, #descritivo_be",
+                plugins: "image link media code fullscreen lists table",
+                toolbar: "undo redo | bold italic | alignleft aligncenter alignright | bullist numlist | link image media | fullscreen code",
+                language: "pt_BR",
+                branding: false,
+
+                images_upload_url: 'blogv2/upload_image.php',
+                automatic_uploads: true,
+
+                file_picker_callback: function(cb, value, meta) {
+                    if (meta.filetype === 'image') {
+                        const input = document.createElement('input');
+                        input.type = 'file';
+                        input.accept = 'image/*';
+                        input.onchange = function() {
+                            const file = this.files[0];
+                            const formData = new FormData();
+                            formData.append('file', file);
+                            fetch('blogv2/upload_image.php', {
+                                    method: 'POST',
+                                    body: formData
+                                })
+                                .then(res => res.json())
+                                .then(data => cb(data.location, {
+                                    title: file.name
+                                }))
+                                .catch(err => alert('Erro: ' + err));
+                        };
+                        input.click();
+                    }
+                }
             });
+
         }
-    }, 200);
+    }, 500);
 </script>
