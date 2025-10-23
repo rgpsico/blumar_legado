@@ -85,7 +85,7 @@ $result_posts = pg_query_params($conn, $sql_posts, $params);
         <th>Título</th>
         <th style="width: 150px;">Data</th>
         <th style="width: 80px;">Ativo</th>
-        <th style="width: 150px;">Ações</th>
+        <th style="width: 200px;">Ações</th>
       </tr>
     </thead>
     <tbody>
@@ -98,7 +98,8 @@ $result_posts = pg_query_params($conn, $sql_posts, $params);
           echo '<td>' . ($row['data_post'] ?? '-') . '</td>';
           echo '<td>' . ($row['ativo'] === 't' ? '✅' : '❌') . '</td>';
           echo '<td>
-                  <button class="btn btn-primary btn-sm" onclick="editarPostv2(' . $row['pk_blognacional'] . ')">Editar</button>
+                  <button class="btn btn-info btn-sm me-1" onclick="visualizarPost(' . $row['pk_blognacional'] . ')">Visualizar</button>
+                  <button class="btn btn-primary btn-sm me-1" onclick="editarPostv2(' . $row['pk_blognacional'] . ')">Editar</button>
                   <button class="btn btn-danger btn-sm" onclick="excluirPostv2(' . $row['pk_blognacional'] . ')">Excluir</button>
                 </td>';
           echo '</tr>';
@@ -136,6 +137,10 @@ $result_posts = pg_query_params($conn, $sql_posts, $params);
     $("#titulo").val('');
     $("#ativo").val('');
     $("#formFiltro").submit();
+  }
+
+  function visualizarPost(id) {
+    window.open('https://www.blumar.com.br/blog/post.php?post=' + id, '_blank');
   }
 
   function editarPostv2(id) {
