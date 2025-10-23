@@ -1,126 +1,160 @@
-<?php
+<?php 
+
 ini_set('display_errors', 1);
 error_reporting(~0);
-?>
+require_once '../util/connection.php';
 
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
-<script src="https://cdn.tiny.cloud/1/jo7idzhud6aviu1mcv8mllu99verm7oorkijqpuenv5rouqb/tinymce/8/tinymce.min.js" referrerpolicy="origin"></script>
 
-<div class="container-fluid bg-white p-4 shadow-sm rounded">
-    <h4 class="mb-3">🆕 Novo Post</h4>
 
-    <form id="form_novo_post">
-        <div class="row">
-            <div class="col-md-6 mb-3">
-                <label for="titulo" class="form-label">Título</label>
-                <input type="text" id="titulo" class="form-control">
-            </div>
 
-            <div class="col-md-3 mb-3">
-                <label for="data_post" class="form-label">Data do Post</label>
-                <input type="date" id="data_post" class="form-control" value="<?php echo date('Y-m-d'); ?>">
-            </div>
 
-            <div class="col-md-3 mb-3">
-                <label for="classif" class="form-label">Classificação</label>
-                <input type="number" id="classif" class="form-control" min="1" max="99" value="1">
-            </div>
-        </div>
+$query_cidade =
+"
+        select 
+            pk_cidade_tpo, 
+            nome_pt, 
+            nome_en, 
+            descritivo_pt, 
+            descritivo_en, 
+            foto1, 
+            foto2,
+            tpocidcod,
+            cidade_cod 
+        from 
+            tarifario.cidade_tpo
+        order by 
+            nome_en
+    
+";
 
-        <div class="mb-3">
-            <label for="descritivo_blumar" class="form-label">Conteúdo (Blumar)</label>
-            <textarea id="descritivo_blumar" class="form-control" rows="8"></textarea>
-        </div>
 
-        <div class="mb-3">
-            <label for="descritivo_be" class="form-label">Conteúdo (Be)</label>
-            <textarea id="descritivo_be" class="form-control" rows="4"></textarea>
-        </div>
 
-        <div class="row">
-            <div class="col-md-6 mb-3">
-                <label for="foto_capa" class="form-label">Foto de Capa (URL)</label>
-                <input type="text" id="foto_capa" class="form-control">
-            </div>
 
-            <div class="col-md-6 mb-3">
-                <label for="foto_topo" class="form-label">Foto de Topo (URL)</label>
-                <input type="text" id="foto_topo" class="form-control">
-            </div>
-        </div>
 
-        <div class="row">
-            <div class="col-md-6 mb-3">
-                <label for="url_video" class="form-label">URL do Vídeo</label>
-                <input type="text" id="url_video" class="form-control">
-            </div>
 
-            <div class="col-md-6 mb-3">
-                <label for="meta_description" class="form-label">Meta Description</label>
-                <input type="text" id="meta_description" class="form-control">
-            </div>
-        </div>
+echo'
+<b>CADASTRO DE NOVO POST</b><br> 
 
-        <div class="row">
-            <div class="col-md-6 mb-3">
-                <label for="citie" class="form-label">Cidade (ID)</label>
-                <input type="number" id="citie" class="form-control">
-            </div>
-
-            <div class="col-md-6 mb-3">
-                <label for="regiao" class="form-label">Região (ID)</label>
-                <input type="number" id="regiao" class="form-control">
-            </div>
-        </div>
-
-        <div class="form-check mb-3">
-            <input type="checkbox" id="ativo" class="form-check-input">
-            <label for="ativo" class="form-check-label">Ativo</label>
-        </div>
-
-        <button type="button" class="btn btn-success" onclick="insere_novo_postv2()">💾 Salvar</button>
-        <button type="button" class="btn btn-secondary" onclick="acao_blognacionalv2()">← Voltar</button>
-    </form>
+<div id="box2">
+<div id="box1">
+    Tipo<br> 
+    <select name="classif" id="classif">
+        <option value="0">-----------------</option>  
+        <option value="1">Hotels</option> 
+        <option value="2">Tours</option>
+        <option value="3">Boats</option>
+        <option value="4">Flights</option>
+        <option value="5">Destinations</option>
+        <option value="6">Festivals</option>
+    </select> 
+</div>
+<div id="box1">
+Data publicação<br>
+     <input type="text" name="data_post" id="data_post" maxlength="10"  size="10">
+ </div>
 </div>
 
-<script>
-    setTimeout(function() {
-        if (typeof tinymce !== "undefined") {
-            tinymce.remove();
-            tinymce.init({
-                selector: "#descritivo_blumar, #descritivo_be",
-                plugins: "image link media code fullscreen lists table",
-                toolbar: "undo redo | bold italic | alignleft aligncenter alignright | bullist numlist | link image media | fullscreen code",
-                language: "pt_BR",
-                branding: false,
+<div id="box2">
+<div id="box1">
+<select name="citie" id="citie"  > 
+	    <option value="0" selected>Escolha uma cidade para o post</option>
 
-                images_upload_url: 'blogv2/upload_image.php',
-                automatic_uploads: true,
 
-                file_picker_callback: function(cb, value, meta) {
-                    if (meta.filetype === 'image') {
-                        const input = document.createElement('input');
-                        input.type = 'file';
-                        input.accept = 'image/*';
-                        input.onchange = function() {
-                            const file = this.files[0];
-                            const formData = new FormData();
-                            formData.append('file', file);
-                            fetch('blogv2/upload_image.php', {
-                                    method: 'POST',
-                                    body: formData
-                                })
-                                .then(res => res.json())
-                                .then(data => cb(data.location, {
-                                    title: file.name
-                                }))
-                                .catch(err => alert('Erro: ' + err));
-                        };
-                        input.click();
-                    }
-                }
-            });
 
-        }
-    }, 500);
-</script>
+';
+$result_cidade = pg_exec($conn, $query_cidade);
+if ($result_cidade) {
+for ($rowcid = 0; $rowcid < pg_numrows($result_cidade); $rowcid++) {
+        
+         $nome_en = pg_result($result_cidade, $rowcid, 'nome_en');
+         $cidade_cod = pg_result($result_cidade, $rowcid, 'cidade_cod');
+         
+
+        echo '<option value="'.$cidade_cod.'">'.$nome_en.'</option> ';
+
+
+    }
+    }
+
+
+
+
+
+
+ECHO'	</select></div>
+
+</div>
+
+
+<div id="box2">
+
+<div id="box1">
+Regi&atilde;o Geografica<br>
+			<select name="regiao" id="regiao">
+				<option value="0">-----------------</option>  
+				<option value="1">Norte</option> 
+				<option value="2">Nordeste</option>
+				<option value="3">Sudeste</option>
+				<option value="4">Centro-Oeste</option>
+				<option value="5">Sul</option>
+			</select> 
+</div>
+</div>
+
+
+
+
+
+ <div id="box2">
+    <div id="box1">
+		Titulo<br>
+		<input type="text" name="titulo" id="titulo" maxlength="200"  size="100">
+	</div>
+  </div>
+  <div id="box7"> 
+     Descritivo Blumar<br> 
+     <br>
+     <textarea name="descritivo_blumar" id="descritivo_blumar" rows="15" cols="100"></textarea>
+</div>
+ <div id="box7"> 
+      Descritivo BeBrazil<br><br>
+ <textarea name="descritivo_be" id="descritivo_be" rows="15" cols="100"></textarea>
+</div>
+ 
+<div id="box2">
+<div id="box1">
+Foto capa<br>
+        <input type="text" name="foto_capa" id="foto_capa" maxlength="200"  size="100">
+    </div>
+</div>
+
+<div id="box2">
+<div id="box1">
+Foto topo<br>
+        <input type="text" name="foto_topo" id="foto_topo" maxlength="200"  size="100">
+    </div>
+</div>
+
+
+
+<div id="box2">
+<div id="box1">
+URL Video<br>
+        <input type="text" name="url_video" id="url_video" maxlength="200"  size="100">
+    </div>
+</div>
+
+<div id="box2">
+<div id="box1">
+Meta description<br>
+        <input type="text" name="meta_description" id="meta_description" maxlength="200"  size="100">
+    </div>
+</div>
+<div id="box5"><input name="ativo" type="checkbox"  id="ativo"   checked> Ativo<br><br>
+	<input type="button"  name="Go" value="Inserir" onclick="javascript:insere_novo_post();"  ></div>
+	<div id="box6"></div>
+';
+
+
+
+
