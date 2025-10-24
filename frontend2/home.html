@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BLUMAR - Authentic Brazil Experiences</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="home-styles.css">
+</head>
+
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+        <div class="container-fluid px-4">
+            <a class="navbar-brand fw-bold" href="#">BLUMAR</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+                <ul class="navbar-nav align-items-center">
+                    <li class="nav-item">
+                        <img src="https://flagcdn.com/w40/us.png" alt="US Flag" width="30" class="me-3">
+                    </li>
+                    <li class="nav-item">
+                        <button class="btn btn-link text-white">
+                            <i class="bi bi-list fs-4"></i>
+                        </button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section with Video Background -->
+    <section class="hero-section">
+        <!-- Video Background -->
+        <video autoplay muted loop playsinline class="hero-video">
+            <source
+                src="https://assets.mixkit.co/videos/preview/mixkit-aerial-view-of-the-christ-the-redeemer-in-rio-de-44576-large.mp4"
+                type="video/mp4">
+            <!-- Fallback para navegadores que não suportam vídeo -->
+            Seu navegador não suporta vídeo HTML5.
+        </video>
+
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <div class="container">
+                <h1 class="hero-title">Authentic Brazil.</h1>
+                <h2 class="hero-subtitle">Exceptional Experiences.</h2>
+                <p class="hero-text">Crafted by those <strong>who know it best.</strong></p>
+            </div>
+        </div>
+
+        <!-- Search Bar -->
+        <div class="search-bar-container">
+            <div class="container">
+                <div class="search-bar">
+                    <div class="row g-2 align-items-end">
+                        <div class="col-md-2">
+                            <label class="form-label text-white small">Package Type</label>
+                            <select class="form-select">
+                                <option>All Packages</option>
+                                <option>Group Tours</option>
+                                <option>Private Tours</option>
+                            </select>
+                        </div>
+                        <div class="col-md-2">
+                            <label class="form-label text-white small">Travel Dates</label>
+                            <input type="date" class="form-control">
+                        </div>
+                        <div class="col-md-2">
+                            <label class="form-label text-white small">Location (Brazil)</label>
+                            <select class="form-select">
+                                <option>Rio de Janeiro</option>
+                                <option>São Paulo</option>
+                                <option>Salvador</option>
+                            </select>
+                        </div>
+                        <div class="col-md-2">
+                            <label class="form-label text-white small">Guests</label>
+                            <input type="number" class="form-control" placeholder="2" value="2">
+                        </div>
+                        <div class="col-md-2">
+                            <input type="text" class="form-control" placeholder="Search for destinations...">
+                        </div>
+                        <div class="col-md-2">
+                            <button class="btn btn-warning w-100 fw-bold">Search</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- We Believe Section -->
+    <section class="believe-section py-5">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-4 mb-4 mb-lg-0">
+                    <h2 class="section-title">We believe<br>the best journeys<br>start with people.</h2>
+                    <p class="mt-4">Our team travels across Brazil - exploring, experiencing and networking. So that you
+                        don't have to. We know the country like nobody else.</p>
+                    <p>Let them inspire you with stories, discoveries and tips you simply can't get anywhere else.</p>
+                    <button class="btn btn-warning mt-3 px-4">Learn More</button>
+                </div>
+                <div class="col-lg-4 mb-4 mb-lg-0">
+                    <div class="card experience-card border-0 shadow">
+                        <img src="https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=600" class="card-img-top"
+                            alt="Tourism Boat">
+                        <div class="card-body text-center">
+                            <span class="badge bg-secondary mb-2">Explore Our</span>
+                            <h5 class="card-title">Tourism Boat</h5>
+                            <p class="card-text small text-muted">Lorem ipsum dolor sit amet, consectetur adipiscing
+                                elit. Sed do eiusmod tempor incididunt ut labore.</p>
+                            <button class="btn btn-warning btn-sm">Learn More</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="card experience-card border-0 shadow">
+                        <img src="https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=600" class="card-img-top"
+                            alt="Private Boat">
+                        <div class="card-body text-center">
+                            <span class="badge bg-secondary mb-2">Meet the</span>
+                            <h5 class="card-title">Private Boat</h5>
+                            <p class="card-text small text-muted">Lorem ipsum dolor sit amet, consectetur adipiscing
+                                elit. Sed do eiusmod tempor incididunt ut labore.</p>
+                            <button class="btn btn-warning btn-sm">Learn More</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- DMC Section -->
+    <section class="dmc-section py-5">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-6">
+                    <h2 class="section-title text-white mb-4">A leading DMC<br>and Tour Operator<br>company in Brazil
+                    </h2>
+                    <p class="text-white">With over 30 years of extensive experience designing, and executing customized
+                        programs, Blumar connects you to an exceptional journey that exemplifies the best that Brazil
+                        has to offer. We have the charge to deliver world-class experiences for our customers.</p>
+                    <button class="btn btn-warning mt-3 px-4">Learn More</button>
+                </div>
+                <div class="col-lg-6">
+                    <!-- Background image handled by CSS -->
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Creating Magic Section -->
+    <section class="magic-section py-5 bg-light">
+        <div class="container">
+            <h2 class="section-title text-center mb-2">Creating Magic</h2>
+            <p class="text-center text-muted mb-5">Brazilian itineraries curated to inspire and delight. We have every
+                moment trip into an extraordinary experience, creating magical moments that enchant and truly connect
+                participants.</p>
+
+            <div class="row g-4">
+                <div class="col-md-6 col-lg-3">
+                    <div class="magic-card">
+                        <img src="https://images.unsplash.com/photo-1510414842594-a61c69b5ae57?w=600"
+                            class="img-fluid rounded" alt="Christ the Redeemer">
+                        <div class="magic-overlay">
+                            <button class="btn btn-play">
+                                <i class="bi bi-play-circle fs-1"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3">
+                    <div class="magic-card">
+                        <img src="https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?w=600"
+                            class="img-fluid rounded" alt="Carnival">
+                        <div class="magic-overlay">
+                            <button class="btn btn-play">
+                                <i class="bi bi-play-circle fs-1"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3">
+                    <div class="magic-card">
+                        <img src="https://images.unsplash.com/photo-1552566626-52f8b828add9?w=600"
+                            class="img-fluid rounded" alt="Dining">
+                        <div class="magic-overlay">
+                            <button class="btn btn-play">
+                                <i class="bi bi-play-circle fs-1"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3">
+                    <div class="magic-card">
+                        <img src="https://images.unsplash.com/photo-1483648969698-5e7dcaa3444f?w=600"
+                            class="img-fluid rounded" alt="Stadium">
+                        <div class="magic-overlay">
+                            <button class="btn btn-play">
+                                <i class="bi bi-play-circle fs-1"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Beyond Ordinary Section -->
+    <section class="beyond-section py-5 bg-light">
+        <div class="container">
+            <h2 class="section-title text-center mb-2">Beyond the ordinary</h2>
+            <p class="text-center text-muted mb-5">We make you to also include the exponent and special experiences that
+                break the mold. It's about unlocking the extraordinary in every moment—where creativity, innovation, and
+                human connection come together to create something truly remarkable.</p>
+
+            <div class="row g-4">
+                <div class="col-md-6 col-lg-3">
+                    <div class="experience-overlay-card">
+                        <img src="https://images.unsplash.com/photo-1540555700478-4be289fbecef?w=600"
+                            class="img-fluid rounded" alt="Golden lion">
+                        <div class="overlay-content">
+                            <h5 class="text-white">Golden lion<br>Tamarin Tour</h5>
+                            <button class="btn btn-play-sm">
+                                <i class="bi bi-play-circle fs-3"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3">
+                    <div class="experience-overlay-card">
+                        <img src="https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=600"
+                            class="img-fluid rounded" alt="Búzios">
+                        <div class="overlay-content">
+                            <h5 class="text-white">Búzios</h5>
+                            <button class="btn btn-play-sm">
+                                <i class="bi bi-play-circle fs-3"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3">
+                    <div class="experience-overlay-card">
+                        <img src="https://images.unsplash.com/photo-1556910103-1c02745aae4d?w=600"
+                            class="img-fluid rounded" alt="Rio Cooking">
+                        <div class="overlay-content">
+                            <h5 class="text-white">Rio Cooking<br>Class</h5>
+                            <button class="btn btn-play-sm">
+                                <i class="bi bi-play-circle fs-3"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3">
+                    <div class="experience-overlay-card">
+                        <img src="https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=600"
+                            class="img-fluid rounded" alt="Speedboat">
+                        <div class="overlay-content">
+                            <h5 class="text-white">Speedboat</h5>
+                            <button class="btn btn-play-sm">
+                                <i class="bi bi-play-circle fs-3"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Why Blumar Section -->
+    <section class="why-blumar-section py-5 bg-white">
+        <div class="container">
+            <h2 class="section-title text-center mb-5">Why Blumar</h2>
+
+            <div class="row g-4">
+                <div class="col-md-6 col-lg-4">
+                    <div class="feature-box text-center p-4">
+                        <i class="bi bi-star-fill feature-icon"></i>
+                        <h5 class="mt-3">Experience and Expertise</h5>
+                        <p class="text-muted small">With over 30 years of experience in the Brazilian tourism industry,
+                            we have the knowledge and expertise to create unforgettable experiences.</p>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4">
+                    <div class="feature-box text-center p-4">
+                        <i class="bi bi-geo-alt-fill feature-icon"></i>
+                        <h5 class="mt-3">Local Knowledge</h5>
+                        <p class="text-muted small">Our team lives and breathes Brazil. We know the hidden gems, the
+                            best restaurants, and the most authentic experiences that you won't find in guidebooks.</p>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4">
+                    <div class="feature-box text-center p-4">
+                        <i class="bi bi-shield-check feature-icon"></i>
+                        <h5 class="mt-3">Innovative products</h5>
+                        <p class="text-muted small">Through our innovative approach, we craft exceptional experiences
+                            that go beyond the ordinary, creating memorable moments in Brazil's diverse landscapes.</p>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4">
+                    <div class="feature-box text-center p-4">
+                        <i class="bi bi-diagram-3-fill feature-icon"></i>
+                        <h5 class="mt-3">Cutting-edge Technology</h5>
+                        <p class="text-muted small">We leverage the latest technology to provide seamless booking
+                            experiences and real-time updates throughout your journey.</p>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4">
+                    <div class="feature-box text-center p-4">
+                        <i class="bi bi-people-fill feature-icon"></i>
+                        <h5 class="mt-3">Solid Management & Process</h5>
+                        <p class="text-muted small">Our experienced management team and well-established processes
+                            ensure that every detail of your trip is carefully planned and executed.</p>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4">
+                    <div class="feature-box text-center p-4">
+                        <i class="bi bi-hand-thumbs-up-fill feature-icon"></i>
+                        <h5 class="mt-3">Quality & Socially responsible</h5>
+                        <p class="text-muted small">We are committed to delivering exceptional quality while maintaining
+                            social and environmental responsibility in all our operations.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer-section py-4">
+        <div class="container">
+            <div class="row align-items-center mb-4">
+                <div class="col-md-4">
+                    <h5 class="text-white fw-bold">BLUMAR</h5>
+                    <p class="text-white small mb-0">Rua Siqueira Campos, 43 - cob 2 - Copacabana - Rio de Janeiro - RJ
+                        - Brazil</p>
+                    <p class="text-white small mb-0">CEP: 22031-901 | +55 21 2145 9000 | operacional@blumar.com.br</p>
+                </div>
+                <div class="col-md-8 text-md-end">
+                    <i class="bi bi-facebook text-white me-3 fs-5"></i>
+                    <i class="bi bi-instagram text-white me-3 fs-5"></i>
+                    <i class="bi bi-linkedin text-white fs-5"></i>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Partners Section -->
+    <section class="partners-section py-4 bg-light">
+        <div class="container text-center">
+            <div class="row justify-content-center align-items-center g-3">
+                <div class="col-6 col-md-2">
+                    <img src="https://via.placeholder.com/100x50?text=Partner" alt="Partner" class="img-fluid">
+                </div>
+                <div class="col-6 col-md-2">
+                    <img src="https://via.placeholder.com/100x50?text=Partner" alt="Partner" class="img-fluid">
+                </div>
+                <div class="col-6 col-md-2">
+                    <img src="https://via.placeholder.com/100x50?text=Partner" alt="Partner" class="img-fluid">
+                </div>
+                <div class="col-6 col-md-2">
+                    <img src="https://via.placeholder.com/100x50?text=Partner" alt="Partner" class="img-fluid">
+                </div>
+                <div class="col-6 col-md-2">
+                    <img src="https://via.placeholder.com/100x50?text=Partner" alt="Partner" class="img-fluid">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>

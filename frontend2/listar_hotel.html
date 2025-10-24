@@ -1,0 +1,864 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BLUMAR - Hotéis Premium</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        :root {
+            --blumar-dark: #0a2540;
+            --blumar-accent: #00d4ff;
+            --blumar-orange: #ff6b35;
+            --blumar-gradient: linear-gradient(135deg, #0a2540 0%, #1a4d7a 100%);
+            --text-dark: #0f172a;
+            --text-muted: #64748b;
+            --bg-light: #f8fafc;
+            --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.08);
+            --shadow-md: 0 4px 20px rgba(0, 0, 0, 0.12);
+            --shadow-lg: 0 8px 30px rgba(0, 0, 0, 0.15);
+            --shadow-xl: 0 12px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            color: var(--text-dark);
+            min-height: 100vh;
+        }
+
+        #app {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            box-shadow: var(--shadow-xl);
+            min-height: 100vh;
+        }
+
+        /* Header Top Bar */
+        .header-top-bar {
+            background: var(--blumar-gradient);
+            color: white;
+            padding: 0.8rem 2rem;
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            gap: 1rem;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .flag-us {
+            width: 28px;
+            height: 20px;
+            background: url('https://flagcdn.com/w40/us.png') center/cover;
+            border-radius: 4px;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+        }
+
+        .header-top-bar a {
+            color: white;
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            padding: 0.5rem 1.5rem;
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 50px;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .header-top-bar a:hover {
+            background: white;
+            color: var(--blumar-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(255, 255, 255, 0.3);
+        }
+
+        /* Header Main */
+        .header-main {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem 2rem;
+            background: white;
+            border-bottom: 2px solid #e2e8f0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            backdrop-filter: blur(10px);
+        }
+
+        .logo-blumar {
+            font-size: 2.2rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--blumar-dark) 0%, var(--blumar-accent) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            animation: shimmer 3s infinite;
+        }
+
+        @keyframes shimmer {
+
+            0%,
+            100% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0.85;
+            }
+        }
+
+        /* Page Header */
+        .page-header {
+            padding: 3rem 2rem 2rem 2rem;
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .page-header h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            margin: 0 0 0.5rem 0;
+            color: var(--text-dark);
+            position: relative;
+            display: inline-block;
+        }
+
+        .page-header h1::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 0;
+            width: 100px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--blumar-accent), transparent);
+            border-radius: 2px;
+        }
+
+        .page-header p {
+            font-size: 1.1rem;
+            color: var(--text-muted);
+            font-weight: 400;
+            margin-top: 1rem;
+        }
+
+        /* Filter Menu */
+        .filter-menu {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            align-items: center;
+            padding: 1.5rem 2rem;
+            background: white;
+            border-bottom: 1px solid #e2e8f0;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .filter-item {
+            display: flex;
+            align-items: center;
+            gap: 0.7rem;
+        }
+
+        .filter-menu label {
+            font-size: 0.9rem;
+            color: var(--text-dark);
+            font-weight: 600;
+        }
+
+        .filter-menu select {
+            padding: 0.7rem 1rem;
+            border: 2px solid #e2e8f0;
+            border-radius: 10px;
+            font-size: 0.9rem;
+            min-width: 200px;
+            color: var(--text-dark);
+            background: white;
+            font-family: 'Poppins', sans-serif;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .filter-menu select:hover,
+        .filter-menu select:focus {
+            border-color: var(--blumar-accent);
+            box-shadow: 0 0 0 3px rgba(0, 212, 255, 0.1);
+            outline: none;
+        }
+
+        .filter-tags {
+            display: flex;
+            gap: 0.6rem;
+            flex-wrap: wrap;
+        }
+
+        .filter-tag {
+            background: linear-gradient(135deg, #e0f2fe 0%, #bae6fd 100%);
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+            font-size: 0.85rem;
+            color: #0369a1;
+            font-weight: 500;
+            border: 1px solid #7dd3fc;
+            transition: all 0.3s ease;
+        }
+
+        .filter-tag:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(125, 211, 252, 0.4);
+        }
+
+        .stars {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+            background: #f8fafc;
+            padding: 0.6rem 1.2rem;
+            border-radius: 50px;
+            border: 2px solid #e2e8f0;
+        }
+
+        .stars label {
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .stars input[type="radio"] {
+            cursor: pointer;
+            width: 18px;
+            height: 18px;
+            accent-color: var(--blumar-accent);
+        }
+
+        .stars label:hover {
+            color: var(--blumar-accent);
+        }
+
+        .filter-menu button {
+            background: linear-gradient(135deg, var(--blumar-orange) 0%, #ff8c42 100%);
+            color: white;
+            border: none;
+            padding: 0.8rem 2rem;
+            cursor: pointer;
+            font-size: 1rem;
+            border-radius: 50px;
+            margin-left: auto;
+            font-weight: 600;
+            box-shadow: 0 4px 15px rgba(255, 107, 53, 0.3);
+            transition: all 0.3s ease;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .filter-menu button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 25px rgba(255, 107, 53, 0.4);
+        }
+
+        /* Loading State */
+        .loading {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 4rem;
+            color: var(--text-muted);
+        }
+
+        .loading i {
+            font-size: 3rem;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* Hotel List */
+        .hotel-list {
+            padding: 3rem 2rem;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+            gap: 2rem;
+            background: var(--bg-light);
+        }
+
+        /* Hotel Card */
+        .hotel-card {
+            background: white;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: var(--shadow-md);
+            transition: all 0.4s ease;
+            position: relative;
+            cursor: pointer;
+        }
+
+        .hotel-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(0, 212, 255, 0.1) 0%, rgba(10, 37, 64, 0.1) 100%);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        .hotel-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: var(--shadow-xl);
+        }
+
+        .hotel-card:hover::before {
+            opacity: 1;
+        }
+
+        .hotel-card-image {
+            width: 100%;
+            height: 250px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background-size: cover;
+            background-position: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hotel-card-image::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 50%;
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.5), transparent);
+        }
+
+        .hotel-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--blumar-dark);
+            backdrop-filter: blur(10px);
+            box-shadow: var(--shadow-sm);
+            z-index: 2;
+        }
+
+        .hotel-card-content {
+            padding: 1.5rem;
+            position: relative;
+        }
+
+        .hotel-location {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+
+        .hotel-location i {
+            color: var(--blumar-accent);
+        }
+
+        .hotel-card-content h3 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin: 0.5rem 0;
+            color: var(--text-dark);
+            line-height: 1.3;
+        }
+
+        .hotel-code {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            margin: 0.5rem 0 1rem 0;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .hotel-code i {
+            color: var(--blumar-accent);
+        }
+
+        .hotel-card-content p {
+            font-size: 0.9rem;
+            line-height: 1.6;
+            color: var(--text-muted);
+            margin-bottom: 1.5rem;
+            height: 75px;
+            overflow: hidden;
+            font-weight: 400;
+        }
+
+        .card-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 1rem;
+            border-top: 1px solid #e2e8f0;
+        }
+
+        .hotel-stars {
+            display: flex;
+            gap: 0.2rem;
+        }
+
+        .hotel-stars i {
+            color: #fbbf24;
+            font-size: 0.9rem;
+        }
+
+        .read-more {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: linear-gradient(135deg, var(--blumar-orange) 0%, #ff8c42 100%);
+            color: white;
+            padding: 0.7rem 1.5rem;
+            text-decoration: none;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(255, 107, 53, 0.3);
+        }
+
+        .read-more:hover {
+            transform: translateX(5px);
+            box-shadow: 0 6px 20px rgba(255, 107, 53, 0.4);
+        }
+
+        /* No Results */
+        .no-results {
+            text-align: center;
+            padding: 4rem 2rem;
+            color: var(--text-muted);
+        }
+
+        .no-results i {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            color: #e2e8f0;
+        }
+
+        /* Footer */
+        .footer-info {
+            background: var(--blumar-gradient);
+            color: white;
+            padding: 3rem 2rem;
+            margin-top: 3rem;
+            text-align: center;
+        }
+
+        .footer-info p {
+            font-size: 0.95rem;
+            margin: 0.5rem 0;
+            opacity: 0.9;
+        }
+
+        .footer-info a {
+            color: var(--blumar-accent);
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .footer-info a:hover {
+            opacity: 0.8;
+        }
+
+        .footer-social {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .footer-social i {
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .footer-social i:hover {
+            color: var(--blumar-accent);
+            transform: scale(1.2);
+        }
+
+        /* Footer Logos */
+        .footer-logos {
+            background: white;
+            padding: 3rem 2rem;
+            border-top: 1px solid #e2e8f0;
+            text-align: center;
+        }
+
+        .compliance-text {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin: 0 0 1.5rem 0;
+            text-transform: uppercase;
+            font-weight: 600;
+            letter-spacing: 1.5px;
+        }
+
+        .logo-group {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 2rem;
+            margin-bottom: 2rem;
+            align-items: center;
+        }
+
+        .logo-group img {
+            max-height: 40px;
+            opacity: 0.6;
+            transition: all 0.3s ease;
+            filter: grayscale(100%);
+        }
+
+        .logo-group img:hover {
+            opacity: 1;
+            filter: grayscale(0%);
+            transform: scale(1.1);
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hotel-card {
+            animation: fadeInUp 0.6s ease-out backwards;
+        }
+
+        .hotel-card:nth-child(1) {
+            animation-delay: 0.1s;
+        }
+
+        .hotel-card:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        .hotel-card:nth-child(3) {
+            animation-delay: 0.3s;
+        }
+
+        .hotel-card:nth-child(4) {
+            animation-delay: 0.4s;
+        }
+
+        .hotel-card:nth-child(5) {
+            animation-delay: 0.5s;
+        }
+
+        .hotel-card:nth-child(6) {
+            animation-delay: 0.6s;
+        }
+
+        /* Responsive */
+        @media (max-width: 1200px) {
+            .hotel-list {
+                grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hotel-list {
+                grid-template-columns: 1fr;
+                padding: 2rem 1rem;
+            }
+
+            .filter-menu {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .filter-menu button {
+                margin-left: 0;
+                width: 100%;
+            }
+
+            .page-header h1 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="app">
+        <div class="header-top-bar">
+            <div class="flag-us"></div>
+            <a href="#"><i class="fas fa-arrow-left"></i> Back to Main Site</a>
+        </div>
+
+        <div class="header-main">
+            <span class="logo-blumar">BLUMAR</span>
+        </div>
+
+        <div class="page-header">
+            <h1>Hotels</h1>
+            <p><i class="fas fa-map-marker-alt"></i> Rio de Janeiro hotels selection</p>
+        </div>
+
+        <div class="filter-menu">
+            <div class="filter-item">
+                <label><i class="fas fa-filter"></i> Filters</label>
+            </div>
+            <div class="filter-tags">
+                <span class="filter-tag">Incentive Area</span>
+                <span class="filter-tag">Hotels</span>
+                <span class="filter-tag">Rio de Janeiro</span>
+            </div>
+
+            <div class="filter-item">
+                <select v-model="filtros.cidade">
+                    <option value="">Select the Location</option>
+                    <option v-for="cidade in cidades" :key="cidade" :value="cidade">{{ cidade }}</option>
+                </select>
+            </div>
+
+            <div class="filter-item stars">
+                <label>Stars:</label>
+                <label for="star-5">5</label> <input type="radio" id="star-5" name="stars" value="5"
+                    v-model="filtros.estrelas">
+                <label for="star-4">4</label> <input type="radio" id="star-4" name="stars" value="4"
+                    v-model="filtros.estrelas">
+                <label for="star-3">3</label> <input type="radio" id="star-3" name="stars" value="3"
+                    v-model="filtros.estrelas">
+                <label for="all">All</label> <input type="radio" id="all" name="stars" value=""
+                    v-model="filtros.estrelas" checked>
+            </div>
+
+            <div class="filter-item">
+                <select v-model="filtros.uf">
+                    <option value="">Change the state</option>
+                    <option value="RJ">Rio de Janeiro</option>
+                    <option value="SP">São Paulo</option>
+                </select>
+            </div>
+
+            <button @click="aplicarFiltros"><i class="fas fa-check"></i> Apply Filter</button>
+        </div>
+
+        <div v-if="loading" class="loading">
+            <i class="fas fa-spinner"></i>
+        </div>
+
+        <div v-else-if="hoteisFiltrados.length === 0" class="no-results">
+            <i class="fas fa-hotel"></i>
+            <h3>Nenhum hotel encontrado</h3>
+            <p>Tente ajustar os filtros para ver mais resultados</p>
+        </div>
+
+        <div v-else class="hotel-list">
+            <hotel-card v-for="hotel in hoteisFiltrados" :key="hotel.codigo" :hotel="hotel"></hotel-card>
+        </div>
+
+        <footer>
+            <div class="footer-info">
+                <p><strong>BLUMAR</strong> - Rua Siqueira Campos, 43 - Cob. 2 - Copacabana - Rio de Janeiro - RJ -
+                    Brasil - CEP 22031-901</p>
+                <p><i class="fas fa-phone"></i> +55 21 2142-9200 | <i class="fas fa-envelope"></i> <a
+                        href="mailto:info@blumar.com.br">info@blumar.com.br</a></p>
+                <div class="footer-social">
+                    <i class="fab fa-facebook"></i>
+                    <i class="fab fa-instagram"></i>
+                    <i class="fab fa-linkedin"></i>
+                    <i class="fab fa-twitter"></i>
+                </div>
+            </div>
+            <div class="footer-logos">
+                <p class="compliance-text">WE ARE IN COMPLIANCE WITH</p>
+                <div class="logo-group">
+                    <img src="https://via.placeholder.com/120x40/e2e8f0/64748b?text=VIRTUOSO" alt="Virtuoso" />
+                    <img src="https://via.placeholder.com/120x40/e2e8f0/64748b?text=ILTM" alt="ILTM" />
+                    <img src="https://via.placeholder.com/120x40/e2e8f0/64748b?text=IATA" alt="IATA" />
+                    <img src="https://via.placeholder.com/120x40/e2e8f0/64748b?text=USTOA" alt="USTOA" />
+                    <img src="https://via.placeholder.com/120x40/e2e8f0/64748b?text=TRAVELW" alt="TRAVELWELL" />
+                    <img src="https://via.placeholder.com/120x40/e2e8f0/64748b?text=NEST" alt="NEST" />
+                </div>
+
+                <p class="compliance-text">REPRESENTED BY</p>
+
+                <div class="logo-group">
+                    <img src="https://via.placeholder.com/100x40/e2e8f0/64748b?text=GPS" alt="GPS" />
+                    <img src="https://via.placeholder.com/100x40/e2e8f0/64748b?text=REDE" alt="Rede" />
+                    <img src="https://via.placeholder.com/100x40/e2e8f0/64748b?text=FII" alt="FII" />
+                </div>
+            </div>
+        </footer>
+
+    </div>
+
+    <script>
+        Vue.component('hotel-card', {
+            props: ['hotel'],
+            computed: {
+                imagemFachada() {
+                    // Tenta pegar a imagem da fachada, se não tiver usa placeholder
+                    if (this.hotel.imagem_fachada && this.hotel.imagem_fachada.includes('http')) {
+                        return this.hotel.imagem_fachada;
+                    } else if (this.hotel.htlimgfotofachada && this.hotel.htlimgfotofachada.includes('http')) {
+                        return this.hotel.htlimgfotofachada;
+                    }
+                    // Placeholder baseado no nome do hotel
+                    const gradients = [
+                        'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+                        'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)',
+                        'linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)',
+                        'linear-gradient(135deg, #43e97b 0%, #38f9d7 100%)',
+                        'linear-gradient(135deg, #fa709a 0%, #fee140 100%)',
+                    ];
+                    const index = this.hotel.codigo.charCodeAt(this.hotel.codigo.length - 1) % gradients.length;
+
+                    return gradients[index];
+                },
+                descricaoTratada() {
+                    const desc = this.hotel.descricao || this.hotel.descricao_ingles ||
+                        'Experience luxury and comfort in the heart of Rio de Janeiro. Our premium facilities and exceptional service ensure an unforgettable stay.';
+                    return desc.substring(0, 150) + (desc.length > 150 ? '...' : '');
+                },
+                estrelas() {
+                    // Extrai o número de estrelas da classificação
+                    const match = this.hotel.classificacao?.match(/(\d+)/);
+                    return match ? parseInt(match[1]) : 4;
+                }
+            },
+            template: `
+                <div class="hotel-card">
+                    <div class="hotel-card-image" :style="imagemFachada.includes('http') ? 'background-image: url(' + hotel.htlimgfotofachada  + ')' : 'background: ' + imagemFachada">
+                        <div class="hotel-badge">{{ hotel.classificacao || '4 estrelas' }}</div>
+                    </div>
+                    <div class="hotel-card-content">
+                        <div class="hotel-location">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>{{ hotel.cidade }}, {{ hotel.uf }}</span>
+                            <span style="margin-left: auto; background: #e0f2fe; padding: 0.25rem 0.75rem; border-radius: 50px; font-size: 0.75rem; color: #0369a1; font-weight: 600;">{{ hotel.categoria }}</span>
+                        </div>
+                        <h3>{{ hotel.nome }}</h3>
+                        <div class="hotel-code">
+                            <i class="fas fa-tag"></i>
+                            <span>Código: {{ hotel.codigo }}</span>
+                        </div>
+                        <p>{{ descricaoTratada }}</p>
+                        <div class="card-footer">
+                            <div class="hotel-stars">
+                                <i v-for="n in estrelas" :key="n" class="fas fa-star"></i>
+                            </div>
+                            <a :href="'hotelshow.php?id=' + hotel.codigo" class="read-more">
+                                Read More <i class="fas fa-arrow-right"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            `
+        });
+
+        new Vue({
+            el: '#app',
+            data: {
+                hotels: [],
+                hoteisFiltrados: [],
+                loading: true,
+                filtros: {
+                    cidade: '',
+                    estrelas: '',
+                    uf: ''
+                },
+                apiUrl: 'http://localhost/blumar_legado/blumar/api/hotels.php?request=listar_hoteis'
+            },
+            computed: {
+                cidades() {
+                    // Extrai lista única de cidades
+                    return [...new Set(this.hotels.map(h => h.cidade))].filter(c => c);
+                }
+            },
+            methods: {
+                async carregarHoteis() {
+                    try {
+                        this.loading = true;
+                        const response = await axios.get(this.apiUrl);
+                        this.hotels = response.data.filter(h => h.status === true);
+                        this.hoteisFiltrados = this.hotels;
+                    } catch (error) {
+                        console.error('Erro ao carregar hotéis:', error);
+                        // Dados de fallback em caso de erro
+                        this.hotels = [];
+                        this.hoteisFiltrados = [];
+                    } finally {
+                        this.loading = false;
+                    }
+                },
+                aplicarFiltros() {
+                    let resultado = this.hotels;
+
+                    if (this.filtros.cidade) {
+                        resultado = resultado.filter(h => h.cidade === this.filtros.cidade);
+                    }
+
+                    if (this.filtros.uf) {
+                        resultado = resultado.filter(h => h.uf === this.filtros.uf);
+                    }
+
+                    if (this.filtros.estrelas) {
+                        resultado = resultado.filter(h => {
+                            const match = h.classificacao?.match(/(\d+)/);
+                            return match && match[1] === this.filtros.estrelas;
+                        });
+                    }
+
+                    this.hoteisFiltrados = resultado;
+                }
+            },
+            mounted() {
+                this.carregarHoteis();
+            }
+        });
+    </script>
+
+</body>
+
+</html>

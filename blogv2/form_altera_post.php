@@ -144,7 +144,7 @@ if ($result_cidade) {
             <label for="ativo" class="form-check-label">Ativo</label>
         </div>
 
-        <button type="button" class="btn btn-primary" onclick="alteracao_post()">💾 Salvar Alterações</button>
+        <button type="button" class="btn btn-primary" onclick="alteracao_postv2()">💾 Salvar Alterações</button>
         <button type="button" class="btn btn-secondary" onclick="acao_blognacional()">← Voltar</button>
     </form>
 </div>
