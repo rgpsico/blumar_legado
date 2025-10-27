@@ -5,26 +5,23 @@
 ini_set('display_errors', 1);
 error_reporting(~0);
 
-If (isSet($_SESSION)) {} else {session_start();}
+if (isset($_SESSION)) {
+} else {
+	session_start();
+}
 
 require_once '../util/connection.php';
 
-if (isset($_POST["navega_cidade_cod"]) && $_POST["navega_cidade_cod"] != 0)
-{
-    $cidade_cod =   pg_escape_string($_POST["navega_cidade_cod"]);
+if (isset($_POST["navega_cidade_cod"]) && $_POST["navega_cidade_cod"] != 0) {
+	$cidade_cod =   pg_escape_string($_POST["navega_cidade_cod"]);
+} elseif (isset($cidade_cod)) {
+} else {
+	echo 'nenhuma cidade selecionada';
+	exit();
 }
-elseif(isset($cidade_cod) )
-{
 
- } 
- else
- {
-echo'nenhuma cidade selecionada';
-exit();
- }
- 
- 
- 
+
+
 
 
 //echo$mneu_for;
@@ -61,28 +58,27 @@ else
 
 
 
- 
-     $pegaumhtl="select  
+
+$pegaumhtl = "select  
           		nome_en
 			from
 			    tarifario.cidade_tpo
 			where
 			 cidade_cod  = $cidade_cod";
-		$result_umhtl = pg_exec($conn, $pegaumhtl);
-		for ($rowhtl = 0; $rowhtl < pg_numrows($result_umhtl); $rowhtl++) 
-				{
-					 $nome_cid = pg_result($result_umhtl, $rowhtl, 'nome_en');
-				 }
-
-
-		 
-
-
-echo'<div id="mapa-eco" ></div><div id="cabeca_bancoimg"><b>  '.strtoupper($nome_cid).' TOURS PICTURES</b></div>';
+$result_umhtl = pg_exec($conn, $pegaumhtl);
+for ($rowhtl = 0; $rowhtl < pg_numrows($result_umhtl); $rowhtl++) {
+	$nome_cid = pg_result($result_umhtl, $rowhtl, 'nome_en');
+}
 
 
 
-$pega_cidadestp= "select 
+
+
+echo '<div id="mapa-eco" ></div><div id="cabeca_bancoimg"><b>  ' . strtoupper($nome_cid) . ' TOURS PICTURES</b></div>';
+
+
+
+$pega_cidadestp = "select 
 				pk_bco_img,  
 				mneu_for,
 		        tam_1,
@@ -98,12 +94,11 @@ $pega_cidadestp= "select
 				tp_produto = 2
 	            and fk_cidcod = '$cidade_cod'
 				order by legenda";
-				$result_cidadestp = pg_exec($conn, $pega_cidadestp);
+$result_cidadestp = pg_exec($conn, $pega_cidadestp);
 
- //echo pg_numrows($result_cidadestp);
+//echo pg_numrows($result_cidadestp);
 
-for ($rowcid = 0; $rowcid < pg_numrows($result_cidadestp); $rowcid++)
-{
+for ($rowcid = 0; $rowcid < pg_numrows($result_cidadestp); $rowcid++) {
 	$pk_bco_img = pg_result($result_cidadestp, $rowcid, 'pk_bco_img');
 	$mneu_for = pg_result($result_cidadestp, $rowcid, 'mneu_for');
 	$tam_1 = pg_result($result_cidadestp, $rowcid, 'tam_1');
@@ -113,51 +108,39 @@ for ($rowcid = 0; $rowcid < pg_numrows($result_cidadestp); $rowcid++)
 	$tam_4 = pg_result($result_cidadestp, $rowcid, 'tam_4');
 	$tam_3 = pg_result($result_cidadestp, $rowcid, 'tam_3');
 	$tam_2 = pg_result($result_cidadestp, $rowcid, 'tam_2');
-	
-	
-	 echo'<div id="tumb_bancoimg"><div id="img_bancoimg"><img src="https://www.blumar.com.br/'.$tam_1.'" width="135" height="90"></div>';
- 	 
-	 echo'<div id="bt_imgstp">';
-	 
-	 if(strlen($tam_2) != 0)
-	 {
-	 	echo'<div id="bt_zip"><a href="#" title=" 300 x 200 " class="imgpatht2"><input type="hidden" class="imgpatht2value" value="'.$pk_bco_img.'">T2</a></div>';
-	 }
-	 
-	 if(strlen($tam_3) != 0)
-	 {
-	 	echo'<div id="bt_zip"><a href="#" title=" 450 x 300 " class="imgpatht3"><input type="hidden" class="imgpatht3value" value="'.$pk_bco_img.'">T3</a></div>';
-	 }
-	  
-	 if(strlen($tam_4) != 0)
-	 {
-	 	echo'<div id="bt_zip"><a href="#" title=" 840 x 559 " class="imgpatht4"><input type="hidden" class="imgpatht4value" value="'.$pk_bco_img.'">T4</a></div>';
-	 }
- 	 
-	 if(strlen($tam_5) != 0)
-	 {
-	 	echo'<div id="bt_zip"><a href="#" title=" Original size " class="imgpatht5"><input type="hidden" class="imgpatht5value" value="'.$pk_bco_img.'">T5</a></div>';
-	 }
-	 
-	 if(strlen($zip) != 0)
-	 {
-	 	echo'<div id="bt_zip"><a href="#" title=" Compressed file ">zip</a></div>';
-	 }
- 	 
-	 echo'<div id="bt_zip2"><a href="#" class="imgpath"><input type="hidden" class="imgpathvalue" value="'.$pk_bco_img.'"><img src="../images/edit_img.png" title="edit image" ></a></div>';
-	 
-		echo'</div>';
-		if(strlen($legenda) != 0)
-		{
-			echo'<div class="bt_download"> <b>'.substr($legenda, 0, 21).'</b></div>';
-		}
-		echo'<div class="bt_download">id: '.$pk_bco_img.' </div>';
-		  
-		echo'</div>';	
-			
-			
+
+
+	echo '<div id="tumb_bancoimg"><div id="img_bancoimg"><img src="https://www.blumar.com.br/' . $tam_1 . '" width="135" height="90"></div>';
+
+	echo '<div id="bt_imgstp">';
+
+	if (strlen($tam_2) != 0) {
+		echo '<div id="bt_zip"><a href="#" title=" 300 x 200 " class="imgpatht2"><input type="hidden" class="imgpatht2value" value="' . $pk_bco_img . '">T2</a></div>';
+	}
+
+	if (strlen($tam_3) != 0) {
+		echo '<div id="bt_zip"><a href="#" title=" 450 x 300 " class="imgpatht3"><input type="hidden" class="imgpatht3value" value="' . $pk_bco_img . '">T3</a></div>';
+	}
+
+	if (strlen($tam_4) != 0) {
+		echo '<div id="bt_zip"><a href="#" title=" 840 x 559 " class="imgpatht4"><input type="hidden" class="imgpatht4value" value="' . $pk_bco_img . '">T4</a></div>';
+	}
+
+	if (strlen($tam_5) != 0) {
+		echo '<div id="bt_zip"><a href="#" title=" Original size " class="imgpatht5"><input type="hidden" class="imgpatht5value" value="' . $pk_bco_img . '">T5</a></div>';
+	}
+
+	if (strlen($zip) != 0) {
+		echo '<div id="bt_zip"><a href="#" title=" Compressed file ">zip</a></div>';
+	}
+
+	echo '<div id="bt_zip2"><a href="#" class="imgpath"><input type="hidden" class="imgpathvalue" value="' . $pk_bco_img . '"><img src="../images/edit_img.png" title="edit image" ></a></div>';
+
+	echo '</div>';
+	if (strlen($legenda) != 0) {
+		echo '<div class="bt_download"> <b>' . substr($legenda, 0, 21) . '</b></div>';
+	}
+	echo '<div class="bt_download">id: ' . $pk_bco_img . ' </div>';
+
+	echo '</div>';
 }
-
-
-
-
