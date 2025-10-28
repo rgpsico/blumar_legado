@@ -3,8 +3,11 @@
 ini_set('display_errors', 1);
 error_reporting(~0);
 
-If (isSet($_SESSION)) {} else {session_start();}
- 
+if (isset($_SESSION)) {
+} else {
+	session_start();
+}
+
 echo '
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -39,7 +42,7 @@ echo '
 
 
 
-echo'<body>
+echo '<body>
  <div id="container">
 		
     <div id="container_conteudo">
@@ -58,10 +61,10 @@ echo'<body>
 		
 		<div id="miolo_nav">';
 
- 
-     require_once 'miolo_navegacao.php';
 
-		echo'</div>
+require_once 'miolo_navegacao.php';
+
+echo '</div>
 		</div>
 		<div id="diplay_banco2"></div>
 		
@@ -75,5 +78,3 @@ echo'<body>
 	</div> <br>
 </body>
 </html> ';
-
-?>

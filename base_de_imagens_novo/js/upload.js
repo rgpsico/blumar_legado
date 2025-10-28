@@ -1,4 +1,4 @@
-// js/upload.js - Funcionalidade de Upload de Pastas e Imagens
+// js/upload.js - Funcionalidade de Upload de Múltiplos Arquivos de Imagem
 
 $(document).ready(function () {
     let selectedFiles = []; // Armazena arquivos selecionados
@@ -20,7 +20,7 @@ $(document).ready(function () {
     $('#uploadForm').on('submit', handleUpload);
 
     /**
-     * Configura drag and drop na área de upload
+     * Configura drag and drop na área de upload (para múltiplos arquivos)
      */
     function setupDragAndDrop() {
         const uploadArea = $('#uploadArea');
@@ -53,7 +53,7 @@ $(document).ready(function () {
     }
 
     /**
-     * Configura o input de seleção de pasta
+     * Configura o input de seleção de múltiplos arquivos
      */
     function setupFileInput() {
         $('#folderInput').on('change', function (e) {
@@ -109,13 +109,12 @@ $(document).ready(function () {
      */
     function createFileItem(file) {
         const size = (file.size / 1024).toFixed(2); // KB
-        const relativePath = file.webkitRelativePath || file.name;
+        const relativePath = file.name; // Sem estrutura de pasta, só nome
 
         return `
             <div class="file-item">
                 <i class="fas fa-file-image"></i>
                 <span class="file-name">${file.name}</span>
-                <span class="file-path">${relativePath}</span>
                 <span class="file-size">${size} KB</span>
                 <button type="button" class="btn-remove-file" data-index="${selectedFiles.indexOf(file)}" title="Remover">
                     <i class="fas fa-times"></i>
@@ -178,7 +177,7 @@ $(document).ready(function () {
         selectedFiles.forEach((file, index) => {
             formData.append(`file_${index}`, file);
             formData.append(`file_name_${index}`, file.name);
-            formData.append(`file_path_${index}`, file.webkitRelativePath || file.name); // Para estrutura de pastas
+            // Sem file_path, pois não é pasta
         });
 
         formData.append('total_files', selectedFiles.length);
@@ -221,6 +220,7 @@ $(document).ready(function () {
         $('#uploadProgress').show();
         updateProgress(0);
     }
+
 
     /**
      * Atualiza barra de progresso
