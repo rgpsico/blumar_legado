@@ -10,7 +10,7 @@ require_once '../util/connection.php';
 <form id="cadastroImagemForm" enctype="multipart/form-data" method="post">
     <div class="cadastro-form-group">
         <label for="tp_produto">Tipo de Produto:</label>
-        <select id="tp_produto" name="tp_produto" onchange="javascript:pega_tp_produto();" class="form-control" required>
+        <select id="tp_produto" name="tp_produto" onchange="javascript:pega_tp_produto2();" class="form-control" required>
             <option value="1" <?php echo (isset($_SESSION['tp_produto']) && $_SESSION['tp_produto'] == '1') ? 'selected' : ''; ?>>Hotel</option>
             <option value="2" <?php echo (isset($_SESSION['tp_produto']) && $_SESSION['tp_produto'] == '2') ? 'selected' : ''; ?>>Tour</option>
             <option value="3" <?php echo (isset($_SESSION['tp_produto']) && $_SESSION['tp_produto'] == '3') ? 'selected' : ''; ?>>Venue</option>
@@ -332,6 +332,30 @@ require_once '../util/connection.php';
     </div>
 
     <script>
+        function pega_tp_produto2() {
+
+            $.ajax({
+                dataType: "html",
+                url: "pega_tp_produto2.php",
+                type: 'POST',
+                data: {
+                    tp_produto: $("#tp_produto").val()
+                },
+                beforeSend: function() {
+                    $("#loading").fadeIn("slow");
+                },
+                error: function() {
+                    alert("Erro ao listar produtos!");
+                },
+                success: function(resposta) {
+                    $("#miolo_produto").html(resposta);
+                },
+                complete: function() {
+                    $("#loading").fadeOut("slow");
+                }
+            });
+        }
+
         // Função JS atualizada para submissão via AJAX (adicione isso ou em cadastro.js)
         function insert_new_image() {
             var form = document.getElementById('cadastroImagemForm');

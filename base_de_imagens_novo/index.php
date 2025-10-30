@@ -443,8 +443,7 @@ $cidade_selecionada = isset($_SESSION['cidade_cod']) ? $_SESSION['cidade_cod'] :
 
     <script src="js/main.js"></script>
     <script src="js/upload.js"></script>
-    <script src="js/tabs.js"></script>
-    <script src="js/cadastro.js"></script>
+    <script src="../js/banco_imagem.js"></script>
     <!-- Script para funcionalidade dos submenus -->
     <script>
         $(document).ready(function() {

@@ -3,8 +3,8 @@ session_start();
 require_once '../util/connection.php';
 header('Content-Type: application/json');
 
-// Configurações
-$upload_dir = 'uploads/'; // Base uploads, subfolders inside
+// Configurações - CAMINHO ABSOLUTO PARA A RAIZ DAS IMAGENS (Windows)
+$root_dir = 'Z:/wwwinternet/bancoimagemfotos/'; // Raiz absoluta das imagens
 $tipos_resolucao = [
     'tam_1' => [135, 90],   // thumbnail
     'tam_2' => [300, 200],
@@ -13,6 +13,21 @@ $tipos_resolucao = [
     'tam_5' => null         // original (sem redimensionar)
 ];
 $max_size = 10 * 1024 * 1024; // 10MB
+
+// Mapeamento de tp_produto para pasta base (ajuste nomes conforme estrutura existente)
+$mapa_pastas = [
+    1 => 'hotel',      // Hotel
+    2 => 'tour',       // Tour
+    3 => 'venue',      // Venue
+    4 => 'restaurante', // Restaurante
+    5 => 'gifts',      // Gifts
+    6 => 'transportes', // Transportes
+    7 => 'various',    // Various
+    8 => 'tours_incentives',
+    9 => 'tours_technical',
+    10 => 'cidade',    // Cidade
+    11 => 'inspection' // Inspection Report
+];
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     echo json_encode(['success' => false, 'error' => 'Método inválido']);
@@ -25,8 +40,23 @@ if ($tp_produto == 0) {
     exit;
 }
 
-// Pasta específica por tipo
-$pasta_tipo = $upload_dir . 'produtos/' . $tp_produto . '/';
+$pasta_base = $mapa_pastas[$tp_produto] ?? 'geral'; // Pasta base por tipo
+
+// Busca nome da cidade para subpasta (se aplicável)
+$nome_subpasta = '';
+if (!empty($_POST['cidade_cod']) && $_POST['cidade_cod'] != '0') {
+    $cidade_cod = (int) $_POST['cidade_cod'];
+    $query_cidade = "SELECT nome_en FROM tarifario.cidade_tpo WHERE cidade_cod = $cidade_cod";
+    $result_cidade = pg_exec($conn, $query_cidade);
+    if ($result_cidade && pg_numrows($result_cidade) > 0) {
+        $nome_subpasta = strtolower(pg_result($result_cidade, 0, 'nome_en'));
+        $nome_subpasta = preg_replace('/[^a-zA-Z0-9\s-]/', '', $nome_subpasta); // Sanitiza nome
+        $nome_subpasta = str_replace(' ', '_', $nome_subpasta); // Substitui espaços por _
+    }
+}
+
+// Pasta final: root/pasta_base/{nome_subpasta}/ (usa barras normais no Windows)
+$pasta_tipo = $root_dir . $pasta_base . '/' . $nome_subpasta . '/';
 if (!is_dir($pasta_tipo)) {
     mkdir($pasta_tipo, 0755, true);
 }
@@ -56,8 +86,8 @@ if (isset($_FILES['imagem_original']) && $_FILES['imagem_original']['error'] ===
         exit;
     }
 
-    // Paths relativos para DB (from web root, adjust if needed)
-    $paths = ['tam_5' => 'uploads/produtos/' . $tp_produto . '/' . $nome_base];
+    // Paths relativos para DB (relativo à web root: bancoimagemfotos/pasta_base/subpasta/nome.jpg)
+    $paths = ['tam_5' => 'bancoimagemfotos/' . $pasta_base . '/' . $nome_subpasta . '/' . $nome_base];
 
     // Carrega imagem
     $imagem = null;
@@ -134,7 +164,7 @@ if (isset($_FILES['imagem_original']) && $_FILES['imagem_original']['error'] ===
         imagedestroy($resized);
         imagedestroy($nova_imagem);
 
-        $paths[$chave] = 'uploads/produtos/' . $tp_produto . '/' . basename($caminho_redim);
+        $paths[$chave] = 'bancoimagemfotos/' . $pasta_base . '/' . $nome_subpasta . '/' . basename($caminho_redim);
     }
     imagedestroy($imagem);
 
@@ -143,22 +173,26 @@ if (isset($_FILES['imagem_original']) && $_FILES['imagem_original']['error'] ===
     $zip = new ZipArchive();
     $zip_success = false;
     if ($zip->open($zip_path, ZipArchive::CREATE) === TRUE) {
-        foreach ($paths as $rel_path) {
-            $full_path = $upload_dir . $rel_path;
-            if (file_exists($full_path)) {
-                $zip->addFile($full_path, basename($full_path));
+        // Adiciona arquivos usando caminhos locais absolutos
+        $zip->addFile($caminho_original, $nome_base); // Original
+        foreach (array_keys($tipos_resolucao) as $chave) {
+            if ($chave !== 'tam_5') {
+                $nome_redim = $id_unico . '_' . $chave . '.' . $extensao;
+                $caminho_redim_local = $pasta_tipo . $nome_redim;
+                if (file_exists($caminho_redim_local)) {
+                    $zip->addFile($caminho_redim_local, $nome_redim);
+                }
             }
         }
         $zip_success = $zip->close();
     }
-    if ($zip_success) {
-        $paths['zip'] = 'uploads/produtos/' . $tp_produto . '/' . basename($zip_path);
+    if ($zip_success && file_exists($zip_path)) {
+        $paths['zip'] = 'bancoimagemfotos/' . $pasta_base . '/' . $nome_subpasta . '/' . $id_unico . '.zip';
     } else {
         $paths['zip'] = '';
     }
 
-    // Insere no banco - ADAPTADO ao schema real
-    // pg_query_params lida com escaping, então passe valores raw (numbers as int, strings as string, bool as bool/null)
+    // Insere no banco (mesmo código anterior)
     $mneu_for = $_POST['mneu_for'] ?? '0'; // VARCHAR
     $fk_cidcod = (int) ($_POST['cidade_cod'] ?? 0); // NUMERIC
     $nome_produto = $_POST['nome_produto'] ?? ''; // VARCHAR
@@ -179,43 +213,42 @@ if (isset($_FILES['imagem_original']) && $_FILES['imagem_original']['error'] ===
     $ordem = 0; // NUMERIC
     $id_hotel = null; // INT
     $id_service = null; // INT
-    $id_city = null; // INT (pode ser set to fk_cidcod if same)
+    $id_city = null; // INT
     $id_special_destination = null; // INT
 
-    // Query INSERT com todas as colunas relevantes (inclui data_cadastro, omite pk auto)
     $query_insert = "INSERT INTO banco_imagem.bco_img (mneu_for, fk_cidcod, tam_1, tam_2, tam_3, tam_4, tam_5, zip, legenda, autor, origem, autorizacao, data_cadastro, palavras_chave, tp_produto, ativo_cli, nome_produto, legenda_pt, legenda_esp, av3, av, dt_validade, fachada, nacional, ordem, id_hotel, id_service, id_city, id_special_destination) 
                      VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20, $21, $22, $23, $24, $25, $26, $27, $28, $29)";
 
     $result = pg_query_params($conn, $query_insert, [
-        $mneu_for,                  // 1 VARCHAR
-        $fk_cidcod,                 // 2 NUMERIC (int)
-        $paths['tam_1'] ?? '',      // 3 VARCHAR
-        $paths['tam_2'] ?? '',      // 4 VARCHAR
-        $paths['tam_3'] ?? '',      // 5 VARCHAR
-        $paths['tam_4'] ?? '',      // 6 VARCHAR
-        $paths['tam_5'],            // 7 VARCHAR
-        $paths['zip'],              // 8 VARCHAR
-        $legenda,                   // 9 VARCHAR
-        $autor,                     // 10 VARCHAR
-        $origem,                    // 11 text
-        $autorizacao,               // 12 text
-        $data_cadastro,             // 13 DATE (string 'YYYY-MM-DD')
-        $palavras_chave,            // 14 text
-        $tp_produto,                // 15 NUMERIC (int)
-        $ativo_cli,                 // 16 BOOLEAN (bool)
-        $nome_produto,              // 17 VARCHAR
-        $legenda_pt,                // 18 VARCHAR
-        $legenda_esp,               // 19 VARCHAR
-        $av3,                       // 20 BOOLEAN
-        $av,                        // 21 BOOLEAN
-        $dt_validade,               // 22 DATE (null)
-        $fachada,                   // 23 BOOLEAN
-        $nacional,                  // 24 BOOLEAN
-        $ordem,                     // 25 NUMERIC (int)
-        $id_hotel,                  // 26 INT (null)
-        $id_service,                // 27 INT (null)
-        $id_city,                   // 28 INT (null)
-        $id_special_destination     // 29 INT (null)
+        $mneu_for,
+        $fk_cidcod,
+        $paths['tam_1'] ?? '',
+        $paths['tam_2'] ?? '',
+        $paths['tam_3'] ?? '',
+        $paths['tam_4'] ?? '',
+        $paths['tam_5'],
+        $paths['zip'],
+        $legenda,
+        $autor,
+        $origem,
+        $autorizacao,
+        $data_cadastro,
+        $palavras_chave,
+        $tp_produto,
+        $ativo_cli,
+        $nome_produto,
+        $legenda_pt,
+        $legenda_esp,
+        $av3,
+        $av,
+        $dt_validade,
+        $fachada,
+        $nacional,
+        $ordem,
+        $id_hotel,
+        $id_service,
+        $id_city,
+        $id_special_destination
     ]);
 
     if ($result) {
@@ -223,7 +256,7 @@ if (isset($_FILES['imagem_original']) && $_FILES['imagem_original']['error'] ===
     } else {
         // Cleanup files on error
         foreach (array_values($paths) as $rel_path) {
-            $full_path = $upload_dir . $rel_path;
+            $full_path = $root_dir . $rel_path;
             if (file_exists($full_path)) {
                 unlink($full_path);
             }
