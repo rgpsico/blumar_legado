@@ -197,7 +197,6 @@ switch ($action) {
         }
         break;
 
-
     // 🔹 LISTAR IMAGENS DE UM HOTEL
     case 'list':
         if ($_SERVER['REQUEST_METHOD'] !== 'GET') {

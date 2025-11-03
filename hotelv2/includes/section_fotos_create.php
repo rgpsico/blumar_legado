@@ -87,7 +87,7 @@
     }
     const hotelIdCreate = window.galleryHotelId;
 
-    const apiBaseUrl = 'http://localhost/blumar_legado/blumar/api/hotel_gallery_api.php';
+    const apiBaseUrlCreate = 'http://localhost/blumar_legado/blumar/api/hotel_gallery_api.php';
 
     var modal = new bootstrap.Modal(document.getElementById('galleryModal'));
     var selectedImages = [];
@@ -167,7 +167,7 @@
 
         // Busca imagens via API
         $.ajax({
-            url: `${apiBaseUrl}?action=list&hotel_id=${encodeURIComponent(hotelIdCreate)}`,
+            url: `${apiBaseUrlCreate}?action=list&hotel_id=${encodeURIComponent(hotelIdCreate)}`,
             type: 'GET',
             dataType: 'json',
             success: function(data) {

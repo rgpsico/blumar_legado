@@ -102,43 +102,57 @@
     if (typeof window.galleryHotelId === 'undefined') {
         window.galleryHotelId = <?= json_encode($frncod ?? ''); ?>;
     }
-    const hotelId = window.galleryHotelId;
+    if (typeof window.hotelIdEdit === 'undefined') {
+        window.hotelIdEdit = window.galleryHotelId;
+    }
+    if (typeof window.apiBaseUrl === 'undefined') {
+        window.apiBaseUrl = 'http://localhost/blumar_legado/blumar/api/hotel_gallery_api.php';
 
-    const apiBaseUrl = 'http://localhost/blumar_legado/blumar/api/hotel_gallery_api.php';
+    }
 
     var modal = new bootstrap.Modal(document.getElementById('galleryModal'));
     var selectedImages = [];
+    var galleryAllImages = []; // Armazena todas as imagens da API para uso em thumbs
 
-    // Função para carregar lista de imagens (usada após upload ou ao abrir modal)
-    function loadImages() {
-        if (!hotelId) {
-            $('#images_loading').hide();
-            $('#no_images').show().html('ID do hotel não encontrado. Faça upload após salvar o hotel.');
+    // Função para carregar TODAS as imagens da galeria do hotel (para thumbs e modal)
+    function loadGalleryImages(callback) {
+        if (!window.hotelIdEdit) {
+            console.warn('ID do hotel não encontrado para loadGalleryImages.');
+            if (callback) callback([]);
             return;
         }
 
-        $('#images_loading').show();
-        $('#images_container').empty().hide();
-        $('#no_images').hide();
-
         $.ajax({
-            url: `${apiBaseUrl}?action=list&hotel_id=${encodeURIComponent(hotelId)}`,
+            url: `${window.apiBaseUrl}?action=list&hotel_id=${encodeURIComponent(window.hotelIdEdit)}`,
             type: 'GET',
             dataType: 'json',
             success: function(data) {
-                console.log(data)
-                $('#images_loading').hide();
-                if (data.total > 0 && data.images) {
-                    $('#images_container').show();
-                    renderImages(data.images);
+                console.log('Dados da API para galeria:', data);
+                if (data && data.images) {
+                    galleryAllImages = data.images;
+                    if (callback) callback(data.images);
                 } else {
-                    $('#no_images').show();
+                    galleryAllImages = [];
+                    if (callback) callback([]);
                 }
             },
             error: function(xhr, status, error) {
-                $('#images_loading').hide();
-                console.error('Erro ao carregar imagens:', error);
-                $('#no_images').show().html('Erro ao carregar imagens: ' + error);
+                console.error('Erro ao carregar galeria:', xhr.responseText);
+                galleryAllImages = [];
+                if (callback) callback([]);
+            }
+        });
+    }
+
+    // Função para carregar lista de imagens no modal
+    function loadImages() {
+        loadGalleryImages(function(images) {
+            $('#images_loading').hide();
+            if (images && images.length > 0) {
+                $('#images_container').show();
+                renderImages(images);
+            } else {
+                $('#no_images').show().html('Nenhuma imagem encontrada para este hotel no banco de dados.');
             }
         });
     }
@@ -154,7 +168,7 @@
         formData.append('id', imgId);
 
         $.ajax({
-            url: apiBaseUrl,
+            url: window.apiBaseUrl,
             type: 'POST',
             data: formData,
             processData: false,
@@ -167,8 +181,11 @@
                     selectedImages = selectedImages.filter(function(u) {
                         return u !== imgUrl;
                     });
-                    // Recarrega a lista
-                    loadImages();
+                    // Recarrega todas as imagens e re-renderiza thumbs
+                    loadGalleryImages(function() {
+                        renderSelectedThumbs();
+                        loadImages(); // Recarrega modal se aberto
+                    });
                 } else {
                     alert('Erro ao excluir: ' + (data.error || 'Desconhecido'));
                 }
@@ -179,34 +196,28 @@
         });
     }
 
-    // Função para renderizar thumbnails selecionadas
+    // Função para renderizar thumbnails selecionadas (agora via API)
     function renderSelectedThumbs() {
         var container = $('#selected_gallery_thumbs');
-        var currentValue = $('#gallery_images').val().trim();
-        var currentUrls = currentValue ? currentValue.split(',').map(function(u) {
-            return u.trim();
-        }).filter(function(u) {
-            return u;
-        }) : [];
 
-        container.empty();
-        if (currentUrls.length === 0) {
-            container.append('<div class="col-12"><small class="text-muted">Nenhuma imagem selecionada.</small></div>');
+        if (!galleryAllImages || galleryAllImages.length === 0) {
+            container.html('<div class="col-12"><small class="text-muted">Nenhuma imagem cadastrada.</small></div>');
             return;
         }
 
-        currentUrls.forEach(function(url, index) {
+        container.empty();
 
+        galleryAllImages.forEach(function(img, index) {
             var thumbDiv = $(`
             <div class="col-md-2 col-sm-3 col-4 mb-2 position-relative">
-                <img src="${url}" 
-                     alt="Thumbnail ${index + 1}" 
+                <img src="${img.image_url}" 
+                     alt="${img.title || 'Imagem ' + img.id}" 
                      class="img-fluid rounded" 
                      style="height: 100px; object-fit: cover; width: 100%;"
                      onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZGRkIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxMiIgZmlsbD0iIzk5OSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZHk9Ii4zZW0iPlNlbSBJbWFnZW08L3RleHQ+PC9zdmc+';">
                 <button type="button" class="btn btn-danger btn-sm position-absolute top-0 end-0 m-1" 
                         style="border-radius: 50%; width: 20px; height: 20px; padding: 0; font-size: 10px; z-index: 1;"
-                        onclick="removeSelectedImage(${index})">
+                        onclick="deleteImage(${img.id}, '${img.image_url.replace(/'/g, "\\'")}')">
                     ×
                 </button>
             </div>
@@ -215,7 +226,7 @@
         });
     }
 
-    // Função para remover uma imagem selecionada
+    // Função para remover uma imagem selecionada (atualiza textbox e re-renderiza)
     function removeSelectedImage(indexToRemove) {
         var currentValue = $('#gallery_images').val().trim();
         var currentUrls = currentValue ? currentValue.split(',').map(function(u) {
@@ -225,15 +236,24 @@
         }) : [];
 
         if (indexToRemove >= 0 && indexToRemove < currentUrls.length) {
-            currentUrls.splice(indexToRemove, 1);
+            var removedUrl = currentUrls.splice(indexToRemove, 1)[0];
             $('#gallery_images').val(currentUrls.join(', '));
-            renderSelectedThumbs(); // Re-renderiza após remoção
+            // Recarrega galeria e re-renderiza
+            loadGalleryImages(function() {
+                renderSelectedThumbs();
+            });
         }
     }
 
-    // Inicializa thumbnails na carga da página
+    // Inicializa thumbnails na carga da página (carrega da API)
     $(document).ready(function() {
-        renderSelectedThumbs();
+        if (window.hotelIdEdit) {
+            loadGalleryImages(function() {
+                renderSelectedThumbs();
+            });
+        } else {
+            renderSelectedThumbs(); // Fallback se sem ID
+        }
     });
 
     // Listener para mudanças manuais na textarea (opcional, para sync se editar direto)
@@ -249,7 +269,7 @@
             return;
         }
 
-        if (!hotelId) {
+        if (!window.hotelIdEdit) {
             alert('ID do hotel não encontrado. Salve o hotel primeiro para fazer upload.');
             return;
         }
@@ -259,7 +279,7 @@
             formData.append('images[]', files[i]);
         }
         formData.append('action', 'upload');
-        formData.append('hotel_id', hotelId);
+        formData.append('hotel_id', window.hotelIdEdit);
 
         var progressBar = $('#upload_progress');
         var progress = progressBar.find('.progress-bar');
@@ -268,7 +288,7 @@
         status.html('<small class="text-info">Iniciando upload...</small>');
 
         $.ajax({
-            url: apiBaseUrl,
+            url: window.apiBaseUrl,
             type: 'POST',
             data: formData,
             processData: false,
@@ -285,15 +305,21 @@
                 return xhr;
             },
             success: function(data) {
+                console.log('Upload response:', data);
                 progressBar.hide();
                 if (data.success) {
                     status.html('<small class="text-success">Upload concluído! Recarregando lista de imagens...</small>');
-                    loadImages(); // Recarrega a lista para incluir as novas imagens
+                    // Recarrega galeria após upload
+                    loadGalleryImages(function() {
+                        renderSelectedThumbs();
+                        loadImages(); // Se modal aberto
+                    });
                 } else {
                     status.html('<small class="text-danger">Erro no upload: ' + (data.error || 'Desconhecido') + '</small>');
                 }
             },
             error: function(xhr, status, error) {
+                console.error('Upload error:', xhr.responseText);
                 progressBar.hide();
                 status.html('<small class="text-danger">Erro no upload: ' + error + '</small>');
             }
@@ -301,7 +327,7 @@
     });
 
     $('#select_gallery_images').on('click', function() {
-        if (!hotelId) {
+        if (!window.hotelIdEdit) {
             alert('ID do hotel não encontrado. Não é possível carregar as imagens.');
             return;
         }
@@ -314,7 +340,12 @@
     });
 
     function renderImages(images) {
+        console.log('Rendering images:', images);
         $('#images_container').empty();
+        if (!images || images.length === 0) {
+            $('#no_images').show();
+            return;
+        }
         images.forEach(function(imgData, index) {
             var url = imgData.image_url || '';
             var previewUrl = imgData.image_url || '';
@@ -330,7 +361,7 @@
                                     Imagem ${index + 1} (ID: ${imgData.id})
                                 </label>
                             </div>
-                            <button type="button" class="btn btn-danger btn-sm" onclick="deleteImage(${imgData.id}, '${url}')">
+                            <button type="button" class="btn btn-danger btn-sm" onclick="deleteImage(${imgData.id}, '${url.replace(/'/g, "\\'")}')">
                                 <i class="bi bi-trash"></i> Excluir
                             </button>
                         </div>
@@ -403,7 +434,9 @@
         $('#gallery_images').val(currentUrls.join(', '));
 
         // Renderiza as thumbnails atualizadas
-        renderSelectedThumbs();
+        loadGalleryImages(function() {
+            renderSelectedThumbs();
+        });
 
         modal.hide();
     });
