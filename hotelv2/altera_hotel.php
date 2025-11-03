@@ -519,7 +519,7 @@ if (!empty($ultimo_update)) {
 				</div>
 
 				<!-- Passo 3: Fotos e Galeria -->
-				<?php include('section_fotos.php'); ?>
+				<?php include('includes/section_fotos_edit.php'); ?>
 
 				<!-- Passo 4: Apartamentos -->
 				<div class="step-content" data-step="4">
