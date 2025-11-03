@@ -635,16 +635,16 @@
                         this.loading = true;
                         // Pega o ID da URL
                         const urlParams = new URLSearchParams(window.location.search);
-                        const hotelId = urlParams.get('id');
+                        const hotelIdShow = urlParams.get('id');
 
-                        if (!hotelId) {
+                        if (!hotelIdShow) {
                             console.error('ID do hotel não encontrado na URL');
                             return;
                         }
 
                         // Busca o hotel específico
                         const response = await axios.get(`${this.apiUrl}?request=listar_hoteis`);
-                        this.hotel = response.data.find(h => h.codigo === hotelId) || {};
+                        this.hotel = response.data.find(h => h.codigo === hotelIdShow) || {};
 
                         // Define imagem principal com prefixo correto
                         this.imagemPrincipal = this.getImageUrl(this.hotel.imagem_fachada || this.hotel.htlimgfotofachada);

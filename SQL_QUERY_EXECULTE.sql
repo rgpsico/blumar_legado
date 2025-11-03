@@ -1,4 +1,4 @@
-CREATE TABLE hotel_gallery_image (
+CREATE TABLE conteudo_internet.hotel_gallery_image (
     id SERIAL PRIMARY KEY,
     hotel_id INTEGER NOT NULL,
     image_url TEXT NOT NULL,

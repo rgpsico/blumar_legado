@@ -57,6 +57,23 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
+                <!-- Seção de Upload -->
+                <div class="card mb-3" id="upload_section" style="display: <?= $frncod ? 'block' : 'none'; ?>;">
+                    <div class="card-header">
+                        <h6>Upload de Nova Imagem</h6>
+                    </div>
+                    <div class="card-body">
+                        <div class="input-group">
+                            <input type="file" class="form-control" id="image_upload" multiple accept="image/*">
+                            <button type="button" class="btn btn-primary" id="upload_images">Fazer Upload</button>
+                        </div>
+                        <div id="upload_progress" class="progress mt-2" style="display: none;">
+                            <div class="progress-bar" role="progressbar" style="width: 0%;">0%</div>
+                        </div>
+                        <div id="upload_status" class="mt-2"></div>
+                    </div>
+                </div>
+
                 <div class="mb-3">
                     <button type="button" class="btn btn-secondary me-2" id="select_all">Selecionar Todas</button>
                     <button type="button" class="btn btn-secondary" id="deselect_all">Deselecionar Todas</button>
@@ -92,6 +109,40 @@
     var modal = new bootstrap.Modal(document.getElementById('galleryModal'));
     var selectedImages = [];
 
+    // Função para carregar lista de imagens (usada após upload ou ao abrir modal)
+    function loadImages() {
+        if (!hotelId) {
+            $('#images_loading').hide();
+            $('#no_images').show().html('ID do hotel não encontrado. Faça upload após salvar o hotel.');
+            return;
+        }
+
+        $('#images_loading').show();
+        $('#images_container').empty().hide();
+        $('#no_images').hide();
+
+        $.ajax({
+            url: `${apiBaseUrl}?action=list&hotel_id=${encodeURIComponent(hotelId)}`,
+            type: 'GET',
+            dataType: 'json',
+            success: function(data) {
+                console.log(data)
+                $('#images_loading').hide();
+                if (data.total > 0 && data.images) {
+                    $('#images_container').show();
+                    renderImages(data.images);
+                } else {
+                    $('#no_images').show();
+                }
+            },
+            error: function(xhr, status, error) {
+                $('#images_loading').hide();
+                console.error('Erro ao carregar imagens:', error);
+                $('#no_images').show().html('Erro ao carregar imagens: ' + error);
+            }
+        });
+    }
+
     // Função para renderizar thumbnails selecionadas
     function renderSelectedThumbs() {
         var container = $('#selected_gallery_thumbs');
@@ -109,6 +160,7 @@
         }
 
         currentUrls.forEach(function(url, index) {
+
             var thumbDiv = $(`
             <div class="col-md-2 col-sm-3 col-4 mb-2 position-relative">
                 <img src="${url}" 
@@ -153,6 +205,65 @@
         renderSelectedThumbs();
     });
 
+    // Upload de imagens
+    $('#upload_images').on('click', function() {
+        var files = $('#image_upload')[0].files;
+        if (files.length === 0) {
+            alert('Selecione pelo menos uma imagem para upload.');
+            return;
+        }
+
+        if (!hotelId) {
+            alert('ID do hotel não encontrado. Salve o hotel primeiro para fazer upload.');
+            return;
+        }
+
+        var formData = new FormData();
+        for (var i = 0; i < files.length; i++) {
+            formData.append('images[]', files[i]);
+        }
+        formData.append('action', 'upload');
+        formData.append('hotel_id', hotelId);
+
+        var progressBar = $('#upload_progress');
+        var progress = progressBar.find('.progress-bar');
+        var status = $('#upload_status');
+        progressBar.show();
+        status.html('<small class="text-info">Iniciando upload...</small>');
+
+        $.ajax({
+            url: apiBaseUrl,
+            type: 'POST',
+            data: formData,
+            processData: false,
+            contentType: false,
+            dataType: 'json',
+            xhr: function() {
+                var xhr = new window.XMLHttpRequest();
+                xhr.upload.addEventListener('progress', function(e) {
+                    if (e.lengthComputable) {
+                        var percent = (e.loaded / e.total) * 100;
+                        progress.css('width', percent + '%').text(Math.round(percent) + '%');
+                    }
+                });
+                return xhr;
+            },
+            success: function(data) {
+                progressBar.hide();
+                if (data.success) {
+                    status.html('<small class="text-success">Upload concluído! Recarregando lista de imagens...</small>');
+                    loadImages(); // Recarrega a lista para incluir as novas imagens
+                } else {
+                    status.html('<small class="text-danger">Erro no upload: ' + (data.error || 'Desconhecido') + '</small>');
+                }
+            },
+            error: function(xhr, status, error) {
+                progressBar.hide();
+                status.html('<small class="text-danger">Erro no upload: ' + error + '</small>');
+            }
+        });
+    });
+
     $('#select_gallery_images').on('click', function() {
         if (!hotelId) {
             alert('ID do hotel não encontrado. Não é possível carregar as imagens.');
@@ -161,31 +272,7 @@
 
         // Limpa seleções anteriores
         selectedImages = [];
-        $('#images_container').empty().hide();
-        $('#no_images').hide();
-        $('#images_loading').show();
-
-        // Busca imagens via API
-        $.ajax({
-            url: `${apiBaseUrl}?action=list&hotel_id=${encodeURIComponent(hotelId)}`,
-            type: 'GET',
-            dataType: 'json',
-            success: function(data) {
-                $('#images_loading').hide();
-                if (data.total > 0 && data.images) {
-                    $('#images_container').show();
-                    renderImages(data.images);
-                } else {
-                    $('#no_images').show();
-                }
-            },
-            error: function(xhr, status, error) {
-                $('#images_loading').hide();
-                console.error('Erro ao carregar imagens:', error);
-                alert('Erro ao carregar imagens do hotel. Verifique o console para detalhes.');
-                $('#no_images').show().html('Erro ao carregar imagens: ' + error);
-            }
-        });
+        loadImages(); // Usa a nova função loadImages
 
         modal.show();
     });

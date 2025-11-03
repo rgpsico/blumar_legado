@@ -81,11 +81,11 @@
 </div>
 
 <script>
-    // Para modo create, hotelId é vazio inicialmente
+    // Para modo create, hotelIdCreate é vazio inicialmente
     if (typeof window.galleryHotelId === 'undefined') {
         window.galleryHotelId = '';
     }
-    const hotelId = window.galleryHotelId;
+    const hotelIdCreate = window.galleryHotelId;
 
     const apiBaseUrl = 'http://localhost/blumar_legado/blumar/api/hotel_gallery_api.php';
 
@@ -154,7 +154,7 @@
     });
 
     $('#select_gallery_images').on('click', function() {
-        if (!hotelId) {
+        if (!hotelIdCreate) {
             alert('ID do hotel não encontrado. Salve o hotel primeiro para carregar as imagens da galeria.');
             return;
         }
@@ -167,7 +167,7 @@
 
         // Busca imagens via API
         $.ajax({
-            url: `${apiBaseUrl}?action=list&hotel_id=${encodeURIComponent(hotelId)}`,
+            url: `${apiBaseUrl}?action=list&hotel_id=${encodeURIComponent(hotelIdCreate)}`,
             type: 'GET',
             dataType: 'json',
             success: function(data) {
