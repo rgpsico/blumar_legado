@@ -1079,7 +1079,7 @@ ksort($categories);
                                             $endpointDesc = is_array($endpoint) ? $endpoint['description'] : '';
 
                                             // Constrói URL completa
-                                            $baseUrl = 'https://intranet.blumar.com.br/nova_intra/admin/conteudo/api/';
+                                            $baseUrl = 'https://webdeveloper.blumar.com.br/desenv/roger/conteudo/api/';
                                             $fullUrl = $baseUrl . $api['relativePath'] . $endpointUrl;
                                             ?>
                                             <div class="endpoint-box">

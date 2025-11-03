@@ -84,8 +84,20 @@
 // ========================================
 // 🔧 CONFIGURAÇÕES INICIAIS
 // ========================================
+
 date_default_timezone_set('America/Sao_Paulo');
 
+// Configuração de CORS - Adicione isso no topo do arquivo
+header('Access-Control-Allow-Origin: https://webdeveloper.blumar.com.br');  // Origem específica do frontend (mude para '*' em dev se precisar)
+header('Access-Control-Allow-Methods: GET, POST, PUT, DELETE, PATCH, OPTIONS');
+header('Access-Control-Allow-Headers: Content-Type, Authorization, X-Requested-With');
+header('Access-Control-Allow-Credentials: true');  // Se precisar de cookies/sessões
+
+// Lidar com preflight (OPTIONS) - retorna 200 sem processar o resto
+if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
+    http_response_code(200);
+    exit(0);
+}
 header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json; charset=UTF-8");
 
