@@ -344,51 +344,7 @@ if ($result_hoteis_pendentes && pg_numrows($result_hoteis_pendentes) > 0) {
 				</div>
 
 				<!-- Passo 3: Fotos e Galeria -->
-				<div class="step-content" data-step="3">
-					<h3 class="form-section-title">Fotos e Galeria</h3>
-					<div class="row g-3">
-						<div class="col-md-6">
-							<label class="form-label">Fachada</label>
-							<input type="text" class="form-control" name="foto_fachada" id="foto_fachada" maxlength="100">
-						</div>
-						<div class="col-md-6">
-							<label class="form-label">Fachada TBN</label>
-							<input type="text" class="form-control" name="fotofachada_tbn" id="fotofachada_tbn" maxlength="100">
-						</div>
-						<div class="col-md-6">
-							<label class="form-label">Piscina</label>
-							<input type="text" class="form-control" name="fotopiscina" id="fotopiscina" maxlength="100">
-						</div>
-						<div class="col-md-6">
-							<label class="form-label">Foto Extra 1</label>
-							<input type="text" class="form-control" name="fotoextra" id="fotoextra" maxlength="100">
-						</div>
-						<div class="col-md-6">
-							<label class="form-label">Foto Extra 2 (Recepção)</label>
-							<input type="text" class="form-control" name="fotoextra_recep" id="fotoextra_recep" maxlength="100">
-						</div>
-						<div class="col-md-6">
-							<label class="form-label">Foto Extra 3</label>
-							<input type="text" class="form-control" name="ft_resort1" id="ft_resort1" maxlength="100">
-						</div>
-						<div class="col-md-6">
-							<label class="form-label">Foto Extra 4</label>
-							<input type="text" class="form-control" name="ft_resort2" id="ft_resort2" maxlength="100">
-						</div>
-						<div class="col-md-6">
-							<label class="form-label">Foto Extra 5</label>
-							<input type="text" class="form-control" name="ft_resort3" id="ft_resort3" maxlength="100">
-						</div>
-						<div class="col-md-12">
-							<label class="form-label">Imagens da Galeria <small class="text-muted">(URLs separadas por vírgula)</small></label>
-							<textarea class="form-control" name="gallery_images" id="gallery_images" rows="3"></textarea>
-						</div>
-						<div class="col-md-12">
-							<label class="form-label">Imagem da Planta Baixa</label>
-							<input type="text" class="form-control" name="blueprint_image" id="blueprint_image" maxlength="255">
-						</div>
-					</div>
-				</div>
+				<?php include('includes/section_fotos_create.php'); ?>
 
 				<!-- Passo 4: Apartamentos -->
 				<div class="step-content" data-step="4">

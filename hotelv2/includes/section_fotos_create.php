@@ -3,47 +3,47 @@
     <div class="row g-3">
         <div class="col-md-6">
             <label class="form-label">Fachada</label>
-            <input type="text" class="form-control" name="htlimgfotofachada" maxlength="150" value="<?= htmlspecialchars($htlimgfotofachada) ?>">
+            <input type="text" class="form-control" name="htlimgfotofachada" maxlength="150" value="">
         </div>
         <div class="col-md-6">
             <label class="form-label">Fachada TBN</label>
-            <input type="text" class="form-control" name="fotofachada_tbn" maxlength="150" value="<?= htmlspecialchars($fotofachada_tbn) ?>">
+            <input type="text" class="form-control" name="fotofachada_tbn" maxlength="150" value="">
         </div>
         <div class="col-md-6">
             <label class="form-label">Piscina</label>
-            <input type="text" class="form-control" name="htlfotopiscina" maxlength="150" value="<?= htmlspecialchars($htlfotopiscina) ?>">
+            <input type="text" class="form-control" name="htlfotopiscina" maxlength="150" value="">
         </div>
         <div class="col-md-6">
             <label class="form-label">Foto Extra 1</label>
-            <input type="text" class="form-control" name="fotoextra" maxlength="150" value="<?= htmlspecialchars($fotoextra) ?>">
+            <input type="text" class="form-control" name="fotoextra" maxlength="150" value="">
         </div>
         <div class="col-md-6">
             <label class="form-label">Foto Extra 2 (Recepção)</label>
-            <input type="text" class="form-control" name="fotoextra_recep" maxlength="150" value="<?= htmlspecialchars($fotoextra_recep) ?>">
+            <input type="text" class="form-control" name="fotoextra_recep" maxlength="150" value="">
         </div>
         <div class="col-md-6">
             <label class="form-label">Foto Extra 3</label>
-            <input type="text" class="form-control" name="ft_resort1" maxlength="150" value="<?= htmlspecialchars($ft_resort1) ?>">
+            <input type="text" class="form-control" name="ft_resort1" maxlength="150" value="">
         </div>
         <div class="col-md-6">
             <label class="form-label">Foto Extra 4</label>
-            <input type="text" class="form-control" name="ft_resort2" maxlength="150" value="<?= htmlspecialchars($ft_resort2) ?>">
+            <input type="text" class="form-control" name="ft_resort2" maxlength="150" value="">
         </div>
         <div class="col-md-6">
             <label class="form-label">Foto Extra 5</label>
-            <input type="text" class="form-control" name="ft_resort3" maxlength="150" value="<?= htmlspecialchars($ft_resort3) ?>">
+            <input type="text" class="form-control" name="ft_resort3" maxlength="150" value="">
         </div>
         <div class="col-md-12">
             <label class="form-label">Imagens da Galeria <small class="text-muted">(Visualize e gerencie as imagens selecionadas abaixo)</small></label>
             <!-- Textarea oculta, mantida para submissão do form -->
-            <textarea class="form-control d-none" name="gallery_images" id="gallery_images" rows="3"><?= htmlspecialchars($gallery_images) ?></textarea>
-            <button type="button" class="btn btn-outline-primary mt-1" id="select_gallery_images">Selecionar Imagens</button>
+            <textarea class="form-control d-none" name="gallery_images" id="gallery_images" rows="3"></textarea>
+            <button type="button" class="btn btn-outline-primary mt-1" id="select_gallery_images" disabled>Selecionar Imagens (Disponível após salvar)</button>
             <!-- Container para thumbnails selecionadas -->
             <div id="selected_gallery_thumbs" class="row mt-2"></div>
         </div>
         <div class="col-md-12">
             <label class="form-label">Imagem da Planta Baixa</label>
-            <input type="text" class="form-control" name="blueprint_image" maxlength="255" value="<?= htmlspecialchars($blueprint_image) ?>">
+            <input type="text" class="form-control" name="blueprint_image" maxlength="255" value="">
         </div>
     </div>
 </div>
@@ -81,9 +81,9 @@
 </div>
 
 <script>
-    // Evita redeclaração: usa window para escopo global único
+    // Para modo create, hotelId é vazio inicialmente
     if (typeof window.galleryHotelId === 'undefined') {
-        window.galleryHotelId = <?= json_encode($frncod ?? ''); ?>;
+        window.galleryHotelId = '';
     }
     const hotelId = window.galleryHotelId;
 
@@ -155,7 +155,7 @@
 
     $('#select_gallery_images').on('click', function() {
         if (!hotelId) {
-            alert('ID do hotel não encontrado. Não é possível carregar as imagens.');
+            alert('ID do hotel não encontrado. Salve o hotel primeiro para carregar as imagens da galeria.');
             return;
         }
 
