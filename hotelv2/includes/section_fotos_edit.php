@@ -143,6 +143,42 @@
         });
     }
 
+    // Função para excluir imagem do banco e pasta
+    function deleteImage(imgId, imgUrl) {
+        if (!confirm('Tem certeza que deseja excluir esta imagem? Isso removerá o arquivo e o registro do banco.')) {
+            return;
+        }
+
+        var formData = new FormData();
+        formData.append('action', 'delete');
+        formData.append('id', imgId);
+
+        $.ajax({
+            url: apiBaseUrl,
+            type: 'POST',
+            data: formData,
+            processData: false,
+            contentType: false,
+            dataType: 'json',
+            success: function(data) {
+                if (data.action === 'delete') {
+                    alert('Imagem excluída com sucesso!');
+                    // Remove da lista selecionada se estiver
+                    selectedImages = selectedImages.filter(function(u) {
+                        return u !== imgUrl;
+                    });
+                    // Recarrega a lista
+                    loadImages();
+                } else {
+                    alert('Erro ao excluir: ' + (data.error || 'Desconhecido'));
+                }
+            },
+            error: function(xhr, status, error) {
+                alert('Erro na requisição: ' + error);
+            }
+        });
+    }
+
     // Função para renderizar thumbnails selecionadas
     function renderSelectedThumbs() {
         var container = $('#selected_gallery_thumbs');
@@ -287,11 +323,16 @@
             <div class="col-md-4 mb-3">
                 <div class="card">
                     <div class="card-body">
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="img_${index}" value="${url}">
-                            <label class="form-check-label" for="img_${index}">
-                                Imagem ${index + 1} (ID: ${imgData.id})
-                            </label>
+                        <div class="d-flex justify-content-between align-items-start mb-2">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="img_${index}" value="${url}">
+                                <label class="form-check-label" for="img_${index}">
+                                    Imagem ${index + 1} (ID: ${imgData.id})
+                                </label>
+                            </div>
+                            <button type="button" class="btn btn-danger btn-sm" onclick="deleteImage(${imgData.id}, '${url}')">
+                                <i class="bi bi-trash"></i> Excluir
+                            </button>
                         </div>
                         <img src="${previewUrl}" 
                              alt="Preview" class="img-fluid mt-2" style="max-height: 200px; object-fit: cover;" 
