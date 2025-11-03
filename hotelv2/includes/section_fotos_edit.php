@@ -106,7 +106,7 @@
         window.hotelIdEdit = window.galleryHotelId;
     }
     if (typeof window.apiBaseUrl === 'undefined') {
-        window.apiBaseUrl = 'http://localhost/blumar_legado/blumar/api/hotel_gallery_api.php';
+        window.apiBaseUrl = <?= json_encode(API_URL . '/hotel_gallery_api.php'); ?>;
 
     }
 

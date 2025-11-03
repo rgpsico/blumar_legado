@@ -121,7 +121,7 @@ switch ($action) {
         $upload_dir = $base_dir . '/uploads/hotel_gallery/' . $hotel_id . '/';
 
         // Caminho web base (para gerar a URL pública)
-        $base_url = 'http://localhost/blumar_legado/blumar';
+        $base_url = BASE_URL;
 
         // Garante que o diretório exista
         if (!is_dir($upload_dir)) {
