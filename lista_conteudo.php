@@ -50,6 +50,7 @@ if (isset($_SESSION['conteudo'])) {
 <script type="text/javascript" src="js/eco.js"></script>
 <script type="text/javascript" src="js/restaurante.js?v=1.1"></script>
 <script type="text/javascript" src="js/venues.js"></script>
+<script type="text/javascript" src="js/venuesv2.js"></script>
 <script type="text/javascript" src="js/various.js"></script>
 <script type="text/javascript" src="js/abt.js?v=3.6"></script>
 <script type="text/javascript" src="js/news.js?v=1.1"></script>
@@ -379,6 +380,10 @@ if (isset($_SESSION['conteudo'])) {
 							if ($pk_conteudo == '6') {
 								if ($cad_venues == 't') {
 									echo '<div id="texto3"><a href="##" class="text-decoration-none text-dark" onclick="javascript:acao_venues();">' . $nomecont . '</a></div>';
+								}
+
+								if ($cad_venues == 't') {
+									echo '<div id="texto3"><a href="##" class="text-decoration-none text-dark" onclick="javascript:acao_venuesv2();">Venues V2 </a></div>';
 								}
 							}
 
