@@ -1,22 +1,19 @@
 function acao_hotelv2() {
-
 	$.ajax({
 		dataType: "html",
 		url: "hotelv2/miolo_hotel.php",
-		// FUNÇÃO ERRO
 		error: function () {
 			alert("Error when retrieving hotel content!");
 		},
-
 		success: function (resposta) {
 			$("#container_miolo").html(resposta);
 
+			// 🔹 Vai direto pro topo instantaneamente
+			window.scrollTo(0, 0);
 		}
-
-
 	});
-
 }
+
 
 
 
