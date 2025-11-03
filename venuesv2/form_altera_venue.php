@@ -1,7 +1,9 @@
 <?php
 require_once '../util/connection.php';
 
-$cod_venue = (int) $_GET["cod_venue"];
+
+
+$cod_venue = (int) $_REQUEST["cod_venue"];
 
 // Default values if no venue found
 $cod_venues = '';

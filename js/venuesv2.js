@@ -55,10 +55,9 @@ function novo_venuev2() {
 // Função para editar venue (já existe, só adaptando)
 function editar_venue(cod_venues) {
 	$.ajax({
-		dataType: "html",
-		url: "venuesv2/form_altera_venue.php",
+		url: "venuesv2/form_altera_venue.php?cod_venue=" + cod_venues,
 		data: {
-			cod_venues: cod_venues
+			cod_venue: cod_venues
 		},
 		error: function () {
 			alert("Error when retrieving venue form!");
