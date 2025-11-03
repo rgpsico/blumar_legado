@@ -383,7 +383,7 @@ if (isset($_SESSION['conteudo'])) {
 								}
 
 								if ($cad_venues == 't') {
-									echo '<div id="texto3"><a href="##" class="text-decoration-none text-dark" onclick="javascript:acao_venuesv2();">Venues V2 </a></div>';
+									echo '<div id="texto3"><a href="##" class="text-decoration-none text-dark" onclick="saveState(\'venuesv2\'); acao_venuesv2();">Venues V2 </a></div>';
 								}
 							}
 
@@ -746,7 +746,11 @@ if (isset($_SESSION['conteudo'])) {
 							   
 							</div> 
 						</div> <br> 
-						'; ?>
+
+
+'; ?>
+
+
 
 		<script type="text/javascript">
 			// Função para salvar estado
@@ -761,6 +765,7 @@ if (isset($_SESSION['conteudo'])) {
 			$(document).ready(function() {
 				var savedSection = localStorage.getItem("currentSection");
 				var savedSession = localStorage.getItem("userSession");
+
 				if (savedSection && savedSession === pk_acessoSession) {
 					// Chama a função correspondente para recarregar
 					switch (savedSection) {
@@ -770,11 +775,83 @@ if (isset($_SESSION['conteudo'])) {
 						case "hotel":
 							acao_hotel();
 							break;
+						case "hotelv2":
+							acao_hotelv2();
+							break;
 						case "tours":
 							acao_tours();
 							break;
-							// Adicione cases para todas as seções (eco, restaurante, etc.)
-						default:
+						case "eco":
+							acao_ecos();
+							break;
+						case "restaurante":
+							acao_restaurante();
+							break;
+						case "venues":
+							acao_venues();
+							break;
+						case "venuesv2":
+							acao_venuesv2();
+							break;
+						case "various":
+							acao_various();
+							break;
+						case "log":
+							acao_log();
+							break;
+						case "abt":
+							acao_abt();
+							break;
+						case "news":
+							acao_news();
+							break;
+						case "guias":
+							acao_guias();
+							break;
+						case "produpdate":
+							acao_produpdate();
+							break;
+						case "controle_acesso":
+							acao_controle_acesso();
+							break;
+						case "func":
+							acao_func();
+							break;
+						case "log_tarifario":
+							acao_log_tarifario();
+							break;
+						case "destaque_fit":
+							acao_destaque_fit();
+							break;
+						case "expert":
+							acao_expert();
+							break;
+						case "inspections":
+							acao_inspections();
+							break;
+						case "renovation":
+							acao_renovation();
+							break;
+						case "deluxe":
+							acao_deluxe();
+							break;
+						case "beach_house":
+							acao_beach_house();
+							break;
+						case "minisite":
+							acao_minisite();
+							break;
+						case "tarif_tools":
+							acao_tarif_tools();
+							break;
+						case "video":
+							acao_video();
+							break;
+						case "blognacional":
+							acao_blognacional();
+							break;
+						case "blognacionalv2":
+							acao_blognacionalv2();
 							break;
 					}
 				}
