@@ -2,21 +2,108 @@
 
 /**
  * API para Busca e Listagem de Logs de Downloads de Imagens
- * 
+ *
+ * Descrição:
+ * Essa API permite consultar e listar logs de downloads de imagens realizadas
+ * pelos usuários do sistema, incluindo buscas por login, cliente, tipo de imagem
+ * e períodos específicos. Todos os retornos são em formato JSON e incluem
+ * paginação, total de registros e metadados da ação.
+ *
  * Endpoints:
- * - ?action=search_logs&query=sistema  (Busca logs por login ou cliente)
- * - ?action=search_logs_by_date&date_from=2025-10-01&date_to=2025-10-31  (Busca por período de data)
- * - ?action=search_logs&query=sistema&date_from=2025-10-01&date_to=2025-10-31&field=login  (Busca combinada por campo e data)
- * - ?action=list_logs  (Lista todos os logs com paginação)
- * 
+ * - GET  ?action=search_logs&query=sistema  
+ *         → Busca logs por login, cliente, ou termo genérico.
+ *
+ * - GET  ?action=search_logs_by_date&date_from=2025-10-01&date_to=2025-10-31  
+ *         → Busca logs dentro de um intervalo de datas específico.
+ *
+ * - GET  ?action=search_logs&query=sistema&date_from=2025-10-01&date_to=2025-10-31&field=login  
+ *         → Combina busca por campo (ex: login) e período de data.
+ *
+ * - GET  ?action=list_logs&page=1&limit=20  
+ *         → Lista todos os logs com paginação.
+ *
  * Parâmetros comuns:
  * - page: Página atual (default: 1)
- * - limit: Itens por página (default: 10, max: 100)
- * 
- * Respostas em JSON com total, paginação e resultados.
- * Erros: HTTP codes apropriados.
- * Campos retornados: id, user_id, login, cliente, acao, pk_bco_img, tipo_imagem, hotel_nome, cidade_nome, ip (mascarado para privacidade), data_hora, imagem_nome, motivo_acao, imagem_url.
+ * - limit: Quantidade de registros por página (default: 10, máximo: 100)
+ * - query: Palavra-chave para busca (login, cliente, ação, etc.)
+ * - date_from: Data inicial do filtro (YYYY-MM-DD)
+ * - date_to: Data final do filtro (YYYY-MM-DD)
+ * - field: Campo específico de busca (ex: login, cliente, hotel_nome)
+ *
+ * Métodos suportados:
+ * - GET: list_logs, search_logs, search_logs_by_date
+ *
+ * Tabelas relacionadas:
+ * - conteudo_internet.log_imagem_download
+ * - banco_imagem.bco_img
+ * - sbd95.fornec (dados do hotel)
+ * - sbd95.cidades (dados da cidade)
+ *
+ * Retornos:
+ * - 200: Sucesso
+ * - 400: Parâmetro obrigatório ausente
+ * - 404: Nenhum log encontrado
+ * - 405: Método HTTP não permitido
+ * - 500: Erro interno no servidor
+ *
+ * Campos retornados:
+ * - id: Identificador do log
+ * - user_id: ID do usuário (ou null se anônimo)
+ * - login: Login do usuário
+ * - cliente: Nome do cliente ou empresa
+ * - acao: Tipo de ação registrada (ex: download, visualização)
+ * - pk_bco_img: ID da imagem no banco de imagens
+ * - tipo_imagem: Tipo de imagem (hotel, cidade, passeio)
+ * - hotel_nome: Nome do hotel associado (se aplicável)
+ * - cidade_nome: Nome da cidade associada (se aplicável)
+ * - imagem_nome: Nome ou legenda da imagem
+ * - imagem_url: URL pública da imagem
+ * - motivo_acao: Texto informando a justificativa ou origem da ação
+ * - ip: Endereço IP do usuário (mascarado para privacidade)
+ * - data_hora: Data e hora da ação
+ *
+ * Exemplo de resposta (GET ?action=list_logs&page=1&limit=2):
+ * {
+ *   "total": 128,
+ *   "page": 1,
+ *   "limit": 2,
+ *   "results": [
+ *     {
+ *       "id": 452,
+ *       "user_id": 21,
+ *       "login": "joao.silva",
+ *       "cliente": "Agência Brasil Tour",
+ *       "acao": "download",
+ *       "pk_bco_img": 9332,
+ *       "tipo_imagem": "hotel",
+ *       "hotel_nome": "Copacabana Palace",
+ *       "cidade_nome": "Rio de Janeiro",
+ *       "imagem_nome": "fachada_copacabana.jpg",
+ *       "imagem_url": "https://www.blumar.com.br/uploads/hoteis/9332/fachada_copacabana.jpg",
+ *       "motivo_acao": "Download realizado via portal do cliente",
+ *       "ip": "201.52.xxx.xxx",
+ *       "data_hora": "2025-10-21 15:23:48"
+ *     },
+ *     {
+ *       "id": 453,
+ *       "user_id": 44,
+ *       "login": "ana.turismo",
+ *       "cliente": "Latam Operadora",
+ *       "acao": "download",
+ *       "pk_bco_img": 8211,
+ *       "tipo_imagem": "cidade",
+ *       "hotel_nome": null,
+ *       "cidade_nome": "Salvador",
+ *       "imagem_nome": "salvador_pelourinho.jpg",
+ *       "imagem_url": "https://www.blumar.com.br/uploads/cidades/salvador_pelourinho.jpg",
+ *       "motivo_acao": "Download via área restrita",
+ *       "ip": "187.29.xxx.xxx",
+ *       "data_hora": "2025-10-21 16:04:10"
+ *     }
+ *   ]
+ * }
  */
+
 
 header('Content-Type: application/json; charset=utf-8');
 ini_set('display_errors', 1);

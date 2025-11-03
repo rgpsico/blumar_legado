@@ -355,7 +355,7 @@ if (isset($_SESSION['conteudo'])) {
 
 							if ($pk_conteudo == '2') {
 								if ($cad_hotel == 't') {
-									echo '<div id="texto3"><a href="##" class="text-decoration-none text-dark" onclick="javascript:acao_hotelv2();">HOTEL V2</a></div>';
+									echo '<div id="texto3"><a href="##" class="text-decoration-none text-dark" onclick="saveState(\'hotelv2\'); acao_hotelv2();">Hotel V2 </a></div>';
 								}
 							}
 
