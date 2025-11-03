@@ -3,11 +3,79 @@
 /**
  * API para gerenciamento da tabela conteudo_internet.hotel_gallery_image
  *
+ * Descrição:
+ * Gerencia as imagens da galeria de hotéis, permitindo listar, criar,
+ * atualizar e excluir registros relacionados a cada hotel.
+ * Cada imagem é vinculada a um hotel específico através do campo `hotel_id`
+ * (ou `mneu_for`, no contexto do legado).
+ *
  * Endpoints:
- * - ?action=list&hotel_id=151
- * - ?action=create  (POST: hotel_id, image_url, title, description, ordem)
- * - ?action=update  (POST: id, title, description, ordem)
- * - ?action=delete  (POST: id)
+ * - GET  ?action=list&hotel_id=151  
+ *         → Lista todas as imagens cadastradas para o hotel informado.
+ *
+ * - POST ?action=create  
+ *         → Cria uma nova imagem vinculada a um hotel.  
+ *           Body JSON:
+ *           {
+ *              "hotel_id": 151,
+ *              "image_url": "uploads/hoteis/151/fachada.jpg",
+ *              "title": "Fachada principal",
+ *              "description": "Vista frontal do hotel",
+ *              "ordem": 1
+ *           }
+ *
+ * - POST ?action=update  
+ *         → Atualiza os dados de uma imagem existente.  
+ *           Body JSON:
+ *           {
+ *              "id": 45,
+ *              "title": "Piscina aquecida",
+ *              "description": "Área de lazer renovada",
+ *              "ordem": 2
+ *           }
+ *
+ * - POST ?action=delete  
+ *         → Exclui uma imagem da galeria.  
+ *           Body JSON:
+ *           {
+ *              "id": 45
+ *           }
+ *
+ * Métodos suportados:
+ * - GET: list
+ * - POST: create, update, delete
+ *
+ * Tabelas relacionadas:
+ * - conteudo_internet.hotel_gallery_image
+ * - sbd95.fornec (para referência cruzada de hotel)
+ *
+ * Retornos:
+ * - 200: Sucesso
+ * - 201: Registro criado com sucesso
+ * - 400: Parâmetro obrigatório ausente
+ * - 404: Registro não encontrado
+ * - 405: Método HTTP não permitido
+ * - 500: Erro interno no servidor
+ *
+ * Exemplo de resposta (GET ?action=list&hotel_id=151):
+ * [
+ *   {
+ *     "id": 45,
+ *     "hotel_id": 151,
+ *     "image_url": "https://www.blumar.com.br/uploads/hoteis/151/fachada.jpg",
+ *     "title": "Fachada principal",
+ *     "description": "Vista frontal do hotel",
+ *     "ordem": 1
+ *   },
+ *   {
+ *     "id": 46,
+ *     "hotel_id": 151,
+ *     "image_url": "https://www.blumar.com.br/uploads/hoteis/151/piscina.jpg",
+ *     "title": "Piscina",
+ *     "description": "Área de lazer com piscina aquecida",
+ *     "ordem": 2
+ *   }
+ * ]
  */
 
 header('Content-Type: application/json; charset=utf-8');

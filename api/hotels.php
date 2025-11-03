@@ -1,4 +1,86 @@
 <?php
+
+/**
+ * API para gerenciamento da tabela conteudo_internet.ci_hotel
+ *
+ * Descrição:
+ * Fornece endpoints para listagem, busca, criação, atualização e exclusão de hotéis
+ * cadastrados na base de dados da Blumar. Essa API unifica informações das tabelas
+ * `sbd95.fornec` e `conteudo_internet.ci_hotel`, incluindo imagens, vídeos, tour 360,
+ * descrições multilíngues e metadados associados.
+ *
+ * Endpoints:
+ * - GET  ?request=listar_hoteis&cidade=Rio de Janeiro&nome=Copacabana&limit=50  
+ *         → Lista hotéis filtrando por cidade e/ou nome.
+ *
+ * - GET  ?request=buscar_hotel&id=123  
+ *         → Retorna os dados completos de um hotel (nome, endereço, imagens, descrições, etc).
+ *
+ * - POST ?request=criar_hotel  
+ *         → Cria um novo registro de hotel.
+ *           Body JSON (exemplo simplificado):
+ *           {
+ *              "mneu_for": "HOTEL_COPA",
+ *              "descricao_pt": "Hotel localizado em Copacabana com vista para o mar.",
+ *              "descricao_en": "Hotel located in Copacabana with sea view.",
+ *              "foto_fachada": "uploads/hoteis/fachada.jpg",
+ *              "url_video": "uploads/videos/copa.mp4",
+ *              "flaghtl": true,
+ *              "resort": false,
+ *              "facilities": "pool,spa,restaurant"
+ *           }
+ *
+ * - PUT  ?request=atualizar_hotel&id=123  
+ *         → Atualiza um hotel existente.  
+ *           Body JSON (exemplo):
+ *           {
+ *              "mneu_for": "HOTEL_COPA",
+ *              "descricao_pt": "Descrição atualizada",
+ *              "foto_fachada": "uploads/hoteis/nova_fachada.jpg",
+ *              "luxury": true
+ *           }
+ *
+ * - DELETE ?request=excluir_hotel&id=123  
+ *           → Remove o hotel informado (por frncod ou mneu_for) e seus dados relacionados.
+ *
+ * Métodos suportados:
+ * - GET: listar_hoteis, buscar_hotel
+ * - POST: criar_hotel
+ * - PUT: atualizar_hotel
+ * - DELETE: excluir_hotel
+ *
+ * Tabelas relacionadas:
+ * - conteudo_internet.ci_hotel (principal)
+ * - sbd95.fornec (dados de cadastro e cidade)
+ * - conteudo_internet.ci_apartamento (tipos de apartamentos)
+ * - conteudo_internet.ci_hotel_facilidade (facilidades)
+ * - conteudo_internet.log_adm_conteudo (logs administrativos)
+ *
+ * Retornos:
+ * - 200: Sucesso
+ * - 201: Criado com sucesso
+ * - 400: Requisição inválida (parâmetros obrigatórios ausentes)
+ * - 404: Registro não encontrado
+ * - 405: Método HTTP não permitido
+ * - 409: Conflito (registro duplicado)
+ * - 500: Erro interno no servidor
+ *
+ * Exemplo de resposta (GET buscar_hotel):
+ * {
+ *   "codigo": "HOTEL_COPA",
+ *   "nome": "Copacabana Palace",
+ *   "cidade": "Rio de Janeiro",
+ *   "uf": "RJ",
+ *   "quartos": 239,
+ *   "estrelas": 5,
+ *   "descricao": "Hotel de luxo icônico no Rio de Janeiro.",
+ *   "imagem_fachada": "https://www.blumar.com.br/uploads/fachadas/copa.jpg",
+ *   "video_url": "https://www.blumar.com.br/uploads/videos/copa.mp4",
+ *   "tour_360_url": "https://www.blumar.com.br/uploads/tour360/copa.html"
+ * }
+ */
+
+
 // ========================================
 // 🔧 CONFIGURAÇÕES INICIAIS
 // ========================================

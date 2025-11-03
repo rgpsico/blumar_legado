@@ -1,4 +1,71 @@
 <?php
+
+/**
+ * API para gerenciamento da tabela conteudo_internet.venues
+ *
+ * Descrição:
+ * Controla a listagem, criação, atualização e exclusão de venues (locais de eventos),
+ * incluindo informações sobre cidade, imagens, capacidade, preço e localização.
+ *
+ * Endpoints:
+ * - GET  ?request=listar_venues&nome=Copacabana&cidade=Rio de Janeiro&limit=100
+ *         → Lista todos os venues filtrando por nome e/ou cidade.
+ *
+ * - GET  ?request=buscar_venue&id=123
+ *         → Busca os detalhes completos de um venue específico.
+ *
+ * - POST ?request=criar_venue
+ *         → Cria um novo venue. 
+ *           Body JSON:
+ *           {
+ *              "name": "Copacabana Palace",
+ *              "description": "Hotel de luxo icônico no Rio.",
+ *              "short_description": "Hotel 5 estrelas",
+ *              "city": 151,
+ *              "is_active": true,
+ *              "capacity_max": 500,
+ *              "latitude": -22.971,
+ *              "longitude": -43.182,
+ *              "images": [
+ *                  {"image_url": "uploads/venues/foto1.jpg", "is_primary": true, "alt_text": "Fachada"}
+ *              ]
+ *           }
+ *
+ * - PUT  ?request=atualizar_venue&id=123
+ *         → Atualiza campos específicos de um venue existente.
+ *           Body JSON (exemplo parcial):
+ *           {
+ *              "name": "Novo nome do venue",
+ *              "description": "Descrição atualizada",
+ *              "is_active": false
+ *           }
+ *
+ * - DELETE ?request=excluir_venue&id=123
+ *           → Remove o venue e suas imagens relacionadas.
+ *
+ * - GET ?request=listar_cidades
+ *         → Lista todas as cidades disponíveis para cadastro de venues.
+ *
+ * Métodos suportados:
+ * - GET: listar_venues, buscar_venue, listar_cidades
+ * - POST: criar_venue
+ * - PUT: atualizar_venue
+ * - DELETE: excluir_venue
+ *
+ * Tabelas relacionadas:
+ * - conteudo_internet.venues
+ * - conteudo_internet.venue_images
+ * - sbd95.cidades
+ *
+ * Retornos:
+ * - 200: Sucesso
+ * - 201: Criado
+ * - 400: Erro de parâmetro
+ * - 404: Registro não encontrado
+ * - 405: Método não permitido
+ * - 500: Erro interno
+ */
+
 // ========================================
 // 🔧 CONFIGURAÇÕES INICIAIS
 // ========================================

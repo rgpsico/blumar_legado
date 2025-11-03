@@ -2,16 +2,66 @@
 
 /**
  * API Única para Busca de Hotéis e Imagens
- * 
+ *
+ * Descrição:
+ * Essa API unifica consultas de hotéis e imagens em um único endpoint.
+ * Ela permite buscar hotéis por nome ou cidade, recuperar as imagens
+ * associadas a um hotel específico e listar as cidades disponíveis.
+ * Todos os retornos são em JSON.
+ *
  * Endpoints:
- * - ?action=search_hotels&query=rio  (Busca hotéis por nome/produto)
- * - ?action=hotels_by_city&city=sao paulo  (Busca hotéis por cidade)
- * - ?action=hotel_images&hotel_id=123  (Busca imagens de um hotel por mneu_for)
- * - ?action=list_cities  (Lista todas as cidades)
- * - ?action=search_images&query=palavra  (Busca imagens por legenda ou palavras_chave)
- * 
- * Respostas em JSON.
- * Erros: HTTP codes apropriados.
+ * - GET  ?action=search_hotels&query=rio
+ *         → Busca hotéis por nome, produto ou palavra-chave.
+ *
+ * - GET  ?action=hotels_by_city&city=sao paulo
+ *         → Retorna todos os hotéis de uma cidade específica.
+ *
+ * - GET  ?action=hotel_images&hotel_id=123
+ *         → Retorna as imagens associadas a um hotel com base no campo mneu_for.
+ *
+ * - GET  ?action=list_cities
+ *         → Lista todas as cidades com hotéis cadastrados.
+ *
+ * - GET  ?action=search_images&query=palavra
+ *         → Busca imagens por legenda ou palavras-chave associadas.
+ *
+ * Métodos suportados:
+ * - GET: search_hotels, hotels_by_city, hotel_images, list_cities, search_images
+ *
+ * Tabelas relacionadas:
+ * - sbd95.fornec (dados cadastrais do hotel)
+ * - conteudo_internet.ci_hotel (descrições e mídias)
+ * - banco_imagem.bco_img (imagens associadas a hotéis e cidades)
+ * - sbd95.cidades (lista de cidades)
+ *
+ * Retornos:
+ * - 200: Sucesso
+ * - 400: Parâmetro obrigatório ausente
+ * - 404: Nenhum resultado encontrado
+ * - 500: Erro interno do servidor
+ *
+ * Exemplo de resposta (GET ?action=search_hotels&query=rio):
+ * [
+ *   {
+ *     "codigo": "HOTEL_RIO_PALACE",
+ *     "nome": "Rio Palace Hotel",
+ *     "cidade": "Rio de Janeiro",
+ *     "categoria": "Hotel",
+ *     "estrelas": 5,
+ *     "descricao": "Hotel 5 estrelas próximo à praia de Copacabana.",
+ *     "imagem_principal": "https://www.blumar.com.br/uploads/hoteis/fachadas/rio_palace.jpg"
+ *   }
+ * ]
+ *
+ * Exemplo de resposta (GET ?action=hotel_images&hotel_id=123):
+ * [
+ *   {
+ *     "image_url": "https://www.blumar.com.br/uploads/hoteis/rio_palace_1.jpg",
+ *     "legenda": "Vista da piscina",
+ *     "palavras_chave": "piscina, luxo, lazer",
+ *     "autor": "Gabriel Paiva"
+ *   }
+ * ]
  */
 
 header('Content-Type: application/json; charset=utf-8');
