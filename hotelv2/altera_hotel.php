@@ -556,11 +556,42 @@ if (!empty($ultimo_update)) {
 						</div>
 						<div class="col-md-12">
 							<label class="form-label">Imagens da Galeria <small class="text-muted">(URLs separadas por vírgula)</small></label>
-							<textarea class="form-control" name="gallery_images" rows="3"><?= htmlspecialchars($gallery_images) ?></textarea>
+							<div class="input-group">
+								<textarea class="form-control" name="gallery_images" id="gallery_images" rows="3"><?= htmlspecialchars($gallery_images) ?></textarea>
+								<button type="button" class="btn btn-outline-primary" id="select_gallery_images">Selecionar Imagens</button>
+							</div>
 						</div>
 						<div class="col-md-12">
 							<label class="form-label">Imagem da Planta Baixa</label>
 							<input type="text" class="form-control" name="blueprint_image" maxlength="255" value="<?= htmlspecialchars($blueprint_image) ?>">
+						</div>
+					</div>
+				</div>
+
+				<!-- Modal para seleção de imagens -->
+				<div class="modal fade" id="galleryModal" tabindex="-1" aria-labelledby="galleryModalLabel" aria-hidden="true">
+					<div class="modal-dialog modal-xl">
+						<div class="modal-content">
+							<div class="modal-header">
+								<h5 class="modal-title" id="galleryModalLabel">Selecionar Imagens da Galeria</h5>
+								<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+							</div>
+							<div class="modal-body">
+								<div id="images_loading" class="text-center py-3">
+									<div class="spinner-border" role="status">
+										<span class="visually-hidden">Carregando...</span>
+									</div>
+									<p>Carregando imagens do hotel...</p>
+								</div>
+								<div id="images_container" class="row" style="display: none;"></div>
+								<div id="no_images" class="alert alert-info" style="display: none;">
+									Nenhuma imagem encontrada para este hotel.
+								</div>
+							</div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+								<button type="button" class="btn btn-primary" id="save_selected_images">Adicionar Selecionadas</button>
+							</div>
 						</div>
 					</div>
 				</div>
@@ -1238,6 +1269,118 @@ if (!empty($ultimo_update)) {
 				var step = parseInt($(this).data('step'));
 				currentStep = step;
 				updateWizard();
+			});
+
+			// Gallery Modal Logic with jQuery
+			const hotelId = <?= json_encode($mneu_for ?? ''); ?>;
+			const apiBaseUrl = 'http://localhost/blumar_legado/blumar/api/galeria.php';
+
+			var modal = new bootstrap.Modal(document.getElementById('galleryModal'));
+			var selectedImages = [];
+
+			$('#select_gallery_images').on('click', function() {
+				if (!hotelId) {
+					alert('ID do hotel não encontrado. Não é possível carregar as imagens.');
+					return;
+				}
+
+				// Limpa seleções anteriores
+				selectedImages = [];
+				$('#images_container').empty().hide();
+				$('#no_images').hide();
+				$('#images_loading').show();
+
+				// Busca imagens via API
+				$.ajax({
+					url: `${apiBaseUrl}?action=hotel_images&hotel_id=${encodeURIComponent(hotelId)}`,
+					type: 'GET',
+					dataType: 'json',
+					success: function(data) {
+						$('#images_loading').hide();
+						if (data.total_images > 0 && data.images) {
+							$('#images_container').show();
+							renderImages(data.images);
+						} else {
+							$('#no_images').show();
+						}
+					},
+					error: function(xhr, status, error) {
+						$('#images_loading').hide();
+						console.error('Erro ao carregar imagens:', error);
+						alert('Erro ao carregar imagens do hotel. Verifique o console para detalhes.');
+						$('#no_images').show().html('Erro ao carregar imagens: ' + error);
+					}
+				});
+
+				modal.show();
+			});
+
+			function renderImages(images) {
+				$('#images_container').empty();
+				images.forEach(function(imgData, index) {
+					var url = imgData.urls.tam_4 || imgData.urls.tam_3 || imgData.urls.tam_2 || imgData.urls.tam_1 || '';
+					var previewUrl = imgData.urls.tam_3 || imgData.urls.tam_2 || imgData.urls.tam_1 || '';
+
+					var imgDiv = $(`
+						<div class="col-md-4 mb-3">
+							<div class="card">
+								<div class="card-body">
+									<div class="form-check">
+										<input class="form-check-input" type="checkbox" id="img_${index}" value="${url}">
+										<label class="form-check-label" for="img_${index}">
+											Imagem ${index + 1} (ID: ${imgData.pk_bco_img})
+										</label>
+									</div>
+									<img src="${previewUrl}" 
+									     alt="Preview" class="img-fluid mt-2" style="max-height: 200px; object-fit: cover;" 
+									     onerror="this.src='https://via.placeholder.com/300x200?text=Sem+Preview';">
+								</div>
+							</div>
+						</div>
+					`);
+					$('#images_container').append(imgDiv);
+
+					// Event listener para checkbox
+					$(`#img_${index}`).on('change', function() {
+						var checkboxUrl = $(this).val();
+						if ($(this).is(':checked') && checkboxUrl) {
+							if (selectedImages.indexOf(checkboxUrl) === -1) {
+								selectedImages.push(checkboxUrl);
+							}
+						} else {
+							selectedImages = selectedImages.filter(function(u) {
+								return u !== checkboxUrl;
+							});
+						}
+					});
+				});
+			}
+
+			$('#save_selected_images').on('click', function() {
+				if (selectedImages.length === 0) {
+					alert('Selecione pelo menos uma imagem.');
+					return;
+				}
+
+				// Pega o valor atual da textarea
+				var currentValue = $('#gallery_images').val().trim();
+				var currentUrls = currentValue ? currentValue.split(',').map(function(u) {
+					return u.trim();
+				}).filter(function(u) {
+					return u;
+				}) : [];
+
+				// Adiciona as novas selecionadas (evita duplicatas)
+				selectedImages.forEach(function(newUrl) {
+					if (currentUrls.indexOf(newUrl) === -1) {
+						currentUrls.push(newUrl);
+					}
+				});
+
+				// Atualiza textarea
+				$('#gallery_images').val(currentUrls.join(', '));
+
+				modal.hide();
 			});
 		});
 
