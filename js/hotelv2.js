@@ -1,15 +1,34 @@
 function acao_hotelv2() {
+
+	// Exibe o loader
+	const loaderHtml = `
+        <div id="loadingOverlay" 
+             style="position:fixed; top:0; left:0; width:100%; height:100%;
+                    background:rgba(255,255,255,0.8); display:flex; 
+                    align-items:center; justify-content:center; z-index:9999;">
+            <div class="spinner-border text-primary" role="status" style="width:4rem; height:4rem;">
+                <span class="visually-hidden">Carregando...</span>
+            </div>
+        </div>
+    `;
+	$('body').append(loaderHtml);
+
 	$.ajax({
 		dataType: "html",
 		url: "hotelv2/miolo_hotel.php",
-		error: function () {
-			alert("Error when retrieving hotel content!");
-		},
+
 		success: function (resposta) {
 			$("#container_miolo").html(resposta);
-
-			// 🔹 Vai direto pro topo instantaneamente
 			window.scrollTo(0, 0);
+		},
+
+		error: function () {
+			alert("Erro ao carregar o conteúdo do hotel!");
+		},
+
+		complete: function () {
+			// Remove o loader sempre, mesmo em erro
+			$('#loadingOverlay').remove();
 		}
 	});
 }

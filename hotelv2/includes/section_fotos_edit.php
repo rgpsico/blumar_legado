@@ -59,6 +59,7 @@
             <div class="modal-body">
                 <!-- Seção de Upload -->
                 <div class="card mb-3" id="upload_section" style="display: <?= $frncod ? 'block' : 'none'; ?>;">
+                    <input type="text" class="form-control" id="idCodigJqry">
                     <div class="card-header">
                         <h6>Upload de Nova Imagem</h6>
                     </div>
@@ -99,16 +100,27 @@
 
 <script>
     // Evita redeclaração: usa window para escopo global único
-    if (typeof window.galleryHotelId === 'undefined') {
-        window.galleryHotelId = <?= json_encode($frncod ?? ''); ?>;
+
+
+
+    const frncodVal = $('#frncod').val() || null;
+
+    // Define o ID da galeria se ainda não estiver no escopo global
+    if (typeof window.galleryHotelId === 'undefined' || !window.galleryHotelId) {
+        window.galleryHotelId = frncodVal || <?= json_encode($frncod ?? ''); ?>;
     }
-    if (typeof window.hotelIdEdit === 'undefined') {
+
+    // Define o ID do hotel para edição
+    if (typeof window.hotelIdEdit === 'undefined' || !window.hotelIdEdit) {
         window.hotelIdEdit = window.galleryHotelId;
     }
-    if (typeof window.apiBaseUrl === 'undefined') {
-        window.apiBaseUrl = <?= json_encode(API_URL . '/hotel_gallery_api.php'); ?>;
 
+    // Define a URL base da API se não estiver setada
+    if (typeof window.apiBaseUrl === 'undefined' || !window.apiBaseUrl) {
+        window.apiBaseUrl = <?= json_encode(API_URL . '/hotel_gallery_api.php'); ?>;
     }
+
+
 
     var modal = new bootstrap.Modal(document.getElementById('galleryModal'));
     var selectedImages = [];
