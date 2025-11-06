@@ -1,0 +1,144 @@
+body.admin-dashboard-body {
+    font-family: 'Inter', 'Segoe UI', Roboto, sans-serif;
+    background: linear-gradient(160deg, #f5f7fb 0%, #eef2ff 100%);
+    color: #1f2937;
+    min-height: 100vh;
+}
+
+body.admin-dashboard-body #container {
+    width: 100%;
+    max-width: none;
+    margin: 0;
+    padding: 0;
+    background: transparent;
+}
+
+body.admin-dashboard-body #container_conteudo {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+.admin-header {
+    background: linear-gradient(120deg, #1d4ed8, #0ea5e9);
+}
+
+.admin-header .navbar-brand {
+    letter-spacing: 0.08em;
+}
+
+.admin-dashboard-content {
+    position: relative;
+}
+
+.admin-welcome .card-body {
+    background: linear-gradient(135deg, rgba(14,165,233,0.12) 0%, rgba(29,78,216,0.08) 100%);
+    border-radius: 1rem;
+}
+
+.admin-main .card {
+    border-radius: 1rem;
+}
+
+.admin-menu {
+    max-height: calc(100vh - 280px);
+    overflow-y: auto;
+    padding-right: 0.5rem;
+}
+
+.admin-menu::-webkit-scrollbar {
+    width: 6px;
+}
+
+.admin-menu::-webkit-scrollbar-thumb {
+    background: rgba(30,64,175,0.25);
+    border-radius: 999px;
+}
+
+.admin-menu-accordion .accordion-button {
+    border-radius: 0.75rem;
+    margin-bottom: 0.5rem;
+    background: rgba(14,116,144,0.08);
+    color: #0f172a;
+}
+
+.admin-menu-accordion .accordion-button:not(.collapsed) {
+    background: linear-gradient(120deg, rgba(37,99,235,0.15), rgba(59,130,246,0.12));
+    color: #0f172a;
+    box-shadow: none;
+}
+
+.admin-menu-accordion .accordion-button:focus {
+    box-shadow: none;
+}
+
+.admin-menu-group .list-group-item {
+    background: transparent;
+}
+
+.menu-link {
+    display: block;
+    padding: 0.65rem 0.75rem;
+    border-radius: 0.65rem;
+    color: #1f2937;
+    font-weight: 500;
+    transition: background 0.25s ease, transform 0.2s ease, color 0.25s ease;
+}
+
+.menu-link:hover {
+    background: rgba(59,130,246,0.12);
+    color: #1d4ed8;
+    transform: translateX(4px);
+}
+
+.menu-link.active {
+    background: linear-gradient(120deg, #2563eb, #0ea5e9);
+    color: #ffffff;
+    box-shadow: 0 10px 25px rgba(37,99,235,0.18);
+}
+
+.admin-submenu {
+    padding-left: 0.5rem;
+}
+
+.admin-submenu .submenu-toggle {
+    color: #0f172a;
+    font-weight: 600;
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+.admin-submenu .submenu-toggle .bi {
+    transition: transform 0.3s ease;
+}
+
+.admin-submenu .submenu-toggle.collapsed .bi {
+    transform: rotate(-90deg);
+}
+
+.admin-content-panel {
+    min-height: 60vh;
+    background: #ffffff;
+    border-radius: 1rem;
+    box-shadow: inset 0 1px 0 rgba(15,23,42,0.04);
+}
+
+.admin-content-panel #loading {
+    min-height: 260px;
+}
+
+.admin-footer {
+    background: rgba(255,255,255,0.85);
+    backdrop-filter: blur(12px);
+}
+
+@media (max-width: 991.98px) {
+    .admin-menu {
+        max-height: none;
+        padding-right: 0;
+    }
+
+    .admin-header {
+        background: linear-gradient(120deg, #1d4ed8, #2563eb);
+    }
+}
