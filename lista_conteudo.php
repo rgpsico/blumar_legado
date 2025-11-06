@@ -3,10 +3,24 @@
 ini_set('display_errors', 1);
 error_reporting(~0);
 
-if (isset($_SESSION)) {
-} else {
-	session_start();
+if (! isset($_SESSION)) {
+        session_start();
 }
+
+ob_start();
+
+function redirectToLoginWithError($message)
+{
+        $_SESSION['login_error'] = $message;
+
+        if (ob_get_level()) {
+                ob_end_clean();
+        }
+
+        header('Location: index.php?error=1');
+        exit;
+}
+
 if (isset($_SESSION['conteudo'])) {
 
 	//unset($_SESSION['filtro_nucleo'] );
@@ -727,7 +741,7 @@ if (isset($_SESSION['conteudo'])) {
 				}
 			} else {
 
-				echo '<div id="texto2">incorrect login information<br><a href="index.php">Try log in again >></a></div>';
+					redirectToLoginWithError('Credenciais inválidas. Tente novamente.');
 			}
 
 
@@ -735,7 +749,7 @@ if (isset($_SESSION['conteudo'])) {
 
 		} else {
 
-			echo '<div id="texto2">Incorrect login information! <br><a href="index.php">Try log in again >></a></div>';
+					redirectToLoginWithError('Credenciais inválidas. Tente novamente.');
 		}
 
 
