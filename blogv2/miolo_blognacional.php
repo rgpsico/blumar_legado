@@ -50,78 +50,109 @@ $result_posts = pg_query_params($conn, $sql_posts, $params);
 ?>
 
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="../css/system-modern.css?v=1.0" rel="stylesheet">
 
-<div class="container-fluid bg-white p-4 shadow-sm rounded">
-  <div class="d-flex justify-content-between align-items-center mb-4">
-    <h4 class="m-0">📰 Blog Nacional</h4>
-    <button class="btn btn-success btn-sm" onclick="novo_postv2()">+ Novo Post</button>
+<div class="modern-content-wrapper modern-fade-in">
+  <div class="modern-flex-between modern-mb-lg">
+    <h2 class="modern-page-title">📰 Blog Nacional</h2>
+    <button class="modern-btn modern-btn-success modern-btn-sm" onclick="novo_postv2()">
+      <i class="bi bi-plus-circle"></i> Novo Post
+    </button>
   </div>
 
-  <!-- Filtro -->
-  <form id="formFiltro" class="row g-2 mb-4">
-    <div class="col-md-5">
-      <input type="text" name="titulo" id="titulo" class="form-control" placeholder="Buscar por título" value="<?php echo htmlspecialchars($filtro_titulo); ?>">
-    </div>
-    <div class="col-md-3">
-      <select name="ativo" id="ativo" class="form-select">
-        <option value="">-- Status --</option>
-        <option value="t" <?php echo ($filtro_status === 't') ? 'selected' : ''; ?>>Ativos</option>
-        <option value="f" <?php echo ($filtro_status === 'f') ? 'selected' : ''; ?>>Inativos</option>
-      </select>
-    </div>
-    <div class="col-md-2">
-      <button type="submit" class="btn btn-primary w-100">Filtrar</button>
-    </div>
-    <div class="col-md-2">
-      <button type="button" class="btn btn-secondary w-100" onclick="limparFiltro()">Limpar</button>
-    </div>
-  </form>
+  <!-- Filtros -->
+  <div class="modern-filter-bar modern-mb-lg">
+    <form id="formFiltro" class="modern-form-row">
+      <div class="modern-form-group" style="flex: 2;">
+        <label for="titulo" class="modern-form-label">Buscar por título</label>
+        <input type="text" name="titulo" id="titulo" class="modern-form-control" placeholder="Digite o título do post..." value="<?php echo htmlspecialchars($filtro_titulo); ?>">
+      </div>
+      <div class="modern-form-group">
+        <label for="ativo" class="modern-form-label">Status</label>
+        <select name="ativo" id="ativo" class="modern-form-select">
+          <option value="">Todos</option>
+          <option value="t" <?php echo ($filtro_status === 't') ? 'selected' : ''; ?>>✅ Ativos</option>
+          <option value="f" <?php echo ($filtro_status === 'f') ? 'selected' : ''; ?>>❌ Inativos</option>
+        </select>
+      </div>
+      <div class="modern-form-group" style="display: flex; gap: 0.5rem; align-items: flex-end;">
+        <button type="submit" class="modern-btn modern-btn-primary">
+          <i class="bi bi-funnel"></i> Filtrar
+        </button>
+        <button type="button" class="modern-btn modern-btn-secondary" onclick="limparFiltro()">
+          <i class="bi bi-x-circle"></i> Limpar
+        </button>
+      </div>
+    </form>
+  </div>
 
   <!-- Tabela -->
-  <table class="table table-bordered table-hover align-middle">
-    <thead>
-      <tr>
-        <th style="width: 60px;">ID</th>
-        <th>Título</th>
-        <th style="width: 150px;">Data</th>
-        <th style="width: 80px;">Ativo</th>
-        <th style="width: 200px;">Ações</th>
-      </tr>
-    </thead>
-    <tbody>
-      <?php
-      if ($result_posts && pg_num_rows($result_posts) > 0) {
-        while ($row = pg_fetch_assoc($result_posts)) {
-          echo '<tr>';
-          echo '<td>' . $row['pk_blognacional'] . '</td>';
-          echo '<td>' . htmlspecialchars($row['titulo']) . '</td>';
-          echo '<td>' . ($row['data_post'] ?? '-') . '</td>';
-          echo '<td>' . ($row['ativo'] === 't' ? '✅' : '❌') . '</td>';
-          echo '<td>
-                  <button class="btn btn-info btn-sm me-1" onclick="visualizarPost(' . $row['pk_blognacional'] . ')">Visualizar</button>
-                  <button class="btn btn-primary btn-sm me-1" onclick="editarPostv2(' . $row['pk_blognacional'] . ')">Editar</button>
-                  <button class="btn btn-danger btn-sm" onclick="excluirPostv2(' . $row['pk_blognacional'] . ')">Excluir</button>
-                </td>';
-          echo '</tr>';
+  <div class="modern-table-wrapper">
+    <table class="modern-table">
+      <thead>
+        <tr>
+          <th style="width: 60px;">ID</th>
+          <th>Título</th>
+          <th style="width: 150px;">Data</th>
+          <th style="width: 100px;">Status</th>
+          <th style="width: 260px;">Ações</th>
+        </tr>
+      </thead>
+      <tbody>
+        <?php
+        if ($result_posts && pg_num_rows($result_posts) > 0) {
+          while ($row = pg_fetch_assoc($result_posts)) {
+            echo '<tr>';
+            echo '<td><strong>#' . $row['pk_blognacional'] . '</strong></td>';
+            echo '<td>' . htmlspecialchars($row['titulo']) . '</td>';
+            echo '<td>' . ($row['data_post'] ?? '-') . '</td>';
+            echo '<td>';
+            if ($row['ativo'] === 't') {
+              echo '<span class="modern-badge modern-badge-success">✅ Ativo</span>';
+            } else {
+              echo '<span class="modern-badge modern-badge-danger">❌ Inativo</span>';
+            }
+            echo '</td>';
+            echo '<td>
+                    <div class="modern-table-actions">
+                      <button class="modern-btn modern-btn-info modern-btn-sm" onclick="visualizarPost(' . $row['pk_blognacional'] . ')">
+                        <i class="bi bi-eye"></i> Ver
+                      </button>
+                      <button class="modern-btn modern-btn-primary modern-btn-sm" onclick="editarPostv2(' . $row['pk_blognacional'] . ')">
+                        <i class="bi bi-pencil"></i> Editar
+                      </button>
+                      <button class="modern-btn modern-btn-danger modern-btn-sm" onclick="excluirPostv2(' . $row['pk_blognacional'] . ')">
+                        <i class="bi bi-trash"></i> Excluir
+                      </button>
+                    </div>
+                  </td>';
+            echo '</tr>';
+          }
+        } else {
+          echo '<tr><td colspan="5" class="modern-text-center modern-text-muted" style="padding: 2rem;">
+                  <i class="bi bi-inbox" style="font-size: 2rem; display: block; margin-bottom: 0.5rem;"></i>
+                  Nenhum post encontrado
+                </td></tr>';
         }
-      } else {
-        echo '<tr><td colspan="5" class="text-center text-muted">Nenhum post encontrado</td></tr>';
-      }
-      ?>
-    </tbody>
-  </table>
+        ?>
+      </tbody>
+    </table>
+  </div>
 
   <!-- Paginação -->
-  <nav aria-label="Paginação do Blog">
-    <ul class="pagination justify-content-center">
-      <?php for ($i = 1; $i <= $totalPaginas; $i++): ?>
-        <li class="page-item <?php echo ($i == $paginaAtual) ? 'active' : ''; ?>">
-          <a class="page-link" href="#" onclick="carregarPagina(<?php echo $i; ?>)"><?php echo $i; ?></a>
-        </li>
-      <?php endfor; ?>
-    </ul>
-  </nav>
+  <?php if ($totalPaginas > 1): ?>
+  <div class="modern-pagination">
+    <?php for ($i = 1; $i <= $totalPaginas; $i++): ?>
+      <a href="#" class="modern-pagination-item <?php echo ($i == $paginaAtual) ? 'active' : ''; ?>"
+         onclick="carregarPagina(<?php echo $i; ?>); return false;">
+        <?php echo $i; ?>
+      </a>
+    <?php endfor; ?>
+  </div>
+  <?php endif; ?>
 </div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.js"></script>
 
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 <script>
