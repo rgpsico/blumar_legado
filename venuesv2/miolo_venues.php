@@ -50,49 +50,13 @@ $cities_query = "SELECT DISTINCT city FROM conteudo_internet.venues WHERE city I
 $cities_result = pg_exec($conn, $cities_query);
 ?>
 
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+<link href="../css/system-modern.css?v=1.0" rel="stylesheet">
+
 <style>
-	* {
-		margin: 0;
+	body {
 		padding: 0;
-		box-sizing: border-box;
-	}
-
-	.venues-container {
-		font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-		background-color: #f5f7fa;
-		color: #2c3e50;
-		padding: 20px;
-	}
-
-	.venues-header {
-		background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-		color: white;
-		padding: 30px;
-		border-radius: 12px;
-		margin-bottom: 30px;
-		box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-	}
-
-	.venues-header h1 {
-		font-size: 28px;
-		margin-bottom: 10px;
-	}
-
-	.venues-header p {
-		opacity: 0.9;
-		font-size: 14px;
-	}
-
-	.venues-toolbar {
-		background: white;
-		padding: 20px;
-		border-radius: 12px;
-		margin-bottom: 20px;
-		box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-		display: flex;
-		flex-wrap: wrap;
-		gap: 15px;
-		align-items: center;
 	}
 
 	.venues-btn {
@@ -372,29 +336,32 @@ $cities_result = pg_exec($conn, $cities_query);
 	}
 </style>
 
-<div class="venues-container">
-	<div class="venues-header">
-		<h1>🏛️ Administração de Venues</h1>
-		<p>Gerencie todos os espaços e locais cadastrados no sistema</p>
+<div class="modern-container modern-system">
+	<div class="modern-header modern-mb-xl modern-fade-in">
+		<h1 class="h2 mb-1">🏛️ Administração de Venues</h1>
+		<p class="mb-0 opacity-75">Gerencie todos os espaços e locais cadastrados no sistema</p>
 	</div>
 
 	<?php if ($_SESSION['consulta'] != 't'): ?>
-		<div class="venues-toolbar">
-			<button class="venues-btn venues-btn-primary" onclick="novo_venuev2()">
-				➕ Novo Venue
+		<div class="modern-flex-between modern-mb-md">
+			<button class="modern-btn modern-btn-success" onclick="novo_venuev2()">
+				<i class="bi bi-plus-circle"></i> Novo Venue
 			</button>
+		</div>
 
-			<div class="venues-filters">
-				<div class="venues-filter-group">
-					<label>Buscar</label>
-					<input type="text" id="search_venue" placeholder="Nome ou especialidade..."
+		<!-- Filtros -->
+		<div class="modern-filter-bar modern-mb-lg">
+			<div class="modern-form-row">
+				<div class="modern-form-group" style="flex: 2;">
+					<label for="search_venue" class="modern-form-label">Buscar</label>
+					<input type="text" id="search_venue" class="modern-form-control" placeholder="Nome ou especialidade..."
 						value="<?php echo htmlspecialchars($search); ?>">
 				</div>
 
-				<div class="venues-filter-group">
-					<label>Cidade</label>
-					<select id="filter_city">
-						<option value="">Todas</option>
+				<div class="modern-form-group">
+					<label for="filter_city" class="modern-form-label">Cidade</label>
+					<select id="filter_city" class="modern-form-select">
+						<option value="">Todas as cidades</option>
 						<?php
 						if ($cities_result) {
 							for ($i = 0; $i < pg_numrows($cities_result); $i++) {
@@ -407,18 +374,19 @@ $cities_result = pg_exec($conn, $cities_query);
 					</select>
 				</div>
 
-				<div class="venues-filter-group">
-					<label>Status</label>
-					<select id="filter_active">
+				<div class="modern-form-group">
+					<label for="filter_active" class="modern-form-label">Status</label>
+					<select id="filter_active" class="modern-form-select">
 						<option value="">Todos</option>
-						<option value="1" <?php echo $filter_active === '1' ? 'selected' : ''; ?>>Ativos</option>
-						<option value="0" <?php echo $filter_active === '0' ? 'selected' : ''; ?>>Inativos</option>
+						<option value="1" <?php echo $filter_active === '1' ? 'selected' : ''; ?>>✅ Ativos</option>
+						<option value="0" <?php echo $filter_active === '0' ? 'selected' : ''; ?>>❌ Inativos</option>
 					</select>
 				</div>
 
-				<div class="venues-filter-group" style="justify-content: flex-end;">
-					<label>&nbsp;</label>
-					<button class="venues-btn venues-btn-success" onclick="filtrar_venues()">🔍 Filtrar</button>
+				<div class="modern-form-group" style="display: flex; align-items: flex-end;">
+					<button class="modern-btn modern-btn-primary" onclick="filtrar_venues()">
+						<i class="bi bi-funnel"></i> Filtrar
+					</button>
 				</div>
 			</div>
 		</div>

@@ -115,9 +115,10 @@ if (isset($_SESSION['conteudo'])) {
 <link rel="stylesheet" type="text/css" href="css/blumar.datepicker.css" />
 <link rel="stylesheet" type="text/css" href="css/padrao.css?v=1.3">
 <link rel="stylesheet" type="text/css" href="css/admin-modern.css?v=1.0">
+<link rel="stylesheet" type="text/css" href="css/system-modern.css?v=1.0">
 </head>
 
-<body class="admin-dashboard-body">
+<body class="admin-dashboard-body modern-system">
         <div id="container" class="admin-dashboard d-flex flex-column min-vh-100">
                 <header class="admin-header navbar navbar-expand-lg navbar-dark bg-primary shadow-sm">
                         <div class="container-fluid">

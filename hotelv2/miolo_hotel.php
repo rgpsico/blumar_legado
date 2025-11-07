@@ -45,14 +45,11 @@ $cidades = pg_query($conn, $sqlCidades);
 	<meta charset="utf-8">
 	<title>Administração de Hotéis</title>
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+	<link href="../css/system-modern.css?v=1.0" rel="stylesheet">
 	<style>
 		body {
-			background: #f9f9f9;
-			padding: 30px;
-		}
-
-		.card {
-			margin-bottom: 20px;
+			padding: 0;
 		}
 
 		.select-large {
@@ -62,88 +59,127 @@ $cidades = pg_query($conn, $sqlCidades);
 	</style>
 </head>
 
-<body>
+<body class="modern-system">
 
-	<div class="container">
-		<h2 class="mb-4 text-primary fw-bold">Administração de Conteúdo de Hotéis</h2>
+	<div class="modern-container">
+		<div class="modern-header modern-mb-xl">
+			<h1 class="h2 mb-1">🏨 Administração de Hotéis</h1>
+			<p class="mb-0 opacity-75">Gerencie o cadastro e informações de hotéis do sistema</p>
+		</div>
 
-		<ul class="nav nav-tabs" id="hotelTabs" role="tablist">
-			<li class="nav-item" role="presentation">
-				<button class="nav-link active" id="cadastro-tab" data-bs-toggle="tab" data-bs-target="#cadastro" type="button" role="tab">Novo Hotel</button>
-			</li>
-			<li class="nav-item" role="presentation">
-				<button class="nav-link" id="alteracao-tab" data-bs-toggle="tab" data-bs-target="#alteracao" type="button" role="tab">Alterar Hotel</button>
-			</li>
-			<li class="nav-item" role="presentation">
-				<button class="nav-link" id="consulta-tab" data-bs-toggle="tab" data-bs-target="#consulta" type="button" role="tab">Consultas e Relatórios</button>
-			</li>
-		</ul>
+		<div class="modern-tabs">
+			<ul class="modern-tab-list" id="hotelTabs" role="tablist">
+				<li class="modern-tab-item active" id="cadastro-tab" data-bs-toggle="tab" data-bs-target="#cadastro" role="tab">
+					<i class="bi bi-plus-circle"></i> Novo Hotel
+				</li>
+				<li class="modern-tab-item" id="alteracao-tab" data-bs-toggle="tab" data-bs-target="#alteracao" role="tab">
+					<i class="bi bi-pencil-square"></i> Alterar Hotel
+				</li>
+				<li class="modern-tab-item" id="consulta-tab" data-bs-toggle="tab" data-bs-target="#consulta" role="tab">
+					<i class="bi bi-file-earmark-text"></i> Consultas e Relatórios
+				</li>
+			</ul>
+		</div>
 
-		<div class="tab-content mt-3" id="hotelTabsContent">
+		<div class="tab-content mt-4" id="hotelTabsContent">
 			<!-- ===================== NOVO HOTEL ===================== -->
 			<div class="tab-pane fade show active" id="cadastro" role="tabpanel">
-				<div class="card p-3 shadow-sm">
-					<h5>Inserir novo hotel</h5>
-					<select class="form-select select-large mt-2" id="mneu_for" onchange="novo_hotelv2()">
-						<option value="0" selected>Escolha um hotel para cadastrar</option>
-						<?php while ($row = pg_fetch_assoc($pendentes)): ?>
-							<option value="<?= htmlspecialchars($row['mneu_for']) ?>">
-								<?= htmlspecialchars($row['nome_for']) ?>
-							</option>
-						<?php endwhile; ?>
-					</select>
+				<div class="modern-content-wrapper">
+					<h3 class="modern-section-title modern-mb-md">
+						<i class="bi bi-building-add"></i> Inserir novo hotel
+					</h3>
+					<div class="modern-form-group">
+						<label for="mneu_for" class="modern-form-label">Selecione o hotel para cadastrar</label>
+						<select class="modern-form-select select-large" id="mneu_for" onchange="novo_hotelv2()">
+							<option value="0" selected>Escolha um hotel...</option>
+							<?php while ($row = pg_fetch_assoc($pendentes)): ?>
+								<option value="<?= htmlspecialchars($row['mneu_for']) ?>">
+									<?= htmlspecialchars($row['nome_for']) ?>
+								</option>
+							<?php endwhile; ?>
+						</select>
+					</div>
 				</div>
 			</div>
 
 			<!-- ===================== ALTERAÇÃO ===================== -->
 			<div class="tab-pane fade" id="alteracao" role="tabpanel">
-				<div class="card p-3 shadow-sm">
-					<h5>Alterar hotel existente</h5>
-					<select class="form-select select-large mt-2" id="frncod" onchange="altera_hotelv2()">
-						<option value="0" selected>Escolha um hotel para alterar</option>
-						<?php while ($row = pg_fetch_assoc($hoteis)): ?>
-							<option value="<?= htmlspecialchars($row['frncod']) ?>">
-								<?= htmlspecialchars($row['nome_for'] ?: $row['nome_htl']) ?>
-							</option>
-						<?php endwhile; ?>
-					</select>
+				<div class="modern-content-wrapper modern-mb-md">
+					<h3 class="modern-section-title modern-mb-md">
+						<i class="bi bi-pencil-square"></i> Alterar hotel existente
+					</h3>
+					<div class="modern-form-group">
+						<label for="frncod" class="modern-form-label">Selecione o hotel para alterar</label>
+						<select class="modern-form-select select-large" id="frncod" onchange="altera_hotelv2()">
+							<option value="0" selected>Escolha um hotel...</option>
+							<?php while ($row = pg_fetch_assoc($hoteis)): ?>
+								<option value="<?= htmlspecialchars($row['frncod']) ?>">
+									<?= htmlspecialchars($row['nome_for'] ?: $row['nome_htl']) ?>
+								</option>
+							<?php endwhile; ?>
+						</select>
+					</div>
 				</div>
 
-				<div class="card p-3 shadow-sm">
-					<h5>Alterar hotéis por cidade</h5>
-					<select class="form-select select-large mt-2" id="frncod2" onchange="altera_hotel2()">
-						<option value="0" selected>Selecione uma cidade</option>
-						<?php while ($row = pg_fetch_assoc($cidades)): ?>
-							<option value="<?= htmlspecialchars($row['cid']) ?>"><?= htmlspecialchars($row['nome_cidade']) ?></option>
-						<?php endwhile; ?>
-					</select>
+				<div class="modern-content-wrapper">
+					<h3 class="modern-section-title modern-mb-md">
+						<i class="bi bi-geo-alt"></i> Alterar hotéis por cidade
+					</h3>
+					<div class="modern-form-group">
+						<label for="frncod2" class="modern-form-label">Selecione uma cidade</label>
+						<select class="modern-form-select select-large" id="frncod2" onchange="altera_hotel2()">
+							<option value="0" selected>Escolha uma cidade...</option>
+							<?php while ($row = pg_fetch_assoc($cidades)): ?>
+								<option value="<?= htmlspecialchars($row['cid']) ?>"><?= htmlspecialchars($row['nome_cidade']) ?></option>
+							<?php endwhile; ?>
+						</select>
+					</div>
 				</div>
 			</div>
 
 			<!-- ===================== CONSULTAS ===================== -->
 			<div class="tab-pane fade" id="consulta" role="tabpanel">
-				<div class="card p-3 shadow-sm">
-					<h5>Listagem de Hotéis por Cidade</h5>
-					<select class="form-select select-large mt-2" id="cidcod" onchange="listagem_htl_ingles()">
-						<option value="0" selected>Selecione uma cidade</option>
-						<?php
-						pg_result_seek($cidades, 0);
-						while ($row = pg_fetch_assoc($cidades)): ?>
-							<option value="<?= htmlspecialchars($row['cid']) ?>"><?= htmlspecialchars($row['nome_cidade']) ?></option>
-						<?php endwhile; ?>
-					</select>
+				<div class="modern-content-wrapper modern-mb-md">
+					<h3 class="modern-section-title modern-mb-md">
+						<i class="bi bi-search"></i> Listagem de Hotéis por Cidade
+					</h3>
+					<div class="modern-form-group">
+						<label for="cidcod" class="modern-form-label">Selecione uma cidade</label>
+						<select class="modern-form-select select-large" id="cidcod" onchange="listagem_htl_ingles()">
+							<option value="0" selected>Escolha uma cidade...</option>
+							<?php
+							pg_result_seek($cidades, 0);
+							while ($row = pg_fetch_assoc($cidades)): ?>
+								<option value="<?= htmlspecialchars($row['cid']) ?>"><?= htmlspecialchars($row['nome_cidade']) ?></option>
+							<?php endwhile; ?>
+						</select>
+					</div>
 				</div>
 
-				<div class="card p-3 shadow-sm">
-					<h5>Relatórios Rápidos</h5>
-					<ul>
-						<li><a href="hotel/relatorio-hoteis-nacional.php">Listagem Nacional</a></li>
-						<li><a href="#" onclick="listagem_selo_new()">Hotéis com selo <b>NEW</b></a></li>
-						<li><a href="#" onclick="listagem_selo_unique()">Hotéis com selo <b>UNIQUE</b></a></li>
-						<li><a href="#" onclick="listagem_selo_luxury()">Hotéis <b>Eco Friendly</b></a></li>
-						<li><a href="#" onclick="listagem_selo_favoritos()">Hotéis <b>Favoritos</b></a></li>
-						<li><a href="#" onclick="listagem_health_safe()">Formulário <b>Health & Safe</b></a></li>
-					</ul>
+				<div class="modern-content-wrapper">
+					<h3 class="modern-section-title modern-mb-md">
+						<i class="bi bi-file-earmark-bar-graph"></i> Relatórios Rápidos
+					</h3>
+					<div class="modern-flex modern-gap-md" style="flex-wrap: wrap;">
+						<a href="hotel/relatorio-hoteis-nacional.php" class="modern-btn modern-btn-primary">
+							<i class="bi bi-list-ul"></i> Listagem Nacional
+						</a>
+						<button onclick="listagem_selo_new()" class="modern-btn modern-btn-info">
+							<i class="bi bi-star"></i> Hotéis <b>NEW</b>
+						</button>
+						<button onclick="listagem_selo_unique()" class="modern-btn modern-btn-info">
+							<i class="bi bi-gem"></i> Hotéis <b>UNIQUE</b>
+						</button>
+						<button onclick="listagem_selo_luxury()" class="modern-btn modern-btn-success">
+							<i class="bi bi-tree"></i> Hotéis <b>Eco Friendly</b>
+						</button>
+						<button onclick="listagem_selo_favoritos()" class="modern-btn modern-btn-warning">
+							<i class="bi bi-heart"></i> Hotéis <b>Favoritos</b>
+						</button>
+						<button onclick="listagem_health_safe()" class="modern-btn modern-btn-primary">
+							<i class="bi bi-shield-check"></i> Formulário <b>Health & Safe</b>
+						</button>
+					</div>
 				</div>
 			</div>
 		</div>
