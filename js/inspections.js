@@ -9,7 +9,7 @@
 			},
 			 
 			success: function(resposta) {
-				$("#container_miolo").html(resposta);
+				$("#container").html(resposta);
 				 
 			} 
 			
@@ -34,7 +34,7 @@
 		},
 		 
 		success: function(resposta) {
-			$("#container_miolo").html(resposta);
+			$("#container").html(resposta);
 			 
 		} 
 		
@@ -95,7 +95,7 @@ function input_new_inspection () {
 			alert("Erro ao mostrar o menu de Inspections Reports!");
 		},
 		 success: function(resposta) {
-			$("#container_miolo").html(resposta);
+			$("#container").html(resposta);
 			 
 		} 
 		
@@ -167,7 +167,7 @@ function altera_inspections () {
 		},
 		 
 		success: function(resposta) {
-			$("#container_miolo").html(resposta);
+			$("#container").html(resposta);
 			 
 		} 
 		
@@ -256,7 +256,7 @@ function template_inspections () {
 		},
 		 
 		success: function(resposta) {
-			$("#container_miolo").html(resposta);
+			$("#container").html(resposta);
 			 
 		} 
 		

@@ -10,7 +10,7 @@
 											},
 											 
 											success: function(resposta) {
-												$("#container_miolo").html(resposta);
+												$("#container").html(resposta);
 												 
 											} 
 											
@@ -32,7 +32,7 @@
 		},
 		 
 		success: function(resposta) {
-			$("#container_miolo").html(resposta);
+			$("#container").html(resposta);
 			 
 		} 
 		
@@ -234,7 +234,7 @@
 											},
 											 
 											success: function(resposta) {
-												$("#container_miolo").html(resposta);
+												$("#container").html(resposta);
 												 
 											} 
 											
@@ -467,7 +467,7 @@ $(document).ready(function() {
 											},
 											// FUN��O SUCESSO
 											 success: function(resposta) {
-												 $("#container_miolo").html(resposta);
+												 $("#container").html(resposta);
 												 
 											 },
 											 
@@ -522,7 +522,7 @@ $(document).ready(function() {
 											},
 											 
 											success: function(resposta) {
-												$("#container_miolo").html(resposta);
+												$("#container").html(resposta);
 												 
 											} 
 											
@@ -554,7 +554,7 @@ $(document).ready(function() {
 											},
 											 
 											success: function(resposta) {
-												$("#container_miolo").html(resposta);
+												$("#container").html(resposta);
 												 
 											} 
 											
@@ -589,7 +589,7 @@ $(document).ready(function() {
 											},
 											 
 											success: function(resposta) {
-												$("#container_miolo").html(resposta);
+												$("#container").html(resposta);
 												 
 											} 
 											
@@ -626,7 +626,7 @@ $(document).ready(function() {
 											},
 											 
 											success: function(resposta) {
-												$("#container_miolo").html(resposta);
+												$("#container").html(resposta);
 												 
 											} 
 											
@@ -851,7 +851,7 @@ $(document).ready(function() {
 											},
 											 
 											success: function(resposta) {
-												$("#container_miolo").html(resposta);
+												$("#container").html(resposta);
 												 
 											} 
 											
@@ -881,7 +881,7 @@ $(document).ready(function() {
 		},
 		 
 		success: function(resposta) {
-			$("#container_miolo").html(resposta);
+			$("#container").html(resposta);
 			 
 		} 
 		
@@ -905,7 +905,7 @@ $(document).ready(function() {
 		},
 		 
 		success: function(resposta) {
-			$("#container_miolo").html(resposta);
+			$("#container").html(resposta);
 			 
 		} 
 		
@@ -948,7 +948,7 @@ $(document).ready(function() {
 											},
 											// FUN��O SUCESSO
 											 success: function(resposta) {
-												 $("#container_miolo").html(resposta);
+												 $("#container").html(resposta);
 												 
 											 },
 											 
@@ -1084,7 +1084,7 @@ $(document).ready(function() {
 											},
 											// FUN��O SUCESSO
 											 success: function(resposta) {
-												 $("#container_miolo").html(resposta);
+												 $("#container").html(resposta);
 												 
 											 },
 											 

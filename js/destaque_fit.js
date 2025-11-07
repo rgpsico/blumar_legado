@@ -10,7 +10,7 @@ function acao_destaque_fit () {
 		},
 		 
 		success: function(resposta) {
-			$("#container_miolo").html(resposta);
+			$("#container").html(resposta);
 			 
 		} 
 		
@@ -32,7 +32,7 @@ function novo_destaque_fit () {
 		},
 		 
 		success: function(resposta) {
-			$("#container_miolo").html(resposta);
+			$("#container").html(resposta);
 			 
 		} 
 		
@@ -116,7 +116,7 @@ function input_new_destaque_fit () {
 		},
 		 
 		success: function(resposta) {
-			$("#container_miolo").html(resposta);
+			$("#container").html(resposta);
 			 
 		} 
 		
@@ -159,7 +159,7 @@ $(document).ready(function() {
 										},
 										// FUN��O SUCESSO
 										 success: function(resposta) {
-											 $("#container_miolo").html(resposta);
+											 $("#container").html(resposta);
 											 
 										 },
 										 
@@ -250,7 +250,7 @@ function update_destaque_fit () {
 		},
 		 
 		success: function(resposta) {
-			$("#container_miolo").html(resposta);
+			$("#container").html(resposta);
 			 
 		} 
 		
@@ -298,7 +298,7 @@ $(document).ready(function() {
 										},
 										 
 										 success: function(resposta) {
-											 $("#container_miolo").html(resposta);
+											 $("#container").html(resposta);
 											 
 										 },
 										 

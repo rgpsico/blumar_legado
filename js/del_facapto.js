@@ -33,7 +33,7 @@
 				alert("Ocorreu um erro ao excluir a facilidade!");
 			},
 			success: function(resposta) {
-				$("#container_miolo").html(resposta);
+				$("#container").html(resposta);
 				 
 			 } 
 	}); 

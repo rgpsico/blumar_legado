@@ -10,7 +10,7 @@ function acao_blognacional() {
         },
 
         success: function (resposta) {
-            $("#container_miolo").html(resposta);
+            $("#container").html(resposta);
 
         }
 
@@ -31,7 +31,7 @@ function novo_post() {
         },
 
         success: function (resposta) {
-            $("#container_miolo").html(resposta);
+            $("#container").html(resposta);
 
         }
 
@@ -83,7 +83,7 @@ function insere_novo_post() {
         },
 
         success: function (resposta) {
-            $("#container_miolo").html(resposta);
+            $("#container").html(resposta);
 
         }
 
@@ -110,7 +110,7 @@ function altera_post() {
         },
 
         success: function (resposta) {
-            $("#container_miolo").html(resposta);
+            $("#container").html(resposta);
 
         }
 
@@ -151,7 +151,7 @@ function alteracao_post() {
             regiao: $("#regiao").val(),
             ativo: ativo
         },
-        success: function (html) { $("#container_miolo").html(html); },
+        success: function (html) { $("#container").html(html); },
         error: function () { alert("Erro ao atualizar post."); }
     });
 }

@@ -10,7 +10,7 @@ function acao_os () {
 				},
 				 
 				success: function(resposta) {
-					$("#container_miolo").html(resposta);
+					$("#container").html(resposta);
 					 
 				} 
 				

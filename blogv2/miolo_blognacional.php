@@ -160,7 +160,7 @@ $result_posts = pg_query_params($conn, $sql_posts, $params);
     e.preventDefault();
     const params = $(this).serialize();
     $.get("blogv2/miolo_blognacional.php", params, function(resposta) {
-      $("#container_miolo").html(resposta);
+      $("#container").html(resposta);
     });
   });
 
@@ -178,7 +178,7 @@ $result_posts = pg_query_params($conn, $sql_posts, $params);
     $.post("blogv2/form_altera_post.php", {
       pk_blognacional: id
     }, function(resposta) {
-      $("#container_miolo").html(resposta);
+      $("#container").html(resposta);
     });
   }
 
@@ -187,7 +187,7 @@ $result_posts = pg_query_params($conn, $sql_posts, $params);
       $.post("blogv2/excluir_post.php", {
         pk_blognacional: id
       }, function(resposta) {
-        $("#container_miolo").html(resposta);
+        $("#container").html(resposta);
       });
     }
   }
@@ -195,7 +195,7 @@ $result_posts = pg_query_params($conn, $sql_posts, $params);
   function carregarPagina(pagina) {
     const params = $("#formFiltro").serialize() + "&pagina=" + pagina;
     $.get("blogv2/miolo_blognacional.php", params, function(resposta) {
-      $("#container_miolo").html(resposta);
+      $("#container").html(resposta);
     });
   }
 </script>

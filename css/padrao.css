@@ -1,525 +1,723 @@
-html, body           {  font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif; color:#163247; margin: 0px 0px 0px 0px ; padding: 0;  font-size:12px;  background-color:#fff;  }
-a                    {  text-decoration: none;  color:#163247;}
-#container           {  width:1100px; height: auto;  margin: auto;    }
-#container_login     {  width: 600px; height: 100px;  margin: 15px  0px 0px 0px;   border: solid 1px #D3D6CE;   border-radius: 5px 5px 5px 5px;   }
-#container_conteudo  {  width: 1100px; height: auto;   float:left;   margin: 15px  0px 0px 0px;  background-color:#eeeeee;  border: solid 1px #D3D6CE;   border-radius: 5px 5px 5px 5px;   }
-#container_lista     {  width: 250px; height: auto;   float:left;   margin: 15px  0px 0px 0px;   }
-#container_miolo     {  width: 830px; height: auto;   float:right;  margin: 15px  0px 0px 0px;   }
- 
- /* */
- 
- 
-#loading             { width:72px;    float:left; height:12px;  margin: 0px  10px 0px 0px; padding: 0 0 0 0px;   display: none;}  
-
-#login          { width: 600px; height: 40px;  margin: 15px  0px 0px 20px;    }
-#texto1         { margin: 5px  4px 0px 5px;  font-size:14px; color:#163247;  text-align:center; }
-#texto2         { margin: 5px  4px 0px 5px;  font-size:12px; color:#163247;  text-align:left; }
-#texto3         { margin: 10px  4px 0px 5px; font-size:14px; color:#163247;  text-align:left;  border-color:#CACED1; border-style:solid; border-width: 0 0 1px 0;  }
-#texto4         { margin: 5px  4px 0px 5px;  font-size:14px; color:#163247;  text-align:left; }
-#texto5         { margin: 5px  4px 0px 5px;  font-size:12px; color:#163247;  text-align:left; }
-
-#box1           {  width: 200px; height: 20px;  float:left; margin: 0px  0px 0px 5px;    }
-#box2           {  width: 640px; height: 50px;  float:left; margin: 15px  0px 0px 0px;   }
-#box3           {  width: 200px; height: 100px; float:left; margin: 0px  0px 0px 5px;    }
-#box4           {  width: 640px; height: 140px; float:left; margin: 10px  0px 0px 0px;   }
-#box5           {  width: 640px; height: 40px;  float:left; margin: 15px  0px 0px 0px;   }
-#box6           {  width: 640px; height: 15px;  float:left; margin: 35px  0px 0px 0px;   }
-#box7           {  width: 640px; height: 300px; float:left; margin: 10px  0px 0px 0px;   }
-#box8           {  width: 200px; height: 20px;  float:left; margin: 0px  0px 0px 0px;  border: 1px solid #CACED1; }
-#box9           {  width: 610px; height: 20px;  float:left; margin: 0px  0px 0px 10px;   }
-#box10          {  width: 640px; height: 15px;  float:left; margin: 25px  0px 0px 0px;   }
-#box11          {  width: 640px; height: 90px;  float:left; margin: 15px  0px 0px 0px;   }
-#box12          {  width: 300px; min-height: 20px;  float:left; margin: 0px  0px 0px 5px;    }
-#box13          {  width: 640px; min-height: 20px;  float:left; margin: 18px  0px 10px 0px;  }
-#box14          {  width: 180px; height: 20px;  float:left; margin: 0px  0px 0px 5px;    }
-#box15          {  width: 40px;  height: 20px;  float:left; margin: 0px  0px 0px 5px;    }
-#box16          {  width: 640px; height: auto;  float:left; margin: 18px  0px 10px 0px;  }
-#box17          {  width: 150px; height: 40px;  float:left; margin: 0px  0px 0px 0px;  border: 1px solid #CACED1; }
-#box18          {  width: 160px; height: 20px;  float:left; margin: 0px  0px 0px 5px;    }
-#box19          {  width: 150px; height: 40px;  float:left; margin: 0px  0px 0px 0px;  border: 1px solid #CACED1; }
-#box20          {  width: 440px; height: 20px;  float:left; margin: 0px  0px 0px 0px;  border: 1px solid #CACED1; }
-#box21          {  width: 440px; height: auto;  float:left; margin: 0px  0px 0px 0px;  border: 1px solid #CACED1; }
-#box22          {  width: 200px; height: auto;  float:left; margin: 0px  0px 0px 5px;  border: 1px solid #CACED1;  margin: 10px  0px 10px 5px; padding: 2px;}
-#box23          {  width: 640px; height: auto;  float:left; margin: 10px  0px 0px 0px;   }
-#box24          {  width: 640px; height: auto;  float:left; margin: 15px  0px 0px 0px;   }
-#box25          {  width: 540px; height: auto;  float:left; margin: 10px  0px 0px 0px;   text-align: right; }
-
-#box14apto          {  width: 180px; height: 20px;  float:left; margin: 0px  0px 0px 5px;    }
-#box15apto          {  width: 180px; height: 20px;  float:left; margin: 0px  0px 0px 5px;    }
-#box16apto          {  width: 40px;  height: 20px;  float:left; margin: 0px  0px 0px 5px;    }
-#box17apto          {  width: 180px; height: 20px;  float:left; margin: 0px  0px 0px 5px;    }
-
- 
-#boxabt1titulo       {  width: 350px; height: 20px;  float:left; margin: 0px 0px 2px 2px;   background-color:#163247;   color:#ffffff; text-align: center;}
-#boxabt1             {  width: 350px; height: 20px;  float:left; margin: 0px 0px 2px 2px;   background-color:#ffffff;   color:#163247;  }
-#boxabt2titulo       {  width: 90px; height: 20px;  float:left; margin: 0px 0px 2px 2px;   background-color:#163247;   color:#ffffff;  text-align: center;}
-#boxabt2             {  width: 90px; height: 20px;  float:left; margin: 0px 0px 2px 2px;   background-color:#ffffff;   color:#163247;  text-align: center;}
-
-
-#boxnews1titulo    {  width: 40px;  height: 20px;  float:left; margin: 0px  0px 2px 2px;  background-color:#163247;   color:#ffffff; text-align: center;  }
-#boxnews1          {  width: 40px;  height: 20px;  float:left; margin: 0px  0px 2px 2px;  background-color:#ffffff;   color:#163247;  text-align: center;   }
-#boxnews2titulo    {  width: 330px;  height: 20px;  float:left; margin: 0px  0px 2px 2px;  background-color:#163247;   color:#ffffff; text-align: center;  }
-#boxnews2          {  width: 330px;  height: 20px;  float:left; margin: 0px  0px 2px 2px;  background-color:#ffffff;   color:#163247;    }
-#boxnews3titulo    {  width: 70px;  height: 20px;  float:left; margin: 0px  0px 2px 2px;  background-color:#163247;   color:#ffffff; text-align: center;  }
-#boxnews3          {  width: 70px;  height: 20px;  float:left; margin: 0px  0px 2px 2px;  background-color:#ffffff;   color:#163247; text-align: center;   font-size:11px; }
-#boxnews4titulo    {  width: 60px;  height: 20px;  float:left; margin: 0px  0px 2px 2px;  background-color:#163247;   color:#ffffff; text-align: center;  }
-#boxnews4          {  width: 60px;  height: 20px;  float:left; margin: 0px  0px 2px 2px;  background-color:#ffffff;   color:#163247;  text-align: center;   }
-#boxnewslinha      {  width: 670px;  height: 20px;  float:left; margin: 0px  0px 2px 2px;  background-color:#ffffff;   color:#163247;    }
-#boxnewslinha2      {  width: 740px;  height: 20px;  float:left; margin: 1px  0px 1px 0px;      }
-
-#alteracao              {margin: 0px 0px 0px 15px;    width: 400px;  height: 300px;       /* border:1px solid red; */     overflow:auto;     }
-#miolo-alteracao        {margin: 0px 0px 0px 0px;    width: 640px;  height: 600px;   }
-#container_tours_latino {  width: 640px;  height: auto; }
-
-#template_restaurantes       { float:left;  height: auto; }
-#inner_template_restaurantes { width: 620px; float:left;  height: 500px; border: 1px solid #000000;  border-radius: 5px 5px 5px 5px;  margin: 10px  0px 10px 5px; padding: 0px  0px 10px 5px;}
-
-
-.texto1 {  font-size:16px; color:#000000;   }
-.texto2 {  font-size:14px; color:#163247;   }
-.texto3 {  font-size:12px; color:#163247;   }
-#fotorestau { width: 300px; float:left;  height: 20px;  margin: 5px  5px 5px 5px;  }
-
-#abt_left  { width: 600px; float:left;  height: auto;   }
-#abt_right { width: 200px; float:left;  height: auto;  }
-
-
-#box_escolaridade  { width: 400px; float:left;  height: auto;   }
-#box_cursos  { width: 400px; float:left;  height: auto;   }
-#update_emprestimo { width: 400px; float:left;  height: auto;   }
-
-#boxguiaindividual     { width: 80px;  float:left;  height: 160px;  margin: 5px  5px 0px 5px;   }
-#boxguiaindividualimg  { width: 75px;  float:left;  height: 103px;  box-shadow:   0px 0px 6px 0px rgba(0,0,0,0.5); }
-#boxguiaindividualtxt  { width: 80px;  float:left;                  margin: 5px  0px 0px 0px;   }
-
-#container_guias       { width: 520px; float:left;  height: 300px;  margin: 0px  0px 5px 0px; }
-#topo_guias            { width: 510px; float:left;  height:  30px;  margin: 10px  0px 5px 0px;  text-align:right; padding: 0px  10px 0px 0px; color:#000066;  font-size:18px; font-weight: bold;}
-#linha_guias           { width: 520px; float:left;  height:   5px;  margin: 0px  0px 5px 0px;  background-color:#000066;  }
-#foto_guias            { width: 190px; float:left;  height: 260px;  margin: 5px  0px 10px 10px;    }
-#texto_guias           { width: 310px; float:left;  height: 260px;  margin: 5px  0px 10px 10px;    }
-
-
-#boxlog1titulo    {  width: 100px;  height: 20px;  float:left; margin: 0px  0px 2px 2px;  background-color:#163247;   color:#ffffff; text-align: center;  }
-#boxlog1          {  width: 100px;  height: 20px;  float:left; margin: 0px  0px 2px 2px;  background-color:#ffffff;   color:#163247;    } 
-#boxlog2titulo    {  width: 440px;  height: 20px;  float:left; margin: 0px  0px 2px 2px;  background-color:#163247;   color:#ffffff; text-align: center;  }
-#boxlog2          {  width: 440px;  height: 20px;  float:left; margin: 0px  0px 2px 2px;  background-color:#ffffff;   color:#163247;    } 
-#boxlog3titulo    {  width: 90px;  height: 20px;  float:left; margin: 0px  0px 2px 2px;  background-color:#163247;   color:#ffffff; text-align: center;  }
-#boxlog3          {  width: 90px;  height: 20px;  float:left; margin: 0px  0px 2px 2px;  background-color:#ffffff;   color:#163247;    } 
-
-#rates_linha     { width: 200px; float:left;   height: 20px; margin: 3px  0px 3px 0px; border-bottom: 1px dashed #787250; cursor:pointer;}
-#del_rates       { width: 18px;  float:right;  height: 18px;  cursor:pointer;}
-#atten_linha     { width: 200px; float:left;   height: 20px; margin: 15px  0px 3px 0px; }
-
-#boxfitwrap       {  width: 720px;  height: 20px;  float:left; margin: 0px  0px 2px 2px;    }
-#boxfitwrap2      {  width: 720px;  height: 100%;  float:left; margin: 0px  0px 2px 2px;    }
-#boxfit1titulo    {  width: 25px;  height: 20px;  float:left; margin: 0px  0px 2px 2px;  background-color:#163247;   color:#ffffff; text-align: center;  }
-#boxfit1          {  width: 25px;  height: 20px;  float:left; margin: 0px  0px 2px 2px;  background-color:#ffffff;   color:#163247;  text-align: center;   } 
-#boxfit2titulo    {  width: 200px;  height: 20px;  float:left; margin: 0px  0px 2px 2px;  background-color:#163247;   color:#ffffff; text-align: center;  }
-#boxfit2          {  width: 200px;  height: 20px;  float:left; margin: 0px  0px 2px 2px;  background-color:#ffffff;   color:#163247;    } 
-#boxfit3titulo    {  width: 40px;  height: 20px;  float:left; margin: 0px  0px 2px 2px;  background-color:#163247;   color:#ffffff; text-align: center;  }
-#boxfit3          {  width: 40px;  height: 20px;  float:left; margin: 0px  0px 2px 2px;  background-color:#ffffff;   color:#163247;  text-align: center;   } 
-#boxfit4titulo    {  width: 40px;  height: 20px;  float:left; margin: 0px  0px 2px 2px;  background-color:#163247;   color:#ffffff; text-align: center;  font-size:10px; }
-#boxfit4          {  width: 40px;  height: 20px;  float:left; margin: 0px  0px 2px 2px;  background-color:#c3c3c3;   color:#163247;  text-align: center;   } 
-#boxfit5titulo    {  width: 70px;  height: 20px;  float:left; margin: 0px  0px 2px 2px;  background-color:#163247;   color:#ffffff; text-align: center;  }
-#boxfit5          {  width: 70px;  height: 20px;  float:left; margin: 0px  0px 2px 2px;  background-color:#ffffff;   color:#163247;  text-align: center;  font-size:11px;   } 
-#boxfit6          {  width: 40px;  height: 20px;  float:left; margin: 0px  0px 2px 2px;  background-color:#ffffff;   color:#163247;  text-align: center;  cursor:pointer;  } 
-#boxfit7          {  width: 25px;  height: 20px;  float:left; margin: 0px  0px 2px 2px;  background-color:#ffffff;   color:#163247;  text-align: center;  cursor:pointer;   }
-#boxfit8          {  width: 550px;  height: 20px;  float:left; margin: 0px  0px  10px  0px ;  font-size:18px;     color:#163247;   }
-#boxfit9          {  width: 550px;  height: auto;  float:left; margin: 0px  0px  10px  0px ;  }
-#boxfit10         {  width: 200px;  height: auto;  float:right; margin: 5px  0px  0px  0px;  font-size:13px;  text-align: right;  }
-
-#container_destaque_fit {width: 550px; float:left;  margin: 10px  0px 0px 5px; }
-#img_destaque_fit       {width: 550px; float:left;  margin: 0px  0px 0px 0px; }
-
-#template_brazilian_experts { width: 600px; }
-#box_ft_expert              { width: 600px;  height: auto; float:left; }
-#ft_expert                  { width: 250px;  height: 166px; float:left;  margin: 2px;  }
-#ft_expert2                 { width: 150px;  height: 225px; float:left;  margin: 2px;  }
-#txt_expert                 { width: 440px;  height: auto;  float:left;  margin: 0px 0px  0px  5px;  }
-
-.h3accordion              { margin: 2px 0px 0px 0px;  border: solid 1px #D3D6CE; border-radius: 5px 5px 5px 5px;  background-color:#fff; font-size: 12px;   padding: 0px 0px 4px 2px; width: 378px;   font-weight: none;}
-
-#box_escolaridade_accordion {  margin: -4px 0px 0px 0px;  width: 379px; height: auto;   background-color:#fff;   padding: 7px 0px 0px 1px;  font-size: 10px;  font-weight: none;
-				border-radius: 0px 0px 5px 5px;
-				border-left: solid 1px #D3D6CE;
-				border-right: solid 1px #D3D6CE;
-				border-bottom: solid 1px #D3D6CE;  }
-				
-				
-#box_escolaridade_accordion2 {  margin: -4px 0px 0px 0px;  width: 379px; height: auto;   background-color:#fff;   padding: 7px 0px 0px 1px;  font-size: 10px;  font-weight: none;
-				border-radius: 0px 0px 5px 5px;
-				border-left: solid 1px #D3D6CE;
-				border-right: solid 1px #D3D6CE;
-				border-bottom: solid 1px #D3D6CE;  }				
-
-#box_inner_escola {  width: 368px;   margin: 3px 0px 3px 2px;   background-color:#E9E8E4; border-radius: 5px 5px 5px 5px; border: solid 1px #D3D6CE; height: auto;  padding: 2px 0px 2px 2px;  }
-
-#del_button       {  float:right;  width: 17px; height: 17px;  margin: 1px 3px 0px 0px; font-size:10px; }
-
-
-#basic-modal-content   { width: 700px; height: 600px;  display:none;  }
-#corpofotos            { width: 680px; height: 590px;  float:left;  background-color:#D3D6CE;    overflow:scroll;   color:#ffffff;  border-radius: 5px 5px 5px 5px;  }
-#fotos                 { width: 95px; height: 120px; float:left;  margin: 5px  0px 0px 5px; padding: 4px 0px 0px 4px;  font-size:10px; color:#000000; border: solid 1px #000000;  background-color:#ffffff; overflow:hidden;  text-align: center; }
-
-#busca_foto a     {  cursor:pointer;}
-
-#box_layout_deluxe { float:left;  width: 300px; height: 340px;  margin: 3px 3px 3px 0px; }
-
-#container-deluxe{ width:600px; height:440px;  background-color:#ffffff;   margin: 15px  0px 0px 0px; }
-#faixa-fotos     { background-image: url("../images/bg-deluxe.jpg"); width:600px; height:151px; float: left;  margin: 10px 0px 0px 0px;  }
-#texto-deluxe    { width:500px;  height:200px;   float: left;  padding:15px;  margin: 10px 0px 0px 20px; font-size:11px; overflow:scroll;  text-align:justify;}
-#fotos-deluxe    { width:600px;  margin: 4px 0px 0px 5px;}
-
-#box_check_content {  width: 390px; height: 440px;  overflow:scroll;  background-color:#ffffff; }
-
-#box_mkups         { width: 300px; float:left; height: 440px; }
-#box_mkups2        { width: 300px; float:left; height: 30px;  margin: 8px 0px 8px 0px;}
-#box_mkups3        { width: 600px; float:left; height: 40px;  margin: 8px 0px 8px 0px;}
-#box_mkups4        { width: 300px; float:left; height: 20px;  margin: 2px 0px 2px 0px;}
-#box_mkups5        { width: 600px; float:left; height: 20px;  margin: 2px 0px 2px 0px;}
-#box_mkups6        { width: 600px; float:left; height: 140px;  margin: 2px 0px 2px 0px;}
-#edit_cli_op       { width: 600px; float:left;   margin: 2px 0px 2px 0px;}
-#status-history    { z-index:10; position:absolute;  margin: -85px 0px 0px  310px; background-color:#E9E1C9; font-size: 11px; color: #000000; border: solid 1px #000000; width: 400px; padding: 2px; visibility: hidden;}
-#status-history2   { z-index:10; position:absolute;  margin: -895px 0px 0px  310px; background-color:#E9E1C9; font-size: 11px; color: #000000; border: solid 1px #000000; width: 400px; padding: 2px; visibility: hidden;}
-#alerta_ativo      { z-index:11; position:absolute;  margin: -85px 0px 0px 90px; background-color:#E9E1C9; font-size: 11px; color: #000000; border: solid 1px #000000; width: 400px; padding: 2px; visibility: hidden;}
-#alerta_ativo2     { z-index:11; position:absolute;  margin: -885px 0px 0px 90px; background-color:#E9E1C9; font-size: 11px; color: #000000; border: solid 1px #000000; width: 400px; padding: 2px; visibility: hidden;}
-#alerta_desativar  { z-index:12; position:absolute;  margin: -40px 0px 0px 290px; background-color:#E9E1C9; font-size: 11px; color: #000000; border: solid 1px #000000; width: 400px; padding: 2px; visibility: hidden;}
-#alerta_desativar2 { z-index:12; position:absolute;  margin: -940px 0px 0px 290px; background-color:#E9E1C9; font-size: 11px; color: #000000; border: solid 1px #000000; width: 400px; padding: 2px; visibility: hidden;}
-#allotment         { z-index:13; position:absolute;  margin: -40px 0px 0px 380px; background-color:#E9E1C9; font-size: 11px; color: #000000; border: solid 1px #000000; width: 340px; padding: 2px; visibility: hidden;}
-#allotment2        { z-index:13; position:absolute;  margin: -1240px 0px 0px 380px; background-color:#E9E1C9; font-size: 11px; color: #000000; border: solid 1px #000000; width: 340px; padding: 2px; visibility: hidden;}
-#cons_allotment    { z-index:14; position:absolute;  margin: -50px 0px 0px 170px; background-color:#E9E1C9; font-size: 11px; color: #000000; border: solid 1px #000000; width: 340px; padding: 2px; visibility: hidden;}
-#cons_allotment2   { z-index:14; position:absolute;  margin: -1250px 0px 0px 170px; background-color:#E9E1C9; font-size: 11px; color: #000000; border: solid 1px #000000; width: 340px; padding: 2px; visibility: hidden;}
-#op_cli           { z-index:15; position:absolute;  margin: -50px 0px 0px 230px; background-color:#E9E1C9; font-size: 11px; color: #000000; border: solid 1px #000000; width: 340px; padding: 2px; visibility: hidden;}
-#feeop            { z-index:15; position:absolute;  margin: -40px 0px 0px 210px; background-color:#E9E1C9; font-size: 11px; color: #000000; border: solid 1px #000000; width: 340px; padding: 2px; visibility: hidden;}
-#dtinsrv          { z-index:15; position:absolute;  margin: -40px 0px 0px 280px; background-color:#E9E1C9; font-size: 11px; color: #000000; border: solid 1px #000000; width: 340px; padding: 2px; visibility: hidden;} 
-#logo-history     { z-index:16; position:absolute;  margin: -95px 0px 0px 310px; background-color:#E9E1C9; font-size: 11px; color: #000000; border: solid 1px #000000; width: 400px; padding: 2px; visibility: hidden;}
-
-#box-template { width:610px; height:450px;  float:left;  margin: 25px  0px 0px 0p;  overflow:scroll; }
-
-/*  css de clientes   */
-
-#diplay_clientes     { width:890px; height:100%;  float:left; margin: 7px  0px 0px 5px;  overflow:scroll;}
-#linha_clientes1     { width:860px; background-color:#EFEED8; margin: 2px 0px 2px 0px; padding: 5px 2px 5px 4px; float:left; }
-#linha_clientes2     { width:860px; background-color:#EDE3B7; margin: 2px 0px 2px 0px; padding: 5px 2px 5px 4px; float:left; }
-#linha_clientes3     { width:860px;  margin: 4px 0px 3px 0px;   float:left; }
-#linha_clientes4     { width:860px;  margin: 2px 0px 0px 5px;   float:left; }
-#linha_clientes5     { width:608px;  margin: 4px 0px 3px 5px;   float:left; }
-#linha_clientes6     { width:608px;  margin: 4px 0px 3px 5px; padding: 0px 10px 0px 0px;  float:left;  text-align: right; }
-#linha_clientes6 a   { text-decoration:none;  color:#787250;} 
-#linha_clientes7     { width:350px;  margin: 0px 0px 0px 05px;   float:left;  }
-#linha_clientes8     { width:450px;  margin: 0px 0px 0px 05px;   float:right;  text-align: right; }
-
-
-
-
-
-
-
-
-/*
-==================================================================
-modulo de css para vouchers
-==================================================================
-*/
-#miolo_voucher      { width:890px; height:600px; float:left; padding: 4px 0px 4px 5px;}
-#miolo_voucher2     { width:885px; height:600px; float:left; padding: 4px 0px 4px 5px;   overflow:scroll;  background-color:#ffffff;  }
-#miolo_voucher3     { width:540px; height:490px; float:left; padding: 4px 0px 4px 5px;   background-color:#F6F4E8; }
-#miolo_voucher4     { width:785px; height:490px; float:left; margin: 4px 0px 4px 5px;  padding: 4px 0px 0px 0px;   overflow:scroll;  background-color:#ffffff;}
-#duvida_voucher     { width:50px; height:30px;   float:right;}
-#volta_voucher      { width:150px; height:30px;   float:right;   }
-#miolo_voucher5     { width:785px; height:490px; float:left;  } 
-#miolo_voucher6     { width:100px; height:30px; float:right; margin: 2px 0px 0px 0px;  text-align:right;} 
-#container_voucher  { width: 900px; height:650px;  float:left;  padding: 4px 0px 4px 5px;   margin:  5px  0px 0px 0px;  background-color:#eeeeee;  border: solid 1px #D3D6CE;   border-radius: 5px 5px 5px 5px;   }
-
-
-
-#texto1_voucher  { width:890px; height:30px;  margin: 5px  4px 0px 5px;  font-size:14px; color:#163247;  text-align:center; }
-
-
-/* CSS DE OS */
-#dashboard_os     { width:890px;  height:610px;  float:left; margin: 7px  0px 0px 3px;  overflow:scroll;   }
-#corpo_os         { width:890px;  height:520px;  float:left; margin: 7px  0px 0px 3px;  overflow:scroll;  }
-#container_mapa_os{ width:1300px; height:600px;   float:left; margin: 0px  0px 0px 10px; overflow:scroll; } 
-#linha_mapa       { width:1300px; height:auto;   float:left; margin: 0px  0px 0px 0px; } 
-
-#linha_mapa1        { width:1300px; height:19px; float:left; margin: 1px 0px 2px 0px; background-color:#EFEED8;  padding: 2px 0px 0px 2px;}
-#linha_mapa2        { width:1300px; height:19px; float:left; margin: 1px 0px 2px 0px; background-color:#EDE3B7;  padding: 2px 0px 0px 2px;}
-
-
-#miolo_os_linha   { width:870px;  float:left; margin: 4px 0px 4px 0px;}
-#os_linha         { width:870px;  float:left; margin: 4px 0px 4px 0px;}
-#os_linha_status  { width:870px;  float:left; margin: 4px 0px 4px 0px;}
-#os_linhadir      { width:870px;  float:left; margin: 4px 0px 4px 0px;  text-align: right;}
-#os_linha1        { width:870px;  float:left; margin: 1px 0px 2px 0px; background-color:#EFEED8;  padding: 2px 0px 0px 2px;}
-#os_linha2        { width:870px;  float:left; margin: 1px 0px 2px 0px; background-color:#EDE3B7;  padding: 2px 0px 0px 2px;}
-#redirect_line    { width:870px;  float:left; margin: 4px 0px 4px 5px;}
-#fundo_os         { width:860px;  height:auto;  float:left; margin: 2px  0px 0px 3px;  padding: 0px 5px 5px 5px;  background-color:#fff; color:#000; }
-#os_coluna890     { width:890px;  float:left; padding: 4px 0px 4px 5px;}
-#os_coluna620     { width:620px;  float:left; padding: 0px 0px 0px 0px;}
-#os_coluna580     { width:580px;  float:left; margin: 0px 0px 0px 0px;}
-#os_coluna570     { width:570px;  float:left; margin: 0px 0px 0px 0px;}
-#os_coluna550     { width:550px;  float:left; margin: 0px 0px 0px 0px;}
-#os_coluna440     { width:440px;  float:left; margin: 0px 0px 0px 0px;}
-#os_colunasrv     { width:440px;  float:left; padding: 2px 0px 0px 2px;}
-#os_colunasrvg    { width:360px;  float:left; padding: 2px 0px 0px 2px;}
-#os_coluna300     { width:300px;  float:left; }
-#os_coluna240     { width:240px;  float:left; margin: 0px 0px 0px 10px;}
-#os_coluna220     { width:220px;  float:left; margin: 0px 0px 0px 10px;}
-#os_coluna210     { width:210px;  float:right; margin: 0px 30px 0px 0px;  text-align: right;}
-#os_colunaguiatop { width:240px;  float:left; margin: 0px 0px 0px 10px; padding: 2px 0px 0px 2px;}
-#os_coluna190     { width:190px;  float:left; padding: 0px 0px 0px 0px;}
-#os_coluna150     { width:150px;  float:left;  }
-#os_colunasts     { width:130px;  float:left;  }
-#os_colunabook    { width:120px;  float:left; text-align: center; padding: 2px 0px 0px 2px;}
-#os_coluna120     { width:120px;  float:left; text-align: center;  }
-#os_coluna200r    { width:200px;  float:right; text-align: center;  margin: 5px 0px 0px 10px; }
-#os_coluna90      { width: 90px;  float:left; text-align: center;  }
-#os_colunadt      { width: 90px;  float:left; text-align: center; padding: 2px 0px 0px 2px;}
-#os_colunadt3     { width: 90px;  float:left; text-align: center; padding: 2px 0px 0px 2px;  font-size: 11px; }
-#os_coluna80      { width: 80px;  float:left; text-align: center;  }
-#os_colunaedt     { width: 80px;  float:left; text-align: center;  }
-#os_colunadt2     { width: 70px;  float:left; text-align: center; padding: 2px 0px 0px 2px;  font-size: 11px; }
-#os_colunadt2top  { width: 70px;  float:left; text-align: center; padding: 2px 0px 0px 2px;}
-#os_colunaicos    { width: 70px;  float:left; text-align: center;  }
-#os_coluna70p     { width: 70px;  float:left; text-align: center;  font-size: 11px;  }
-#os_coluna70      { width: 70px;  float:left; text-align: center;  }
-#os_coluna50      { width: 50px;  float:left; text-align: center; padding: 0px 0px 0px 0px;}
-#os_colunahr2     { width: 50px;  float:left; text-align: center; padding: 2px 0px 0px 2px; font-size: 11px; }
-#os_coluna30      { width: 30px;  float:left; text-align: center; padding: 0px 0px 0px 0px; margin: 0px 0px 0px 0px;}
-#os_coluna20      { width: 20px;  float:left; text-align: center; }
-#loading          { width: 72px;  float:left; height:12px;  margin: 10px  10px 0px 0px; padding: 0 0 0 0px;   display: none;}  
-/* FIM DO CSS DE OS */
-
-
-
-#corpo_log         { width:630px; height:570px;  float:left; margin: 7px  0px 0px 0px;  overflow:scroll;  }
-#log_colunadtop    { width: 90px;  float:left;  text-align: center; font-size: 13px;  background-color:#787250; color: #fff;  margin: 0px  1px 0px 1px;  height:15px;  padding: 2px;}
-#log_colunadt      { width: 90px;  float:left;  text-align: center; font-size: 11px;   margin: 0px  1px 0px 1px; padding: 2px;}
-#log_colunaclitop  { width:250px;  float:left;  font-size: 13px;  background-color:#787250; color: #fff;  margin: 0px  1px 0px 1px;  height:15px; padding: 2px;}
-#log_colunacli     { width:250px;  float:left;   margin: 0px  1px 0px 1px; padding: 2px; }
-#log_colunareatop  { width:120px;  float:left;  font-size: 13px;  background-color:#787250; color: #fff;  margin: 0px  1px 0px 1px;  height:15px; padding: 2px;}
-#log_colunarea     { width:120px;  float:left;   margin: 0px  1px 0px 1px; padding: 2px; }
-#log_colunareatop1 { width:120px;  float:left;  font-size: 13px;  background-color:#787250; color: #fff;  margin: 0px  1px 0px 1px;  height:15px; padding: 2px;}
-#log_colunarea1    { width:120px;  float:left; font-size: 10px;   margin: 0px  1px 0px 1px; padding: 2px; }
-
-#log_coluna630     { width:630px;  float:left; }
-#log_coluna320     { width:310px;  float:left; }
-#log_coluna300     { width:300px;  float:right;}
-#log_colunadata    { width:630px;  float:left; }
-
-
-
-#container_guias { width:1095px;  float:left;  height:670px;   overflow:scroll;}
-
-#barra_topo_guia {  width:1095px;  float:left;  height:25px;}
-
-#linha_guias1 { width:1070px; background-color:#EFEED8; margin: 2px 0px 2px 0px; padding: 5px 2px 5px 4px; float:left; }
-#linha_guias2 { width:1070px; background-color:#EDE3B7; margin: 2px 0px 2px 0px; padding: 5px 2px 5px 4px; float:left; }
-
-#guia_nome    { width:216px; margin: 2px 0px 2px 0px; float:left; padding: 2px; border-right: solid 1px #9E9A9A; height:18px;  font-weight: bold;}
-#guia_nometop { width:220px; margin: 2px 0px 2px 0px; float:left;  background-color:#797171;  color: #fff; padding: 2px;  text-align: center;  font-weight: bold;}
-
-#guia_celular    { width:77px; margin: 2px 0px 2px 0px; float:left; padding: 2px; border-right: solid 1px #9E9A9A;  text-align: center; height:18px; font-size: 11px; }
-#guia_celulartop { width:76px; margin: 2px 0px 2px 2px; float:left;  background-color:#797171;  color: #fff; padding: 2px;  text-align: center; font-weight: bold; }
-
-#guia_email    { width:216px; margin: 2px 0px 2px 0px; float:left; padding: 2px; border-right: solid 1px #9E9A9A;  text-align: center; height:18px;}
-#guia_emailtop { width:216px; margin: 2px 0px 2px 2px; float:left;  background-color:#797171;  color: #fff; padding: 2px;  text-align: center;  font-weight: bold;}
-
-#guia_idiomas    { width:194px; margin: -3px 0px 2px 0px; float:left; padding: 2px;   text-align: center; height:20px;  font-size: 11px;  }
-#guia_idiomastop { width:194px; margin: 2px 0px 2px 2px; float:left;  background-color:#797171;  color: #fff; padding: 2px;  text-align: center; font-weight: bold; }
-
-#container_guias_pop { width: 620px; float:left;  height: auto;   margin: 0px  0px 5px 0px; }
-#topo_guias_pop      { width: 620px; float:left;  height:  30px;  margin: 10px  0px 5px 0px;  text-align:right; padding: 0px  10px 0px 0px; color:#000066;  font-size:18px; font-weight: bold;}
-#linha_guias_pop     { width: 620px; float:left;  height:   5px;  margin: 0px  0px 5px 0px;  background-color:#000066;  }
-#texto_guias_pop     { width: 620px; float:left;  height: auto;   margin: 5px  0px 10px 10px;    }
-
-
-
-
-
-
-
-
-
-
-/* INICIO ITINERARIOS TRAILFINDERS*/
-#container_trail       { width:980px; height: auto;  margin: auto;     }
-#container_lista_trail { width:1000px; height: 600px;  float:left;  overflow:scroll;   }
-#linha_trail_980       { width:980px; height:  50px; float:left; margin: 9px 0px 2px 0px;  background-color:#787250;   text-align:left; color:#EFEED8;}
-#linha_miolo_trail     { width:980px; height: auto;  float:left; } 
-
-#filtros_trail       { width:980px; height:  40px; float:left;  margin: -2px 0px 0px 0px;  background-color:#EDE3B7;   text-align:left; color:#787250; font-weight: bold; }
-#filtros_trail1      { width:980px; height:  22px; float:left;  margin: 0px 0px 0px 0px;   background-color:#EDE3B7;   text-align:left; color:#787250; font-weight: bold; }
-#filtros_trail2      { width:980px; height:  18px; float:left;  margin: 0px 0px 0px 0px;   background-color:#EDE3B7;   text-align:right; color:#787250; font-weight: bold; }
-
-#linha_trail_tit     { width:150px; height:  25px; float:left;  margin: 5px 0px 0px 8px;  font-size:16px;  font-weight: bold;   }
-#linha_trail_tit2    { width:250px; height:  25px; float:left;  margin: 9px 0px 0px 8px;  font-size:13px;  font-weight: bold;   }
-#bot_trail           { width:110px; height:  25px; float:right; margin: -6px 4px 2px 0px; text-align:center; border: 2px solid #EDE3B7; background-color:#EDE3B7; color:#787250;  font-weight: bold; padding: 8px 0px 0px 0px;  }
-
-#linha_trail_menu    { width:980px; height:  20px; float:left; margin: 0px 0px 2px 0px;  background-color:#787250;   text-align:left; color:#EFEED8;}
-
-#linha_trail_menu675_top { width:715px;  height:  25px;  float:left; margin: 0px 0px 0px 0px; border-right: 1px solid #EFEED8;  text-align:center; font-size:13px;} 
-#linha_trail_menu100_top { width:80px;   height:  25px;  float:left; margin: 0px 0px 0px 0px; border-right: 1px solid #EFEED8;  text-align:center; font-size:13px;} 
-#linha_trail_menu50_top  { width:50px;   height:  25px;  float:left; margin: 0px 0px 0px 0px; border-right: 1px solid #EFEED8;  text-align:center; font-size:13px;} 
-
-#linha_trail_menu675 { width:715px;  height:  25px;  float:left; margin: 0px 0px 0px 0px; border-right: 1px solid #787250;  font-size:12px;} 
-#linha_trail_menu100 { width:80px;   height:  25px;  float:left; margin: 0px 0px 0px 0px; border-right: 1px solid #787250;  text-align:center; font-size:12px;} 
-#linha_trail_menu50  { width:50px;   height:  25px;  float:left; margin: 0px 0px 0px 0px; border-right: 1px solid #787250;  text-align:center; font-size:12px;} 
-
-#linha_trail_submenu300  { width:380px;  height:  22px;  float:left; margin: 0px 3px 0px 3px; padding: 3px 0px 0px 0px;   }
-#linha_trail_submenu140  { width:140px;  height:  22px;  float:left; margin: 0px 3px 0px 3px; padding: 3px 0px 0px 0px;  } 
-#linha_trail_submenu120  { width:120px;  height:  22px;  float:left; margin: 0px 3px 0px 3px; padding: 3px 0px 0px 0px;  } 
-#linha_trail_submenu80   { width:80px;   height:  22px;  float:left; margin: 0px 3px 0px 3px; padding: 3px 0px 0px 0px;  }
-#linha_trail_submenu50   { width:50px;   height:  22px;  float:left; margin: 0px 3px 0px 3px; padding: 3px 0px 0px 0px;  }
-#linha_trail_submenu27   { width:27px;   height:  22px;  float:left; margin: 0px 3px 0px 3px; padding: 3px 0px 0px 0px;  }
-#linha_trail_submenu10   { width:10px;   height:  22px;  float:left; margin: 0px 3px 0px 3px; padding: 3px 0px 0px 0px;  }
-
-#os_linha1_iti        { width: 980px;  float:left; margin: 1px 0px 2px 0px; background-color:#EFEED8;  }
-#os_linha2_iti        { width: 980px;  float:left; margin: 1px 0px 2px 0px; background-color:#EDE3B7;  }
-
-#os_linha3_iti        { width: 284px;  float:left; margin: 1px 0px 2px 0px; background-color:#EFEED8;  }
-#os_linha4_iti        { width: 284px;  float:left; margin: 1px 0px 2px 0px; background-color:#EDE3B7;  }
-
-#os_miolo_iti        { width: 972px; height:  300px;  float:left; margin: 1px 0px 2px 0px;  padding: 5px 2px 5px 5px; background-color:#EDE3B7;  }
-
-#linha_iti_dir        { width:150px;  float:right; margin: 1px 4px 2px 0px; text-align:right;  }
-#linha_iti_dir2       { width:800px;  float:right; margin: 1px 4px 2px 0px; text-align:right;  }
-
-#box_form_trail   { width:680px; height: 573px;  float:left; background-color:#EFEED8;   padding: 5px 2px 5px 5px;  } 
-#box_list_iti     { width:284px; height: 573px;  float:left; background-color:#F6F6EE;   padding: 5px 4px 5px 5px;  } 
-#box_list_iti2    { width:284px; height: 25px;   float:left;  margin: 3px 0px 2px 0px;   padding: 5px 0px 0px 0px;  }
-#box_list_iti3    { width:170px; height: 20px;   float:right; margin: 0px 0px 0px 0px;    }
-/* FIM ITINERARIOS TRAILFINDERS*/
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/* INICIO TAR TOOLS*/
-
-#miolo_tartools       { width: 630px; height: auto;   float:left;  margin: 5px  0px 0px 0px;   }
-#os_linha1_tar        { width: 630px;  float:left; margin: 1px 0px 2px 0px; background-color:#EFEED8;  }
-#os_linha2_tar        { width: 630px;  float:left; margin: 1px 0px 2px 0px; background-color:#EDE3B7;  }
-
-#linha_tar            { width:630px;  float:left; margin: 1px 0px 2px 0px;  }
-#linha_tar_630        { width:630px;  float:left; margin: 1px 0px 2px 0px;  background-color:#787250;   text-align:center; color:#EFEED8;}
-#linha_tar_630   a    {  color:#EFEED8;}
-
-#linha_tar_260_top    { width:255px;  height:  25px;  float:left; margin: 0px 0px 0px 0px; border-right: 1px solid #EFEED8;  text-align:center; font-size:13px; }
-#linha_tar_200_top    { width:200px;  height:  25px;  float:left; margin: 0px 0px 0px 0px; border-right: 1px solid #EFEED8;  text-align:center; font-size:13px; }
-#linha_tar_144_top    { width:144px;  height:  25px;  float:left; margin: 0px 0px 0px 0px; border-right: 1px solid #EFEED8;  text-align:center; font-size:13px; }
-#linha_tar_90_top     { width:90px;   height:  25px;  float:left; margin: 0px 0px 0px 0px; border-right: 1px solid #EFEED8;  text-align:center; font-size:13px; }
-#linha_tar_70_top     { width:70px;   height:  25px;  float:left; margin: 0px 0px 0px 0px; border-right: 1px solid #EFEED8;  text-align:center; font-size:13px; }
-#linha_tar_60_top     { width:60px;   height:  25px;  float:left; margin: 0px 0px 0px 0px; border-right: 1px solid #EFEED8;  text-align:center; font-size:13px; }
-#linha_tar_50_top     { width:50px;   height:  25px;  float:left; margin: 0px 0px 0px 0px; border-right: 1px solid #EFEED8;  text-align:center; font-size:13px; }
-#linha_tar_40_top     { width:40px;   height:  25px;  float:left; margin: 0px 0px 0px 0px; border-right: 1px solid #EFEED8;  text-align:center; font-size:13px; }
-#linha_tar_30_top     { width:28px;   height:  25px;  float:left; margin: 0px 0px 0px 0px; border-right: 1px solid #EFEED8;  text-align:center; font-size:13px; }
-
-
-
-#linha_tar_260        { width:255px;  height:  35px;  float:left; margin: 0px 0px 0px 0px; border-right: 1px solid #787250;  text-align:center; }
-#linha_tar_200        { width:200px;  height:  35px;  float:left; margin: 0px 0px 0px 0px; border-right: 1px solid #787250;  text-align:center; }
-#linha_tar_144        { width:144px;  height:  35px;  float:left; margin: 0px 0px 0px 0px; border-right: 1px solid #787250;  text-align:center; font-size:10px; }
-#linha_tar_90         { width:90px;   height:  35px;  float:left; margin: 0px 0px 0px 0px; border-right: 1px solid #787250;  text-align:center; font-size:10px; }
-#linha_tar_70         { width:70px;   height:  35px;  float:left; margin: 0px 0px 0px 0px; border-right: 1px solid #787250;  text-align:center; font-size:10px; }
-#linha_tar_60s        { width:60px;   height:  35px;  float:left; margin: 0px 0px 0px 0px; border-right: 1px solid #787250;  text-align:center; font-size:10px;}
-#linha_tar_60         { width:60px;   height:  35px;  float:left; margin: 0px 0px 0px 0px; border-right: 1px solid #787250;  text-align:center; }
-#linha_tar_50         { width:50px;   height:  35px;  float:left; margin: 0px 0px 0px 0px; border-right: 1px solid #787250;  text-align:center; }
-#linha_tar_40         { width:40px;   height:  35px;  float:left; margin: 0px 0px 0px 0px; border-right: 1px solid #787250;  text-align:center; } 
-#linha_tar_30         { width:28px;   height:  35px;  float:left; margin: 0px 0px 0px 0px; border-right: 1px solid #787250;  text-align:center; }
-
-
-#linha_tar_dir        { width:150px;  float:right; margin: 1px 0px 2px 0px; text-align:right;  }
-
-/* FIM TAR TOOLS*/
-
-
-
-
-
-
-
-
-
-
-
-
-/* INICIO DO CSS DE CONTATOS */
-#container-contatos {  width: 999px; height: auto;  margin:auto;    }
-#container-conteudo-contatos  {  width: 995px; height: auto;   float:left;   margin: 2px  0px 0px 0px;  background-color:#eeeeee;  border: solid 1px #D3D6CE;   border-radius: 5px 5px 5px 5px;   }
-#miolo_contatos_linha   { width:980px;  float:left; margin: 4px 0px 9px 0px;}
-#barra-navegacao { width: 993px; margin: 10px 0px 0px  5px; float:left;  height: 23px;    }
-#botao-navega    { width: 70px;  background-color:#787250;  margin: -7px 1px 0px 0px; float:left;  height: 27px;  color:#ffffff;     text-align:center; }
-#botao-navega a  {  text-decoration:none;  color:#fff; }
-#botao-navega2    { width: 140px;  background-color:#787250;  margin: -7px 1px 0px 0px; float:left;  height: 27px;  color:#fff;      text-align:center; }
-#botao-navega2 a  {  text-decoration:none;  color:#fff; }
-#botao-navega3    { width: 381px;  background-color:#787250;  margin: -7px 1px 0px 0px; float:left;  height: 27px;  font-size: 13px; color:#fff;      text-align:center; }
-
-#botao-busca-central { width: 216px;  background-color:#787250; float:left;  font-size:17px; margin: -5px 0px 8px 2px;   height: 25px;  color:#ffffff;    text-align:center;    font-weight:bold; }
-#botao-busca       { width: 320px;  background-color:#787250;  margin: -7px 5px 0px 0px; float:right;  height: 25px;  color:#fff;    text-align:left; font-style:italic;  padding: 2px 0px 0px 3px; }
-#botao-busca input { width: 240px;  height: 17px;}
-
-#miolo                {  width: 988px; margin:  0px 0px 4px 4px;  float:left;  height: 700px;   background-color:#ffffff;   border-radius: 0px 0px 5px 5px;   border: solid 1px #C7C7C5;  }
-#miololetra           {  width: 980px; margin:  5px 0px 0px 10px;  float:left;  height: 20px;  }
-#miololetratit        {  width: 100px; margin:  0px 2px 0px  0px;  float:left;  height: 20px;  }
-#miololetraindividual {  width: 20px; margin:  0px 2px 0px  0px;  float:left;  height: 20px;    background-color:#787250; text-align:center;  color:#fff;   }
-#miololetraindividual a {   text-decoration:none;  color:#fff; }
-#showvalorbusca       {  width: 200px;  float:right; } 
-#miolo-contatos       { width: 980px; margin:  0px 0px 0px  4px;  float:left;  height: 600px;    }
-
-#box-contato         { width: 232px; margin:  4px 4px 0px 4px; float:left;  height: 155px;    border: solid 1px #C7C7C5;}
-#box-contato-topo    { width: 227px; margin:  -1px 0px 0px -1px; padding: 1px 0px 0px 5px;  float:left;  height: 16px;   border: solid 1px #C7C7C5;  background-color:#EFECDF;}
-#box-contato-miolo   { width: 230px;  height: 120px;  margin:  5px 0px 0px 3px;   float:left;  }
-#box-contato-linha   { width: 230px;  height: 15px;  margin:  2px 0px 0px 0px;   float:left;  }
-
-#barranext          {  width: 965px; margin:  5px 0px 0px 10px;  float:left;  height: 20px; text-align:right;  font-weight:bold; } 
-#barranext a        {  text-decoration:none;  color:#787250;}  
-
-#mapa-eco {display:none;   background-color:#F3F0E1;  }
-#simplemodal-overlay {background-color:#000; cursor:wait;}
-#simplemodal-container a.modalCloseImg { background:url("../images/close_bhouse.png") no-repeat;  width:95px; height:27px; display:inline; z-index:3200; position:absolute; top:0px; right:10px; cursor:pointer;}
-
-#miolo-retrieve { width: 800px; margin: 0px; float:left;  height: 560px;   background-color:#ffffff;   border-radius: 5px 5px 5px 5px;   border: solid 1px #C7C7C5; } 
-#box-form-ret     { width: 380px; margin:  5px 10px 0px 10px; float:left;  height: 20px; }
-#box-form-ret input { float:right;   width: 230px; }
-#box-form-ret-trat    { width: 380px; margin:  5px 10px 0px 10px; float:left;  height: 20px; }
-#box-form-ret-trat input {    width: 30px; }
-#miolo-form-traco-ret     { width: 780px; margin:  5px 0px 0px 10px; float:left;  font-size:12px; height:20px;   background-color:#ffffff;  font-weight:bold; }
-#miolo-form-traco-ret hr    { width: 670px; margin:  5px 0px 0px 0px;  float:right; height:1px; border-width:1px; size:1px;  background-color:#000000;}
-#box-form-submit-ret       { width: 380px; margin:  23px 10px 0px 10px; float:left;  height: 30px; }
-#box-form-textarea-ret  { width: 380px; margin:  3px 10px 0px 10px; float:left;  height: 50px; }
-
-#miolo-form            { width: 880px; margin:  10px 0px 0px 0px; float:left;  height: 600px;  background-color:#ffffff;  }
-#miolo-form-update     { width: 872px; margin:  0px 0px 0px 0px; float:left;  height: 640px;  background-color:#ffffff;  border-radius: 5px 5px 5px 5px;   border: solid 1px #C7C7C5;  }
-#box-form              { width: 880px; margin:  3px 10px 0px 10px; float:left;   }
-#box-form-tipocontato  { width: 880px; margin:  3px 10px 0px 10px; float:left;   }
-#box-form-tiporede     { width: 880px; margin:  3px 10px 10px 10px; float:left;   }
-#box-formtrat          { width: 590px; margin:  3px 10px 0px 10px; float:right;  height: 20px;   }
-#box-formtrat input    { width: 30px; }
-#miolo-form-traco      { width: 590px; margin:  5px 0px 5px 10px; float:left;  font-size:12px; height: 20px;   background-color:#ffffff;  font-weight:bold; }
-#miolo-form-traco2     { width: 590px; margin:  5px 0px 5px 10px; float:left;  font-size:12px; height: 30px;   background-color:#ffffff;  font-weight:bold; }
-#box-form-submit       { width: 880px; margin:  3px 10px 0px 10px; float:left;  height: 30px; }
-#box-form-submit input { float:left;   width: 100px; }
-#box-form-textarea     { width: 470px; margin:  3px 10px 0px 10px; float:left;  height: 150px;  }
-#box-form-textarea2    { width: 350px; margin:  3px 10px 0px 10px; float:left;  height: 150px;   overflow:scroll; } 
-
-
-.ui-autocomplete-loading { background: white url('../images/ui-anim_basic_16x16.gif') right center no-repeat; }
-.ui-autocomplete         { max-height: 350px; overflow-y: auto;  overflow-x: hidden;  padding-right: 10px;  background-color:#ffffff;   border: solid 1px #C7C7C5;  }
-
-
-#miolo_edit_client        { width: 690px; margin:  0px 0px 0px 0px;  float:left;  height: 590px;   background-color:#ffffff;   border-radius: 5px 5px 5px 5px;   border: solid 1px #C7C7C5;  }
-#form_edit_client         { width: 630px; margin:  5px 0px 0px 5px;  float:left;  height: 650px;  overflow:scroll;}
-
+/**
+ * BLUMAR LEGADO - MODERNIZED STYLES
+ * Estilos modernizados mantendo compatibilidade com sistema legado
+ * Versão: 2.0 - 2025
+ */
+
+/* ========================================
+   VARIÁVEIS CSS MODERNAS
+   ======================================== */
+:root {
+    /* Cores Primárias Modernizadas */
+    --color-primary: #1d4ed8;
+    --color-primary-light: #3b82f6;
+    --color-primary-dark: #1e40af;
+
+    /* Cores Secundárias */
+    --color-secondary: #0ea5e9;
+    --color-accent: #10b981;
+    --color-warning: #f59e0b;
+    --color-danger: #ef4444;
+
+    /* Cores de Texto */
+    --color-text-primary: #1f2937;
+    --color-text-secondary: #6b7280;
+    --color-text-muted: #9ca3af;
+
+    /* Cores de Fundo */
+    --color-bg-main: #ffffff;
+    --color-bg-alt: #f9fafb;
+    --color-bg-light: #f3f4f6;
+    --color-bg-dark: #e5e7eb;
+
+    /* Sombras */
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+    --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+
+    /* Bordas */
+    --border-color: #e5e7eb;
+    --border-radius-sm: 0.375rem;
+    --border-radius-md: 0.5rem;
+    --border-radius-lg: 0.75rem;
+    --border-radius-xl: 1rem;
+
+    /* Transições */
+    --transition-base: all 0.2s ease-in-out;
+    --transition-slow: all 0.3s ease-in-out;
+}
+
+/* ========================================
+   ESTILOS BASE MODERNIZADOS
+   ======================================== */
+html, body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    color: var(--color-text-primary);
+    margin: 0;
+    padding: 0;
+    font-size: 14px;
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+a {
+    text-decoration: none;
+    color: var(--color-primary);
+    transition: var(--transition-base);
+}
+
+a:hover {
+    color: var(--color-primary-light);
+}
+
+/* ========================================
+   CONTAINERS MODERNIZADOS
+   ======================================== */
+#container {
+    max-width: 1400px;
+    width: 100%;
+    height: auto;
+    margin: 2rem auto;
+    padding: 0 1rem;
+    box-sizing: border-box;
+}
+
+#container_login {
+    max-width: 500px;
+    width: 100%;
+    height: auto;
+    margin: 2rem auto;
+    background: var(--color-bg-main);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius-lg);
+    box-shadow: var(--shadow-lg);
+    padding: 2rem;
+}
+
+#container_conteudo {
+    width: 100%;
+    max-width: 1400px;
+    height: auto;
+    margin: 1.5rem auto;
+    background: var(--color-bg-main);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius-lg);
+    box-shadow: var(--shadow-md);
+    padding: 1.5rem;
+}
+
+#container_lista {
+    width: 280px;
+    height: auto;
+    float: left;
+    margin: 1rem 0;
+    padding: 1rem;
+    background: var(--color-bg-alt);
+    border-radius: var(--border-radius-md);
+}
+
+/* ========================================
+   LOADING E ESTADOS
+   ======================================== */
+#loading {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+}
+
+#loading::after {
+    content: "";
+    width: 40px;
+    height: 40px;
+    border: 4px solid var(--border-color);
+    border-top-color: var(--color-primary);
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+/* ========================================
+   TIPOGRAFIA MODERNA
+   ======================================== */
+#texto1 {
+    margin: 1rem 0;
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: var(--color-text-primary);
+    text-align: center;
+}
+
+#texto2 {
+    margin: 0.75rem 0;
+    font-size: 1rem;
+    color: var(--color-text-secondary);
+    text-align: left;
+}
+
+#texto3 {
+    margin: 1rem 0;
+    font-size: 1rem;
+    font-weight: 500;
+    color: var(--color-text-primary);
+    padding-bottom: 0.75rem;
+    border-bottom: 2px solid var(--color-primary);
+}
+
+#texto4 {
+    margin: 0.75rem 0;
+    font-size: 1rem;
+    color: var(--color-text-primary);
+}
+
+#texto5 {
+    margin: 0.5rem 0;
+    font-size: 0.875rem;
+    color: var(--color-text-secondary);
+}
+
+.texto1 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--color-text-primary);
+}
+
+.texto2 {
+    font-size: 1rem;
+    color: var(--color-text-primary);
+}
+
+.texto3 {
+    font-size: 0.875rem;
+    color: var(--color-text-secondary);
+}
+
+/* ========================================
+   BOXES E LAYOUTS MODERNIZADOS
+   ======================================== */
+[id^="box"] {
+    background: var(--color-bg-main);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius-md);
+    padding: 1rem;
+    margin: 0.5rem 0;
+    box-shadow: var(--shadow-sm);
+    transition: var(--transition-base);
+}
+
+[id^="box"]:hover {
+    box-shadow: var(--shadow-md);
+}
+
+/* ========================================
+   ACCORDIONS MODERNOS
+   ======================================== */
+.h3accordion {
+    margin: 0.5rem 0;
+    padding: 0.75rem 1rem;
+    background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-light) 100%);
+    color: white;
+    border: none;
+    border-radius: var(--border-radius-md);
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transition-base);
+    box-shadow: var(--shadow-sm);
+}
+
+.h3accordion:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+}
+
+#box_escolaridade_accordion,
+#box_escolaridade_accordion2 {
+    background: var(--color-bg-main);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius-md);
+    padding: 1rem;
+    margin: 0.5rem 0;
+}
+
+#box_inner_escola {
+    background: var(--color-bg-light);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius-sm);
+    padding: 0.75rem;
+    margin: 0.5rem 0;
+}
+
+/* ========================================
+   BOTÕES MODERNOS
+   ======================================== */
+button,
+input[type="submit"],
+input[type="button"] {
+    background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-light) 100%);
+    color: white;
+    border: none;
+    border-radius: var(--border-radius-md);
+    padding: 0.625rem 1.25rem;
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transition-base);
+    box-shadow: var(--shadow-sm);
+}
+
+button:hover,
+input[type="submit"]:hover,
+input[type="button"]:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+}
+
+#del_button {
+    background: linear-gradient(135deg, var(--color-danger) 0%, #dc2626 100%);
+    color: white;
+    width: auto;
+    min-width: 20px;
+    height: auto;
+    padding: 0.25rem 0.5rem;
+    font-size: 0.75rem;
+    border-radius: var(--border-radius-sm);
+    margin: 0.25rem;
+}
+
+/* ========================================
+   FORMULÁRIOS MODERNOS
+   ======================================== */
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="date"],
+input[type="number"],
+select,
+textarea {
+    width: 100%;
+    padding: 0.625rem 0.875rem;
+    border: 2px solid var(--border-color);
+    border-radius: var(--border-radius-md);
+    font-size: 0.95rem;
+    font-family: inherit;
+    background: var(--color-bg-main);
+    color: var(--color-text-primary);
+    transition: var(--transition-base);
+    box-sizing: border-box;
+}
+
+input[type="text"]:focus,
+input[type="email"]:focus,
+input[type="password"]:focus,
+input[type="date"]:focus,
+input[type="number"]:focus,
+select:focus,
+textarea:focus {
+    outline: none;
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 3px rgba(29, 78, 216, 0.1);
+}
+
+/* ========================================
+   TABELAS MODERNAS
+   ======================================== */
+table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    background: var(--color-bg-main);
+    border-radius: var(--border-radius-lg);
+    overflow: hidden;
+    box-shadow: var(--shadow-sm);
+}
+
+table thead {
+    background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-light) 100%);
+    color: white;
+}
+
+table thead th {
+    padding: 1rem;
+    text-align: left;
+    font-weight: 600;
+    font-size: 0.875rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+table tbody tr {
+    border-bottom: 1px solid var(--border-color);
+    transition: var(--transition-base);
+}
+
+table tbody tr:hover {
+    background: rgba(29, 78, 216, 0.05);
+}
+
+table tbody tr:last-child {
+    border-bottom: none;
+}
+
+table tbody td {
+    padding: 1rem;
+    color: var(--color-text-primary);
+}
+
+/* ========================================
+   LINHAS DE DADOS MODERNIZADAS
+   ======================================== */
+#linha_clientes1,
+#os_linha1,
+#os_linha1_tar,
+#os_linha1_iti,
+#linha_guias1,
+#linha_trail_menu,
+#linha_mapa1 {
+    background: linear-gradient(135deg, #f9fafb 0%, #e5e7eb 100%);
+    border-radius: var(--border-radius-sm);
+    padding: 0.75rem;
+    margin: 0.25rem 0;
+    border: 1px solid var(--border-color);
+    transition: var(--transition-base);
+}
+
+#linha_clientes2,
+#os_linha2,
+#os_linha2_tar,
+#os_linha2_iti,
+#linha_guias2,
+#linha_mapa2 {
+    background: var(--color-bg-main);
+    border-radius: var(--border-radius-sm);
+    padding: 0.75rem;
+    margin: 0.25rem 0;
+    border: 1px solid var(--border-color);
+    transition: var(--transition-base);
+}
+
+#linha_clientes1:hover,
+#linha_clientes2:hover,
+#os_linha1:hover,
+#os_linha2:hover {
+    background: rgba(29, 78, 216, 0.05);
+    transform: translateX(4px);
+}
+
+/* ========================================
+   NAVEGAÇÃO MODERNA
+   ======================================== */
+#barra-navegacao {
+    display: flex;
+    gap: 0.5rem;
+    padding: 0.5rem;
+    background: var(--color-bg-alt);
+    border-radius: var(--border-radius-md);
+    margin-bottom: 1rem;
+}
+
+#botao-navega,
+#botao-navega2,
+#botao-navega3 {
+    background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-light) 100%);
+    color: white;
+    padding: 0.625rem 1rem;
+    border-radius: var(--border-radius-sm);
+    text-align: center;
+    font-weight: 600;
+    transition: var(--transition-base);
+    cursor: pointer;
+}
+
+#botao-navega a,
+#botao-navega2 a,
+#botao-navega3 a {
+    color: white;
+    text-decoration: none;
+}
+
+#botao-navega:hover,
+#botao-navega2:hover,
+#botao-navega3:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+}
+
+/* ========================================
+   MODAIS MODERNOS
+   ======================================== */
+#basic-modal-content {
+    background: var(--color-bg-main);
+    border-radius: var(--border-radius-xl);
+    box-shadow: var(--shadow-xl);
+    padding: 2rem;
+    max-width: 800px;
+    max-height: 90vh;
+    overflow: auto;
+}
+
+#simplemodal-overlay {
+    background-color: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(4px);
+}
+
+#simplemodal-container a.modalCloseImg {
+    background: linear-gradient(135deg, var(--color-danger) 0%, #dc2626 100%);
+    color: white;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    transition: var(--transition-base);
+}
+
+#simplemodal-container a.modalCloseImg:hover {
+    transform: scale(1.1);
+}
+
+/* ========================================
+   AUTOCOMPLETE MODERNO
+   ======================================== */
+.ui-autocomplete-loading {
+    background: white url('../images/ui-anim_basic_16x16.gif') right center no-repeat;
+}
+
+.ui-autocomplete {
+    max-height: 350px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding: 0.5rem;
+    background: var(--color-bg-main);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius-md);
+    box-shadow: var(--shadow-lg);
+}
+
+.ui-autocomplete .ui-menu-item {
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    transition: var(--transition-base);
+    border-radius: var(--border-radius-sm);
+    margin: 0.25rem 0;
+}
+
+.ui-autocomplete .ui-menu-item:hover {
+    background: var(--color-bg-light);
+}
+
+/* ========================================
+   FOTOS E GALERIAS
+   ======================================== */
+#corpofotos {
+    background: var(--color-bg-alt);
+    border-radius: var(--border-radius-lg);
+    padding: 1rem;
+    overflow: auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    gap: 1rem;
+}
+
+#fotos {
+    background: var(--color-bg-main);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius-md);
+    padding: 0.5rem;
+    text-align: center;
+    transition: var(--transition-base);
+    box-shadow: var(--shadow-sm);
+}
+
+#fotos:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-md);
+}
+
+/* ========================================
+   TOOLTIPS E ALERTAS
+   ======================================== */
+[id^="status-history"],
+[id^="alerta_"],
+[id^="allotment"],
+[id^="cons_allotment"],
+[id^="op_cli"],
+[id^="feeop"],
+[id^="dtinsrv"],
+[id^="logo-history"] {
+    background: var(--color-bg-main);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius-md);
+    padding: 1rem;
+    box-shadow: var(--shadow-lg);
+    color: var(--color-text-primary);
+    font-size: 0.875rem;
+}
+
+/* ========================================
+   SCROLL CUSTOMIZADO
+   ======================================== */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--color-bg-light);
+    border-radius: var(--border-radius-sm);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--color-primary);
+    border-radius: var(--border-radius-sm);
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--color-primary-dark);
+}
+
+/* ========================================
+   RESPONSIVIDADE
+   ======================================== */
+@media (max-width: 1200px) {
+    #container {
+        max-width: 100%;
+        padding: 0 1rem;
+    }
+
+    #container_lista {
+        width: 100%;
+        float: none;
+    }
+}
+
+@media (max-width: 768px) {
+    html, body {
+        font-size: 13px;
+    }
+
+    #container,
+    #container_conteudo {
+        margin: 1rem auto;
+        padding: 1rem;
+    }
+
+    [id^="box"] {
+        width: 100% !important;
+        float: none !important;
+        margin: 0.5rem 0 !important;
+    }
+
+    #corpofotos {
+        grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+        gap: 0.5rem;
+    }
+}
+
+@media (max-width: 480px) {
+    html, body {
+        font-size: 12px;
+    }
+
+    button,
+    input[type="submit"],
+    input[type="button"] {
+        width: 100%;
+        margin: 0.25rem 0;
+    }
+}
+
+/* ========================================
+   IMPRESSÃO
+   ======================================== */
+@media print {
+    html, body {
+        background: white;
+    }
+
+    #container_login,
+    #barra-navegacao,
+    button,
+    input[type="submit"],
+    input[type="button"] {
+        display: none !important;
+    }
+
+    * {
+        box-shadow: none !important;
+    }
+}
+
+/* ========================================
+   UTILITÁRIOS
+   ======================================== */
+.text-center {
+    text-align: center !important;
+}
+
+.text-right {
+    text-align: right !important;
+}
+
+.text-left {
+    text-align: left !important;
+}
+
+.mb-0 { margin-bottom: 0 !important; }
+.mb-1 { margin-bottom: 0.25rem !important; }
+.mb-2 { margin-bottom: 0.5rem !important; }
+.mb-3 { margin-bottom: 1rem !important; }
+.mb-4 { margin-bottom: 1.5rem !important; }
+
+.mt-0 { margin-top: 0 !important; }
+.mt-1 { margin-top: 0.25rem !important; }
+.mt-2 { margin-top: 0.5rem !important; }
+.mt-3 { margin-top: 1rem !important; }
+.mt-4 { margin-top: 1.5rem !important; }
+
+.p-0 { padding: 0 !important; }
+.p-1 { padding: 0.25rem !important; }
+.p-2 { padding: 0.5rem !important; }
+.p-3 { padding: 1rem !important; }
+.p-4 { padding: 1.5rem !important; }
+
+/* ========================================
+   COMPATIBILIDADE COM SISTEMA LEGADO
+   MANTÉM IDS ORIGINAIS COM VALORES LEGADOS
+   ======================================== */
+
+/* Mantém boxes legados com tamanhos fixos para compatibilidade */
+#box1 { width: 200px; height: 20px; float: left; }
+#box2 { width: 640px; height: 50px; float: left; }
+#box3 { width: 200px; height: 100px; float: left; }
+#box4 { width: 640px; height: 140px; float: left; }
+#box5 { width: 640px; height: 40px; float: left; }
+#box6 { width: 640px; height: 15px; float: left; }
+#box7 { width: 640px; height: 300px; float: left; }
+#box8 { width: 200px; height: 20px; float: left; }
+#box9 { width: 610px; height: 20px; float: left; }
+#box10 { width: 640px; height: 15px; float: left; }
+
+/* IDs de layouts específicos permanecem com valores originais */
+#alteracao { margin: 0 0 0 15px; width: 400px; height: 300px; overflow: auto; }
+#miolo-alteracao { width: 640px; height: 600px; }
+#container_tours_latino { width: 640px; height: auto; }
+
+/* Mantém estilos de templates específicos */
+#template_restaurantes { float: left; height: auto; }
+#inner_template_restaurantes {
+    width: 620px;
+    float: left;
+    height: 500px;
+    border-radius: var(--border-radius-lg);
+    margin: 10px 0 10px 5px;
+    padding: 0 0 10px 5px;
+}

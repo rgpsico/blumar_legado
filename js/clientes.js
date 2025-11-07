@@ -9,7 +9,7 @@ function acao_clientes () {
 					alert("Erro ao mostrar o menu de Clientes!");
 				},
 				 success: function(resposta) {
-					$("#container_miolo").html(resposta);
+					$("#container").html(resposta);
 				 },
 				   complete: function() { $("#loading").fadeOut("slow"); } 
 			 });

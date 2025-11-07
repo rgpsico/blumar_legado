@@ -10,7 +10,7 @@ function acao_func () {
 				},
 				 
 				success: function(resposta) {
-					$("#container_miolo").html(resposta);
+					$("#container").html(resposta);
 					 
 				} 
 				
@@ -32,7 +32,7 @@ function novo_user () {
 				},
 				 
 				success: function(resposta) {
-					$("#container_miolo").html(resposta);
+					$("#container").html(resposta);
 					 
 				} 
 				
@@ -117,7 +117,7 @@ function input_new_usuario () {
 				},
 				 
 				success: function(resposta) {
-					$("#container_miolo").html(resposta);
+					$("#container").html(resposta);
 					 
 				} 
 				
@@ -144,7 +144,7 @@ function altera_cadastro_func () {
 	},
 	 
 	success: function(resposta) {
-		$("#container_miolo").html(resposta);
+		$("#container").html(resposta);
 		 
 	} 
 	
@@ -169,7 +169,7 @@ function altera_cadastro_func_inativo () {
 	},
 	 
 	success: function(resposta) {
-		$("#container_miolo").html(resposta);
+		$("#container").html(resposta);
 		 
 	} 
 	
@@ -256,7 +256,7 @@ function insert_update_usuario () {
 				},
 				 
 				success: function(resposta) {
-					$("#container_miolo").html(resposta);
+					$("#container").html(resposta);
 					 
 				} 
 				
@@ -282,7 +282,7 @@ function insere_contratacao () {
 	},
 	 
 	success: function(resposta) {
-		$("#container_miolo").html(resposta);
+		$("#container").html(resposta);
 		 
 	} 
 	
@@ -307,7 +307,7 @@ function update_contratacao () {
 	},
 	 
 	success: function(resposta) {
-		$("#container_miolo").html(resposta);
+		$("#container").html(resposta);
 		 
 	} 
 	
@@ -490,7 +490,7 @@ function insert_contratacao () {
 	},
 	 
 	success: function(resposta) {
-		$("#container_miolo").html(resposta);
+		$("#container").html(resposta);
 		 
 	} 
 	
@@ -582,7 +582,7 @@ function insert_update_contratacao () {
 	},
 	 
 	success: function(resposta) {
-		$("#container_miolo").html(resposta);
+		$("#container").html(resposta);
 		 
 	} 
 	
@@ -610,7 +610,7 @@ function insere_beneficos () {
 	},
 	 
 	success: function(resposta) {
-		$("#container_miolo").html(resposta);
+		$("#container").html(resposta);
 	 } 
 	
 	
@@ -694,7 +694,7 @@ function insert_beneficios () {
 	},
 	 
 	success: function(resposta) {
-		$("#container_miolo").html(resposta);
+		$("#container").html(resposta);
 	 } 
 	
 	
@@ -719,7 +719,7 @@ function update_beneficos () {
 	},
 	 
 	success: function(resposta) {
-		$("#container_miolo").html(resposta);
+		$("#container").html(resposta);
 		 
 	} 
 	
@@ -795,7 +795,7 @@ function insert_update_beneficios () {
 	},
 	 
 	success: function(resposta) {
-		$("#container_miolo").html(resposta);
+		$("#container").html(resposta);
 	 } 
 	
 	
@@ -821,7 +821,7 @@ function conteudo_dependentes () {
 	},
 	 
 	success: function(resposta) {
-		$("#container_miolo").html(resposta);
+		$("#container").html(resposta);
 		 
 	} 
 	
@@ -853,7 +853,7 @@ function insert_update_dependentes () {
 	},
 	 
 	success: function(resposta) {
-		$("#container_miolo").html(resposta);
+		$("#container").html(resposta);
 		 
 	} 
 	
@@ -939,7 +939,7 @@ function conteudo_escolaridade () {
 	},
 	 
 	success: function(resposta) {
-		$("#container_miolo").html(resposta);
+		$("#container").html(resposta);
 		 
 	} 
 	
@@ -1164,7 +1164,7 @@ function conteudo_emprestimos () {
 	},
 	 
 	success: function(resposta) {
-		$("#container_miolo").html(resposta);
+		$("#container").html(resposta);
 		 
 	} 
 	
@@ -1305,7 +1305,7 @@ function conteudo_advertencias () {
 	},
 	 
 	success: function(resposta) {
-		$("#container_miolo").html(resposta);
+		$("#container").html(resposta);
 		 
 	} 
 	

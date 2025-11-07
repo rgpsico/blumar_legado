@@ -8,7 +8,7 @@ function acao_minisite () {
 					alert("Erro ao mostrar o menu do Minisite de Produtos!");
 				},
 				 success: function(resposta) {
-					$("#container_miolo").html(resposta);
+					$("#container").html(resposta);
 				 } 
 			 });
  }

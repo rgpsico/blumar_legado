@@ -9,7 +9,7 @@ function acao_hotel() {
 		},
 
 		success: function (resposta) {
-			$("#container_miolo").html(resposta);
+			$("#container").html(resposta);
 
 		}
 
@@ -34,7 +34,7 @@ function novo_hotel() {
 		},
 
 		success: function (resposta) {
-			$("#container_miolo").html(resposta);
+			$("#container").html(resposta);
 
 		}
 
@@ -310,7 +310,7 @@ function insere_novo_hotel() {
 		},
 
 		success: function (resposta) {
-			$("#container_miolo").html(resposta);
+			$("#container").html(resposta);
 
 		}
 
@@ -338,7 +338,7 @@ function altera_hotel() {
 		},
 
 		success: function (resposta) {
-			$("#container_miolo").html(resposta);
+			$("#container").html(resposta);
 
 		}
 
@@ -366,7 +366,7 @@ function altera_hotel2() {
 		},
 
 		success: function (resposta) {
-			$("#container_miolo").html(resposta);
+			$("#container").html(resposta);
 
 		}
 
@@ -394,7 +394,7 @@ function listagem_htl_ingles() {
 		},
 
 		success: function (resposta) {
-			$("#container_miolo").html(resposta);
+			$("#container").html(resposta);
 
 		}
 
@@ -419,7 +419,7 @@ function cadastro_fac() {
 		},
 
 		success: function (resposta) {
-			$("#container_miolo").html(resposta);
+			$("#container").html(resposta);
 
 		}
 
@@ -449,7 +449,7 @@ function insere_fac() {
 		},
 
 		success: function (resposta) {
-			$("#container_miolo").html(resposta);
+			$("#container").html(resposta);
 
 		}
 
@@ -725,7 +725,7 @@ function update_hotel() {
 		},
 
 		success: function (resposta) {
-			$("#container_miolo").html(resposta);
+			$("#container").html(resposta);
 
 		}
 
@@ -886,7 +886,7 @@ function back_htl() {
 		},
 
 		success: function (resposta) {
-			$("#container_miolo").html(resposta);
+			$("#container").html(resposta);
 
 		}
 
@@ -914,7 +914,7 @@ function add_apto() {
 		},
 
 		success: function (resposta) {
-			$("#container_miolo").html(resposta);
+			$("#container").html(resposta);
 
 		}
 
@@ -946,7 +946,7 @@ function insere_novo_apto() {
 		},
 
 		success: function (resposta) {
-			$("#container_miolo").html(resposta);
+			$("#container").html(resposta);
 
 		}
 
@@ -971,7 +971,7 @@ function apaga_fac_htl() {
 		},
 
 		success: function (resposta) {
-			$("#container_miolo").html(resposta);
+			$("#container").html(resposta);
 
 		}
 
@@ -997,7 +997,7 @@ function add_fac_htl() {
 		},
 
 		success: function (resposta) {
-			$("#container_miolo").html(resposta);
+			$("#container").html(resposta);
 
 		}
 
@@ -1035,7 +1035,7 @@ function insert_add_fac_htl() {
 		},
 
 		success: function (resposta) {
-			$("#container_miolo").html(resposta);
+			$("#container").html(resposta);
 
 		}
 
@@ -1061,7 +1061,7 @@ function add_fac_apto() {
 		},
 
 		success: function (resposta) {
-			$("#container_miolo").html(resposta);
+			$("#container").html(resposta);
 
 		}
 
@@ -1097,7 +1097,7 @@ function insert_add_fac_apto() {
 		},
 
 		success: function (resposta) {
-			$("#container_miolo").html(resposta);
+			$("#container").html(resposta);
 
 		}
 
@@ -1124,7 +1124,7 @@ function apaga_fac_apto() {
 		},
 
 		success: function (resposta) {
-			$("#container_miolo").html(resposta);
+			$("#container").html(resposta);
 
 		}
 
@@ -1148,7 +1148,7 @@ function listagem_selo_new() {
 		},
 
 		success: function (resposta) {
-			$("#container_miolo").html(resposta);
+			$("#container").html(resposta);
 
 		}
 
@@ -1171,7 +1171,7 @@ function listagem_selo_unique() {
 		},
 
 		success: function (resposta) {
-			$("#container_miolo").html(resposta);
+			$("#container").html(resposta);
 
 		}
 
@@ -1192,7 +1192,7 @@ function listagem_selo_luxury() {
 		},
 
 		success: function (resposta) {
-			$("#container_miolo").html(resposta);
+			$("#container").html(resposta);
 
 		}
 
@@ -1212,7 +1212,7 @@ function listagem_marc_nacional() {
 		},
 
 		success: function (resposta) {
-			$("#container_miolo").html(resposta);
+			$("#container").html(resposta);
 
 		}
 
@@ -1233,7 +1233,7 @@ function listagem_selo_favoritos() {
 		},
 
 		success: function (resposta) {
-			$("#container_miolo").html(resposta);
+			$("#container").html(resposta);
 
 		}
 
@@ -1254,7 +1254,7 @@ function listagem_health_safe() {
 		},
 
 		success: function (resposta) {
-			$("#container_miolo").html(resposta);
+			$("#container").html(resposta);
 
 		}
 
@@ -1275,7 +1275,7 @@ function listagem_shealth_safe() {
 		},
 
 		success: function (resposta) {
-			$("#container_miolo").html(resposta);
+			$("#container").html(resposta);
 
 		}
 

@@ -10,7 +10,7 @@
 											},
 											 
 											success: function(resposta) {
-												$("#container_miolo").html(resposta);
+												$("#container").html(resposta);
 												 
 											} 
 											
@@ -37,7 +37,7 @@
 											},
 											 
 											success: function(resposta) {
-												$("#container_miolo").html(resposta);
+												$("#container").html(resposta);
 												 
 											} 
 											
@@ -65,7 +65,7 @@
 											},
 											 
 											success: function(resposta) {
-												$("#container_miolo").html(resposta);
+												$("#container").html(resposta);
 												 
 											} 
 											
@@ -92,7 +92,7 @@
 											},
 											 
 											success: function(resposta) {
-												$("#container_miolo").html(resposta);
+												$("#container").html(resposta);
 												 
 											} 
 											
@@ -148,7 +148,7 @@
 											},
 											 
 											success: function(resposta) {
-												$("#container_miolo").html(resposta);
+												$("#container").html(resposta);
 												 
 											} 
 											
@@ -169,7 +169,7 @@
 								},
 								 
 								success: function(resposta) {
-									$("#container_miolo").html(resposta);
+									$("#container").html(resposta);
 									 
 								} 
 								
@@ -328,7 +328,7 @@
 		},
 		 
 		success: function(resposta) {
-			$("#container_miolo").html(resposta);
+			$("#container").html(resposta);
 			 
 		} 
 		
@@ -354,7 +354,7 @@
 		},
 		 
 		success: function(resposta) {
-			$("#container_miolo").html(resposta);
+			$("#container").html(resposta);
 			 
 		} 
 		
@@ -687,7 +687,7 @@
 		},
 		 
 		success: function(resposta) {
-			$("#container_miolo").html(resposta);
+			$("#container").html(resposta);
 			 
 		} 
 		
@@ -741,7 +741,7 @@
 		},
 		 
 		success: function(resposta) {
-			$("#container_miolo").html(resposta);
+			$("#container").html(resposta);
 			 
 		} 
 		
@@ -767,7 +767,7 @@
 		},
 		 
 		success: function(resposta) {
-			$("#container_miolo").html(resposta);
+			$("#container").html(resposta);
 			 
 		} 
 		
@@ -1221,7 +1221,7 @@
 		},
 		 
 		success: function(resposta) {
-			$("#container_miolo").html(resposta);
+			$("#container").html(resposta);
 			 
 		} 
 		
@@ -1306,7 +1306,7 @@
 		},
 		 
 		success: function(resposta) {
-			$("#container_miolo").html(resposta);
+			$("#container").html(resposta);
 			 
 		} 
 		

@@ -11,7 +11,7 @@ function acao_controle_acesso () {
 	},
 	 
 	success: function(resposta) {
-		$("#container_miolo").html(resposta);
+		$("#container").html(resposta);
 		 
 	} 
 	
@@ -35,7 +35,7 @@ function  altera_permissao_func( ) {
     		alert("Erro ao retornar o usuario!");
     	},
         success: function(resposta) {
-    		$("#container_miolo").html(resposta);
+    		$("#container").html(resposta);
     	 } 
      });
  }
@@ -350,7 +350,7 @@ function  input_update_permissao( ) {
     		alert("Erro ao retornar o usuario!");
     	},
         success: function(resposta) {
-    		$("#container_miolo").html(resposta);
+    		$("#container").html(resposta);
     	 } 
      });
  }
@@ -372,7 +372,7 @@ function  cadastra_permissao_func( ) {
     		alert("Erro ao retornar o usuario!");
     	},
         success: function(resposta) {
-    		$("#container_miolo").html(resposta);
+    		$("#container").html(resposta);
     	 } 
      });
  }
@@ -695,7 +695,7 @@ function  insert_permissao( ) {
     		alert("Erro ao retornar o usuario!");
     	},
         success: function(resposta) {
-    		$("#container_miolo").html(resposta);
+    		$("#container").html(resposta);
     	 } 
      });
  }

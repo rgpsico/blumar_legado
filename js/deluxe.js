@@ -9,7 +9,7 @@
 						},
 						 
 						success: function(resposta) {
-							$("#container_miolo").html(resposta);
+							$("#container").html(resposta);
 							 
 						} 
 						
@@ -32,7 +32,7 @@
 		},
 		 
 		success: function(resposta) {
-			$("#container_miolo").html(resposta);
+			$("#container").html(resposta);
 			 
 		} 
 		
@@ -134,7 +134,7 @@
 					},
 					 
 					success: function(resposta) {
-						$("#container_miolo").html(resposta);
+						$("#container").html(resposta);
 						 
 					} 
 					
@@ -162,7 +162,7 @@ function altera_deluxe () {
 					},
 					 
 					success: function(resposta) {
-						$("#container_miolo").html(resposta);
+						$("#container").html(resposta);
 						 
 					} 
 					
@@ -265,7 +265,7 @@ function insert_update_deluxe () {
 				},
 				 
 				success: function(resposta) {
-					$("#container_miolo").html(resposta);
+					$("#container").html(resposta);
 					 
 				} 
 				

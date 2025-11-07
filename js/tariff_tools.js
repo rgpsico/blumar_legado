@@ -11,7 +11,7 @@
 											},
 											 
 											success: function(resposta) {
-												$("#container_miolo").html(resposta);
+												$("#container").html(resposta);
 												 
 											} 
 											
@@ -163,7 +163,7 @@
 			alert("Erro ao inserir o tarifario!");
 		},
 		 success: function(resposta) {
-			$("#container_miolo").html(resposta);
+			$("#container").html(resposta);
 		 
 		 } 
 	 });
@@ -209,7 +209,7 @@
 			alert("Erro ao atualizar o tarifario!");
 		},
 		 success: function(resposta) {
-			$("#container_miolo").html(resposta);
+			$("#container").html(resposta);
 		 
 		 } 
 	 });

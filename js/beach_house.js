@@ -9,7 +9,7 @@
 						},
 						 
 						success: function(resposta) {
-							$("#container_miolo").html(resposta);
+							$("#container").html(resposta);
 							 
 						} 
 						
@@ -31,7 +31,7 @@
 		},
 		 
 		success: function(resposta) {
-			$("#container_miolo").html(resposta);
+			$("#container").html(resposta);
 			 
 		} 
 		
@@ -78,7 +78,7 @@
 					},
 					 
 					success: function(resposta) {
-						$("#container_miolo").html(resposta);
+						$("#container").html(resposta);
 						 
 					} 
 					
@@ -108,7 +108,7 @@
 					},
 					 
 					success: function(resposta) {
-						$("#container_miolo").html(resposta);
+						$("#container").html(resposta);
 						 
 					} 
 					
@@ -152,7 +152,7 @@ function insert_update_beach_house () {
 					},
 					 
 					success: function(resposta) {
-						$("#container_miolo").html(resposta);
+						$("#container").html(resposta);
 						 
 					} 
 					

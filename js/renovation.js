@@ -13,7 +13,7 @@ function acao_renovation () {
 		},
 		 
 		success: function(resposta) {
-			$("#container_miolo").html(resposta);
+			$("#container").html(resposta);
 			 
 		} 
 		
@@ -36,7 +36,7 @@ function novo_renovation () {
 			},
 			 
 			success: function(resposta) {
-				$("#container_miolo").html(resposta);
+				$("#container").html(resposta);
 				 
 			} 
 			
@@ -113,7 +113,7 @@ function input_new_renovation () {
 			},
 			 
 			success: function(resposta) {
-				$("#container_miolo").html(resposta);
+				$("#container").html(resposta);
 				 
 			} 
 	
@@ -139,7 +139,7 @@ function update_renovation () {
 	},
 	 
 	success: function(resposta) {
-		$("#container_miolo").html(resposta);
+		$("#container").html(resposta);
 		 
 	} 
 	
@@ -164,7 +164,7 @@ function update_renovation_passado () {
 	},
 	 
 	success: function(resposta) {
-		$("#container_miolo").html(resposta);
+		$("#container").html(resposta);
 		 
 	} 
 	
@@ -209,7 +209,7 @@ function insert_update_renovation () {
 			},
 			 
 			success: function(resposta) {
-				$("#container_miolo").html(resposta);
+				$("#container").html(resposta);
 				 
 			} 
 	

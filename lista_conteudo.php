@@ -819,7 +819,7 @@ if (isset($_SESSION['conteudo'])) {
                                                 <div class="card shadow-sm border-0 h-100">
                                                         <div class="card-body p-0 p-lg-4">
 ';
-                                        echo '<div id="container_miolo" class="admin-content-panel">
+                                        echo '<div id="container" class="admin-content-panel">
                                                                 <div id="loading" class="d-flex align-items-center justify-content-center py-5">
                                                                         <div class="spinner-border text-primary" role="status">
                                                                                 <span class="visually-hidden">Carregando...</span>

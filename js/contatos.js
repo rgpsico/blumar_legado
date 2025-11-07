@@ -9,7 +9,7 @@ function acao_contatos() {
 		},
 
 		success: function (resposta) {
-			$("#container_miolo").html(resposta);
+			$("#container").html(resposta);
 
 		}
 

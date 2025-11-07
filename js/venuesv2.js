@@ -1,8 +1,8 @@
 // Função helper para scroll suave ao topo
 function scrollToTop() {
 	// Tenta scrollar o container principal ou a janela
-	if ($('#container_miolo').length) {
-		$('#container_miolo')[0].scrollIntoView({ behavior: 'smooth', block: 'start' });
+	if ($('#container').length) {
+		$('#container')[0].scrollIntoView({ behavior: 'smooth', block: 'start' });
 	}
 	// Scroll da janela também
 	$('html, body').animate({ scrollTop: 0 }, 300);
@@ -18,7 +18,7 @@ function acao_venuesv2() {
 			alert("Error when retrieving venues main page content!");
 		},
 		success: function (resposta) {
-			$("#container_miolo").html(resposta);
+			$("#container").html(resposta);
 			scrollToTop(); // Scroll para o topo após carregar
 		}
 	});
@@ -36,7 +36,7 @@ function ver_venue(cod_venues) {
 			alert("Erro ao carregar detalhes do venue!");
 		},
 		success: function (resposta) {
-			$("#container_miolo").html(resposta);
+			$("#container").html(resposta);
 			scrollToTop(); // Scroll para o topo após carregar
 		}
 	});
@@ -50,7 +50,7 @@ function novo_venuev2() {
 			alert("Error when retrieving venues main page content!");
 		},
 		success: function (resposta) {
-			$("#container_miolo").html(resposta);
+			$("#container").html(resposta);
 			scrollToTop(); // Scroll para o topo após carregar
 		}
 	});
@@ -68,7 +68,7 @@ function editar_venue(cod_venues) {
 			alert("Error when retrieving venue form!");
 		},
 		success: function (resposta) {
-			$("#container_miolo").html(resposta);
+			$("#container").html(resposta);
 			scrollToTop(); // Scroll para o topo após carregar
 		}
 	});
@@ -82,7 +82,7 @@ function novo_venue() {
 			alert("Error when retrieving venues main page content!");
 		},
 		success: function (resposta) {
-			$("#container_miolo").html(resposta);
+			$("#container").html(resposta);
 			scrollToTop(); // Scroll para o topo após carregar
 		}
 	});
@@ -132,7 +132,7 @@ function carregar_pagina_venues(page) {
 			alert("Erro ao carregar a página!");
 		},
 		success: function (resposta) {
-			$("#container_miolo").html(resposta);
+			$("#container").html(resposta);
 			scrollToTop(); // Scroll para o topo após carregar
 		}
 	});

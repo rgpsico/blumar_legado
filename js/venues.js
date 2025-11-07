@@ -9,7 +9,7 @@ function acao_venues() {
 		},
 
 		success: function (resposta) {
-			$("#container_miolo").html(resposta);
+			$("#container").html(resposta);
 
 		}
 
@@ -30,7 +30,7 @@ function novo_venue() {
 		},
 
 		success: function (resposta) {
-			$("#container_miolo").html(resposta);
+			$("#container").html(resposta);
 
 		}
 
@@ -94,7 +94,7 @@ function insere_novo_venue() {
 		},
 
 		success: function (resposta) {
-			$("#container_miolo").html(resposta);
+			$("#container").html(resposta);
 
 		}
 
@@ -118,7 +118,7 @@ function altera_venue() {
 		},
 
 		success: function (resposta) {
-			$("#container_miolo").html(resposta);
+			$("#container").html(resposta);
 
 		}
 
@@ -182,7 +182,7 @@ function update_venue() {
 		},
 
 		success: function (resposta) {
-			$("#container_miolo").html(resposta);
+			$("#container").html(resposta);
 
 		}
 
