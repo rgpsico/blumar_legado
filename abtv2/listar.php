@@ -549,7 +549,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'delete') {
                             $preco = $row['preco_abt'] ? 'R$ ' . number_format($row['preco_abt'], 2, ',', '.') : '-';
                             $tempo = $row['tempo_abt'] ? $row['tempo_abt'] : '-';
 
-                            echo "<tr data-ativo='{$row['ativo']}'>
+                            echo "<tr data-id='{$pk_abt}' data-ativo='{$row['ativo']}'>
                                 <td><strong>#{$pk_abt}</strong></td>
                                 <td><img src='../imagens/abt/{$foto}' class='img-thumbnail-table' onerror='' alt='Foto'></td>
                                 <td><strong>{$nome}</strong>{$off_beaten}</td>
@@ -930,10 +930,163 @@ if (isset($_POST['action']) && $_POST['action'] == 'delete') {
         const modalCreate = new bootstrap.Modal(document.getElementById('modalCreate'));
         const modalEdit = new bootstrap.Modal(document.getElementById('modalEdit'));
         const modalView = new bootstrap.Modal(document.getElementById('modalView'));
+        const isConsulta = <?php echo $_SESSION['consulta'] == 't' ? 'true' : 'false'; ?>;
 
         // Arrays para estilos e cidades (populados via API)
         let estilosOptions = [];
         let cidadesOptions = [];
+
+        function escapeHtml(value) {
+            if (value === null || value === undefined) {
+                return '';
+            }
+            return String(value)
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;')
+                .replace(/'/g, '&#039;');
+        }
+
+        function formatPreco(valor) {
+            if (valor === null || valor === undefined || valor === '') {
+                return '-';
+            }
+            const numero = parseFloat(valor);
+            if (Number.isNaN(numero)) {
+                return '-';
+            }
+            return 'R$ ' + numero.toLocaleString('pt-BR', {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2
+            });
+        }
+
+        function formatIdiomaBadge(lang) {
+            const idiomaNumero = parseInt(lang, 10);
+            const idioma = idiomaNumero === 1 ? 'EN' : 'PT';
+            const classe = idiomaNumero === 1 ? 'primary' : 'success';
+            return `<span class="badge bg-${classe} badge-lang">${idioma}</span>`;
+        }
+
+        function formatStatusBadge(ativo) {
+            const ativoNormalizado = ativo === true || ativo === 't' || ativo === 1;
+            const texto = ativoNormalizado ? 'Ativo' : 'Inativo';
+            const classe = ativoNormalizado ? 'success' : 'secondary';
+            return `<span class="badge bg-${classe} badge-status">${texto}</span>`;
+        }
+
+        function formatHomeIcon(ativoHome) {
+            const ativoNormalizado = ativoHome === true || ativoHome === 't' || ativoHome === 1;
+            return ativoNormalizado ? "<i class='fas fa-check text-success'></i>" : "<i class='fas fa-times text-danger'></i>";
+        }
+
+        function formatNome(abt) {
+            const nome = `<strong>${escapeHtml(abt.nome || abt.name || '')}</strong>`;
+            const offBeaten = (abt.topo_brasil_pass === true || abt.topo_brasil_pass === 't') ? "<span class='badge bg-warning ms-2'>Off Beaten</span>" : '';
+            return nome + offBeaten;
+        }
+
+        function resolverImagemTopo(abt) {
+            const fotoTopo = abt.foto_topo || abt.foto_topo_bpass || abt.foto1;
+            if (!fotoTopo) {
+                return "../imagens/abt/placeholder.jpg";
+            }
+            if (typeof fotoTopo === 'string' && fotoTopo.startsWith('http')) {
+                return fotoTopo;
+            }
+            return `../imagens/abt/${fotoTopo}`;
+        }
+
+        function montarDadosLinha(abt) {
+            const fotoSrc = resolverImagemTopo(abt);
+            const titulo = escapeHtml(abt.titulo || '');
+            const tempo = abt.tempo_abt ? escapeHtml(abt.tempo_abt) : '-';
+            const preco = formatPreco(abt.preco_abt);
+            const idioma = formatIdiomaBadge(abt.lang);
+            const status = formatStatusBadge(abt.ativo);
+            const home = formatHomeIcon(abt.ativo_home);
+            const actions = [`<button class='btn btn-action-icon btn-view' onclick='visualizarABT(${abt.pk_abt})' title='Visualizar'><i class='fas fa-eye'></i></button>`];
+            if (!isConsulta) {
+                actions.push(`<button class='btn btn-action-icon btn-edit' onclick='editarABT(${abt.pk_abt})' title='Editar'><i class='fas fa-edit'></i></button>`);
+                actions.push(`<button class='btn btn-action-icon btn-delete' onclick='deletarABT(${abt.pk_abt}, \"${escapeHtml(abt.nome || abt.name || '')}\")' title='Excluir'><i class='fas fa-trash-alt'></i></button>`);
+            }
+
+            return [
+                `<strong>#${abt.pk_abt}</strong>`,
+                `<img src='${fotoSrc}' class='img-thumbnail-table' alt='Foto'>`,
+                formatNome(abt),
+                titulo,
+                idioma,
+                status,
+                `<span class='text-center d-block'>${home}</span>`,
+                preco,
+                tempo,
+                `<div class='action-buttons'>${actions.join('')}</div>`
+            ];
+        }
+
+        function coletarDadosFormulario(prefixo) {
+            const obterValor = (campo) => $(`#${prefixo}_${campo}`).val();
+            const obterCheckbox = (campo) => $(`#${prefixo}_${campo}`).is(':checked');
+
+            const estilosSelecionados = $(`#${prefixo}_estilos`).val();
+            const destinosSelecionados = $(`#${prefixo}_destinos`).val();
+
+            return {
+                nome: obterValor('nome'),
+                titulo: obterValor('titulo'),
+                data: obterValor('data'),
+                lang: obterValor('lang') ? parseInt(obterValor('lang'), 10) : null,
+                preco_abt: obterValor('preco_abt') ? parseFloat(obterValor('preco_abt')) : null,
+                tempo_abt: obterValor('tempo_abt') || null,
+                fk_cidade_cod: obterValor('fk_cidade_cod') ? parseInt(obterValor('fk_cidade_cod'), 10) : null,
+                campo_livre: obterValor('campo_livre'),
+                foto_topo: obterValor('foto_topo'),
+                foto_campo: obterValor('foto_campo'),
+                foto1: obterValor('foto1'),
+                foto2: obterValor('foto2'),
+                foto3: obterValor('foto3'),
+                foto4: obterValor('foto4'),
+                ativo: obterCheckbox('ativo'),
+                ativo_home: obterCheckbox('ativo_home'),
+                topo_brasil_pass: obterCheckbox('topo_brasil_pass'),
+                ativo_riolife: obterCheckbox('ativo_riolife'),
+                new_mod: obterCheckbox('new_mod'),
+                estilos: estilosSelecionados ? estilosSelecionados.map((id) => parseInt(id, 10)).filter((id) => !Number.isNaN(id)) : [],
+                destinos: destinosSelecionados ? destinosSelecionados.map((id) => parseInt(id, 10)).filter((id) => !Number.isNaN(id)) : []
+            };
+        }
+
+        function atualizarLinhaAbt(abt, isNew) {
+            const dadosLinha = montarDadosLinha(abt);
+            if (isNew) {
+                const novaLinha = table.row.add(dadosLinha).draw(false).node();
+                $(novaLinha).attr('data-id', abt.pk_abt);
+                $(novaLinha).attr('data-ativo', abt.ativo);
+            } else {
+                const $linhaExistente = $(`#tabelaABT tbody tr[data-id='${abt.pk_abt}']`);
+                if ($linhaExistente.length) {
+                    const rowRef = table.row($linhaExistente);
+                    rowRef.data(dadosLinha).draw(false);
+                    $(rowRef.node()).attr('data-id', abt.pk_abt);
+                    $(rowRef.node()).attr('data-ativo', abt.ativo);
+                } else {
+                    const novaLinha = table.row.add(dadosLinha).draw(false).node();
+                    $(novaLinha).attr('data-id', abt.pk_abt);
+                    $(novaLinha).attr('data-ativo', abt.ativo);
+                }
+            }
+            atualizarStats();
+        }
+
+        function buscarAbtEAtualizar(id, isNew) {
+            const requisicao = $.getJSON(`api/abt.php?request=buscar_abt&id=${id}`);
+            requisicao.done(function(abt) {
+                atualizarLinhaAbt(abt, isNew);
+            });
+            return requisicao;
+        }
 
         $(document).ready(function() {
             // Inicializa DataTable
@@ -981,82 +1134,91 @@ if (isset($_POST['action']) && $_POST['action'] == 'delete') {
             // Handlers para forms nos modals
             $('#formCreateABT').on('submit', function(e) {
                 e.preventDefault();
-                var createData = {
-                    requisicao: 'criar_abt',
-                    nome: $('#create_nome').val(),
-                    titulo: $('#create_titulo').val(),
-                    data: $('#create_data').val(),
-                    lang: $('#create_lang').val(),
-                    preco_abt: $('#create_preco_abt').val(),
-                    tempo_abt: $('#create_tempo_abt').val(),
-                    fk_cidade_cod: $('#create_fk_cidade_cod').val(),
-                    campo_livre: $('#create_campo_livre').val(),
-                    foto_topo: $('#create_foto_topo').val(),
-                    foto_campo: $('#create_foto_campo').val(),
-                    foto1: $('#create_foto1').val(),
-                    foto2: $('#create_foto2').val(),
-                    foto3: $('#create_foto3').val(),
-                    foto4: $('#create_foto4').val(),
-                    ativo: $('#create_ativo').is(':checked'),
-                    ativo_home: $('#create_ativo_home').is(':checked'),
-                    topo_brasil_pass: $('#create_topo_brasil_pass').is(':checked'),
-                    ativo_riolife: $('#create_ativo_riolife').is(':checked'),
-                    new_mod: $('#create_new_mod').is(':checked'),
-                    estilos: $('#create_estilos').val() || [], // Array de selecionados
-                    destinos: $('#create_destinos').val() || [] // Array de selecionados
-                };
-                $.post('api/abt.php', createData, function(response) {
-                    if (response.success) {
-                        Swal.fire('Sucesso!', response.message, 'success').then(() => {
-                            modalCreate.hide();
-                            location.reload(); // Recarrega tabela
-                        });
+                const payload = coletarDadosFormulario('create');
+
+                $('#loadingOverlay').addClass('active');
+
+                $.ajax({
+                    url: 'api/abt.php?request=criar_abt',
+                    method: 'POST',
+                    contentType: 'application/json',
+                    data: JSON.stringify(payload),
+                    processData: false,
+                    dataType: 'json'
+                }).done(function(response) {
+                    if (response.success && response.abt_id) {
+                        modalCreate.hide();
+                        if ($('#formCreateABT')[0]) {
+                            $('#formCreateABT')[0].reset();
+                        }
+                        $('#create_estilos, #create_destinos').val(null).trigger('change');
+
+                        buscarAbtEAtualizar(response.abt_id, true)
+                            .done(function() {
+                                Swal.fire('Sucesso!', response.message || 'ABT inserido com sucesso!', 'success');
+                            })
+                            .fail(function() {
+                                Swal.fire('Aviso', 'ABT criado, mas não foi possível atualizar a listagem automaticamente.', 'warning');
+                            })
+                            .always(function() {
+                                $('#loadingOverlay').removeClass('active');
+                            });
                     } else {
-                        Swal.fire('Erro!', response.error || 'Falha ao criar ABT', 'error');
+                        Swal.fire('Erro!', response.error || response.message || 'Falha ao criar ABT', 'error');
+                        $('#loadingOverlay').removeClass('active');
                     }
-                }).fail(function() {
-                    Swal.fire('Erro!', 'Falha na requisição', 'error');
+                }).fail(function(xhr) {
+                    let message = 'Falha na requisição';
+                    if (xhr.responseJSON && (xhr.responseJSON.error || xhr.responseJSON.message)) {
+                        message = xhr.responseJSON.error || xhr.responseJSON.message;
+                    }
+                    Swal.fire('Erro!', message, 'error');
+                    $('#loadingOverlay').removeClass('active');
                 });
             });
 
             $('#formEditABT').on('submit', function(e) {
                 e.preventDefault();
-                var editData = {
-                    requisicao: 'atualizar_abt',
-                    id: $('#edit_pk_abt').val(),
-                    nome: $('#edit_nome').val(),
-                    titulo: $('#edit_titulo').val(),
-                    data: $('#edit_data').val(),
-                    lang: $('#edit_lang').val(),
-                    preco_abt: $('#edit_preco_abt').val(),
-                    tempo_abt: $('#edit_tempo_abt').val(),
-                    fk_cidade_cod: $('#edit_fk_cidade_cod').val(),
-                    campo_livre: $('#edit_campo_livre').val(),
-                    foto_topo: $('#edit_foto_topo').val(),
-                    foto_campo: $('#edit_foto_campo').val(),
-                    foto1: $('#edit_foto1').val(),
-                    foto2: $('#edit_foto2').val(),
-                    foto3: $('#edit_foto3').val(),
-                    foto4: $('#edit_foto4').val(),
-                    ativo: $('#edit_ativo').is(':checked'),
-                    ativo_home: $('#edit_ativo_home').is(':checked'),
-                    topo_brasil_pass: $('#edit_topo_brasil_pass').is(':checked'),
-                    ativo_riolife: $('#edit_ativo_riolife').is(':checked'),
-                    new_mod: $('#edit_new_mod').is(':checked'),
-                    estilos: $('#edit_estilos').val() || [],
-                    destinos: $('#edit_destinos').val() || []
-                };
-                $.post('api/abt.php', editData, function(response) {
+                const abtId = $('#edit_pk_abt').val();
+                if (!abtId) {
+                    Swal.fire('Erro!', 'Não foi possível identificar o pacote para atualizar.', 'error');
+                    return;
+                }
+
+                const payload = coletarDadosFormulario('edit');
+                $('#loadingOverlay').addClass('active');
+
+                $.ajax({
+                    url: `api/abt.php?request=atualizar_abt&id=${abtId}`,
+                    method: 'PUT',
+                    contentType: 'application/json',
+                    data: JSON.stringify(payload),
+                    processData: false,
+                    dataType: 'json'
+                }).done(function(response) {
                     if (response.success) {
-                        Swal.fire('Sucesso!', response.message, 'success').then(() => {
-                            modalEdit.hide();
-                            location.reload();
-                        });
+                        modalEdit.hide();
+                        buscarAbtEAtualizar(abtId, false)
+                            .done(function() {
+                                Swal.fire('Sucesso!', response.message || 'ABT atualizado com sucesso!', 'success');
+                            })
+                            .fail(function() {
+                                Swal.fire('Aviso', 'ABT atualizado, mas não foi possível sincronizar a listagem.', 'warning');
+                            })
+                            .always(function() {
+                                $('#loadingOverlay').removeClass('active');
+                            });
                     } else {
-                        Swal.fire('Erro!', response.error || 'Falha ao atualizar ABT', 'error');
+                        Swal.fire('Erro!', response.error || response.message || 'Falha ao atualizar ABT', 'error');
+                        $('#loadingOverlay').removeClass('active');
                     }
-                }).fail(function() {
-                    Swal.fire('Erro!', 'Falha na requisição', 'error');
+                }).fail(function(xhr) {
+                    let message = 'Falha na requisição';
+                    if (xhr.responseJSON && (xhr.responseJSON.error || xhr.responseJSON.message)) {
+                        message = xhr.responseJSON.error || xhr.responseJSON.message;
+                    }
+                    Swal.fire('Erro!', message, 'error');
+                    $('#loadingOverlay').removeClass('active');
                 });
             });
         });
@@ -1086,7 +1248,9 @@ if (isset($_POST['action']) && $_POST['action'] == 'delete') {
 
         function novoABT() {
             // Limpa form create se necessário
-            $('#formCreateABT')[0].reset();
+            if ($('#formCreateABT')[0]) {
+                $('#formCreateABT')[0].reset();
+            }
             // Limpa selects múltiplos
             $('#create_estilos, #create_destinos').val(null).trigger('change');
             modalCreate.show();
@@ -1160,7 +1324,6 @@ if (isset($_POST['action']) && $_POST['action'] == 'delete') {
                 $('#loadingOverlay').removeClass('active');
                 if (response && response.pk_abt) { // Check for data instead of response.success
                     var data = response;
-                    console.log(data); // Keep for debugging
                     // Popula edit form
                     $('#edit_pk_abt').val(data.pk_abt ?? '');
                     $('#edit_nome').val(data.nome ?? '');
@@ -1185,12 +1348,16 @@ if (isset($_POST['action']) && $_POST['action'] == 'delete') {
                     $('#edit_new_mod').prop('checked', data.new_mod == 't');
                     // Multi-selects: seleciona baseados em arrays
                     if (data.estilos && data.estilos.length > 0) {
-                        var estIds = data.estilos.map(est => est.cod_estilo || est.id);
+                        var estIds = data.estilos.map(est => String(est.cod_estilo || est.id));
                         $('#edit_estilos').val(estIds).trigger('change');
+                    } else {
+                        $('#edit_estilos').val([]).trigger('change');
                     }
                     if (data.destinos && data.destinos.length > 0) {
-                        var destIds = data.destinos.map(dest => dest.fk_cidade_cod || dest.id);
+                        var destIds = data.destinos.map(dest => String(dest.fk_cidade_cod || dest.id));
                         $('#edit_destinos').val(destIds).trigger('change');
+                    } else {
+                        $('#edit_destinos').val([]).trigger('change');
                     }
                     modalEdit.show();
                 } else {
