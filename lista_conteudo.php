@@ -35,14 +35,14 @@ function redirectToLoginWithError($message)
 
 if (isset($_SESSION['conteudo'])) {
 
-	//unset($_SESSION['filtro_nucleo'] );
+        //unset($_SESSION['filtro_nucleo'] );
 
 
-	if (! isset($_POST["login"])) {
-		header('Location: index.php');
-	} else {
+        if (! isset($_POST["login"])) {
+                header('Location: index.php');
+        } else {
 
-		echo '
+                echo '
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -84,6 +84,7 @@ if (isset($_SESSION['conteudo'])) {
 <script type="text/javascript" src="js/venuesv2.js"></script>
 <script type="text/javascript" src="js/various.js"></script>
 <script type="text/javascript" src="js/abt.js?v=3.6"></script>
+<script type="text/javascript" src="js/abtv2.js?v=3.6"></script>
 <script type="text/javascript" src="js/news.js?v=1.1"></script>
 <script type="text/javascript" src="js/guias.js?v=2.3"></script> 
 <script type="text/javascript" src="js/log.js"></script> 
@@ -131,192 +132,192 @@ if (isset($_SESSION['conteudo'])) {
                 <main id="container_conteudo" class="admin-dashboard-content container-fluid flex-grow-1 py-4">
 ';
 
-		require_once 'util/connection.php';
-		// query para auenticar o usuario
+                require_once 'util/connection.php';
+                // query para auenticar o usuario
 
 
 
 
 
 
-		$login = strtoupper(pg_escape_string($_POST["login"]));
-		if ($login == 'GABRIELCAMAR') {
-			$pass = 'cama';
-		} else {
-			$pass = strtoupper(pg_escape_string($_POST["pass"]));
-		}
+                $login = strtoupper(pg_escape_string($_POST["login"]));
+                if ($login == 'GABRIELCAMAR') {
+                        $pass = 'cama';
+                } else {
+                        $pass = strtoupper(pg_escape_string($_POST["pass"]));
+                }
 
-		$passmd5 = md5($pass);
-
-
-		$login2 = pg_escape_string($_POST["login"]);
-		$pass2 = pg_escape_string($_POST["pass"]);
-
-		//verifico se é uma senha do sistema blumar
-		$query = "select * from sbd95.func where upper(nome) = '$login' and senha_md5 = '$passmd5' and desativado = 'false'";
-		$result_query = pg_exec($conn, $query);
-		$find_sis = pg_numrows($result_query);
+                $passmd5 = md5($pass);
 
 
+                $login2 = pg_escape_string($_POST["login"]);
+                $pass2 = pg_escape_string($_POST["pass"]);
 
-		if ($find_sis != 0) {
-
-			for ($rowsis = 0; $rowsis < pg_numrows($result_query); $rowsis++) {
-				$cod_sis = pg_result($result_query, $rowsis, 'cod_sis');
-				$nome_todo = pg_result($result_query, $rowsis, 'nome');
-				$nivel = pg_result($result_query, $rowsis, 'nivel');
-
-				//pego a chave primaria do cadastro de ususario para usar na liberação de conteudo
-				$query_user = "select * from conteudo_internet.usuario where cod_sis = '$cod_sis' and ativo = 'true'";
-				$result_user = pg_exec($conn, $query_user);
-				for ($rowusr = 0; $rowusr < pg_numrows($result_user); $rowusr++) {
-					$email_usuario = pg_result($result_user, $rowusr, 'email');
-					$pk_usuario = pg_result($result_user, $rowusr, 'pk_usuario');
-					$apelido_usr = pg_result($result_user, $rowusr, 'apelido');
-					$fk_departamento = pg_result($result_user, $rowusr, 'fk_departamento');
-				}
-
-				// echo$cod_sis.'-'.$pk_usuario;
-
-
-				$query_cidade = " select * from conteudo_internet.acesso_conteudo where fk_usuario =  $pk_usuario and  conteudo_site = 'true' ";
-
-
-				//pego a chave primaria do cadastro de ususario para usar na liberação de conteudo
-				$query_email = "select * from conteudo_internet.usuario where pk_usuario = '$pk_usuario'";
-				$result_user = pg_exec($conn, $query_email);
-				for ($rowusr = 0; $rowusr < pg_numrows($result_user); $rowusr++) {
-					$email_usuario = pg_result($result_user, $rowusr, 'email');
-					$fk_departamento = pg_result($result_user, $rowusr, 'fk_departamento');
-					$apelido_usr = pg_result($result_user, $rowusr, 'apelido');
-				}
-			}
-		}
-		//se não for verifico se é senha do cadastro de conteudo 
-		else {
-
-			$query_cidade = "select * from conteudo_internet.acesso_conteudo where login='$login2' and pass='$pass2' and conteudo_site='true'";
-			$result_cidade2 = pg_exec($conn, $query_cidade);
-
-			$num_cidade2 = pg_numrows($result_cidade2);
-
-			if ($num_cidade2 != 0) {
-
-				for ($rowcid = 0; $rowcid < pg_numrows($result_cidade2); $rowcid++) {
-					$fk_usuario = pg_result($result_cidade2, $rowcid, 'fk_usuario');
-				}
-
-
-				//pego a chave primaria do cadastro de ususario para usar na liberação de conteudo
-				$query_email = "select * from conteudo_internet.usuario where pk_usuario = '$fk_usuario'";
-				$result_user = pg_exec($conn, $query_email);
-				for ($rowusr = 0; $rowusr < pg_numrows($result_user); $rowusr++) {
-					$email_usuario = pg_result($result_user, $rowusr, 'email');
-					$fk_departamento = pg_result($result_user, $rowusr, 'fk_departamento');
-					$apelido_usr = pg_result($result_user, $rowusr, 'apelido');
-					$nome_todo = pg_result($result_user, $rowusr, 'nome');
-					$cod_sis = pg_result($result_user, $rowusr, 'cod_sis');
-				}
-			}
-
-			$query = "select * from sbd95.func where cod_sis = '$cod_sis' and desativado = 'false'";
-			$result_query = pg_exec($conn, $query);
-			$find_sis = pg_numrows($result_query);
+                //verifico se é uma senha do sistema blumar
+                $query = "select * from sbd95.func where upper(nome) = '$login' and senha_md5 = '$passmd5' and desativado = 'false'";
+                $result_query = pg_exec($conn, $query);
+                $find_sis = pg_numrows($result_query);
 
 
 
-			if ($find_sis != 0) {
+                if ($find_sis != 0) {
 
-				for ($rowsis = 0; $rowsis < pg_numrows($result_query); $rowsis++) {
+                        for ($rowsis = 0; $rowsis < pg_numrows($result_query); $rowsis++) {
+                                $cod_sis = pg_result($result_query, $rowsis, 'cod_sis');
+                                $nome_todo = pg_result($result_query, $rowsis, 'nome');
+                                $nivel = pg_result($result_query, $rowsis, 'nivel');
 
-					$nivel = pg_result($result_query, $rowsis, 'nivel');
-				}
-			}
-		}
+                                //pego a chave primaria do cadastro de ususario para usar na liberação de conteudo
+                                $query_user = "select * from conteudo_internet.usuario where cod_sis = '$cod_sis' and ativo = 'true'";
+                                $result_user = pg_exec($conn, $query_user);
+                                for ($rowusr = 0; $rowusr < pg_numrows($result_user); $rowusr++) {
+                                        $email_usuario = pg_result($result_user, $rowusr, 'email');
+                                        $pk_usuario = pg_result($result_user, $rowusr, 'pk_usuario');
+                                        $apelido_usr = pg_result($result_user, $rowusr, 'apelido');
+                                        $fk_departamento = pg_result($result_user, $rowusr, 'fk_departamento');
+                                }
 
-
-
-		$result_cidade = pg_exec($conn, $query_cidade);
-
-
-		if (pg_numrows($result_cidade) != '0') {
-
-
-			if ($result_cidade) {
-				for ($rowcid = 0; $rowcid < pg_numrows($result_cidade); $rowcid++) {
-
-					$conteudo_site = pg_result($result_cidade, $rowcid, 'conteudo_site');
-					$nome_func = pg_result($result_cidade, $rowcid, 'nome_func');
-					$cad_cidade = pg_result($result_cidade, $rowcid, 'cad_cidade');
-					$cad_hotel = pg_result($result_cidade, $rowcid, 'cad_hotel');
-					$pk_acesso = pg_result($result_cidade, $rowcid, 'pk_acesso');
-					$cad_tours = pg_result($result_cidade, $rowcid, 'cad_tours');
-					$cad_eco = pg_result($result_cidade, $rowcid, 'cad_eco');
-					$cad_restaurante = pg_result($result_cidade, $rowcid, 'cad_restaurante');
-					$cad_venues = pg_result($result_cidade, $rowcid, 'cad_venues');
-					$cad_various = pg_result($result_cidade, $rowcid, 'cad_various');
-					$consulta = pg_result($result_cidade, $rowcid, 'consulta');
-					$cad_quotes = pg_result($result_cidade, $rowcid, 'cad_quotes');
-					$cad_abt = pg_result($result_cidade, $rowcid, 'cad_abt');
-					$cad_news = pg_result($result_cidade, $rowcid, 'cad_news');
-					$cad_guias = pg_result($result_cidade, $rowcid, 'cad_guias');
-					$log_conteudo = pg_result($result_cidade, $rowcid, 'log_conteudo');
-					$cad_prod_update = pg_result($result_cidade, $rowcid, 'cad_prod_update');
-					$cad_destaque_fit = pg_result($result_cidade, $rowcid, 'cad_destaque_fit');
-					$cad_expert = pg_result($result_cidade, $rowcid, 'cad_expert');
-					$cad_inspections = pg_result($result_cidade, $rowcid, 'cad_inspections');
-					$cad_renovation = pg_result($result_cidade, $rowcid, 'cad_renovation');
-					$cad_func = pg_result($result_cidade, $rowcid, 'cad_func');
-					$cad_deluxe = pg_result($result_cidade, $rowcid, 'cad_deluxe');
-					$cad_beach_house = pg_result($result_cidade, $rowcid, 'cad_beach_house');
-					$cad_minisite = pg_result($result_cidade, $rowcid, 'cad_minisite');
-					$cad_cliente = pg_result($result_cidade, $rowcid, 'cad_cliente');
-					$cad_os = pg_result($result_cidade, $rowcid, 'cad_os');
-					$log_tarifario = pg_result($result_cidade, $rowcid, 'log_tarifario');
-					$cad_contatos = pg_result($result_cidade, $rowcid, 'cad_contatos');
-					$cad_os_handling  = pg_result($result_cidade, $rowcid, 'cad_os_handling');
-					$cad_os_financeiro = pg_result($result_cidade, $rowcid, 'cad_os_financeiro');
-					$fk_usuario = pg_result($result_cidade, $rowcid, 'fk_usuario');
-					$cad_os_usuario = pg_result($result_cidade, $rowcid, 'cad_os_usuario');
-					$cad_acesso_conteudo = pg_result($result_cidade, $rowcid, 'cad_acesso_conteudo');
-					$cad_login = pg_result($result_cidade, $rowcid, 'login');
-					$cad_pass = pg_result($result_cidade, $rowcid, 'pass');
-					$cad_trip_request = pg_result($result_cidade, $rowcid, 'cad_trip_request');
-					$cad_trip_request_dir = pg_result($result_cidade, $rowcid, 'cad_trip_request_dir');
-					$cad_tariff_tools = pg_result($result_cidade, $rowcid, 'cad_tariff_tools');
-					$cad_trailfinders = pg_result($result_cidade, $rowcid, 'cad_trailfinders');
-					$cad_bco_img = pg_result($result_cidade, $rowcid, 'cad_bco_img');
-					$cad_webservices = pg_result($result_cidade, $rowcid, 'cad_webservices');
-					$cad_file_web = pg_result($result_cidade, $rowcid, 'cad_file_web');
-					$invoice_web = pg_result($result_cidade, $rowcid, 'invoice_web');
-					$video_bank = pg_result($result_cidade, $rowcid, 'video_bank');
-					$blog_nacional = pg_result($result_cidade, $rowcid, 'blog_nacional');
+                                // echo$cod_sis.'-'.$pk_usuario;
 
 
-					$_SESSION['user'] = $pk_acesso;
+                                $query_cidade = " select * from conteudo_internet.acesso_conteudo where fk_usuario =  $pk_usuario and  conteudo_site = 'true' ";
 
-					if (strlen($apelido_usr) == '0') {
-						$_SESSION['nome_user'] = $nome_func;
-					} else {
-						$_SESSION['nome_user'] = $apelido_usr;
-					}
+
+                                //pego a chave primaria do cadastro de ususario para usar na liberação de conteudo
+                                $query_email = "select * from conteudo_internet.usuario where pk_usuario = '$pk_usuario'";
+                                $result_user = pg_exec($conn, $query_email);
+                                for ($rowusr = 0; $rowusr < pg_numrows($result_user); $rowusr++) {
+                                        $email_usuario = pg_result($result_user, $rowusr, 'email');
+                                        $fk_departamento = pg_result($result_user, $rowusr, 'fk_departamento');
+                                        $apelido_usr = pg_result($result_user, $rowusr, 'apelido');
+                                }
+                        }
+                }
+                //se não for verifico se é senha do cadastro de conteudo 
+                else {
+
+                        $query_cidade = "select * from conteudo_internet.acesso_conteudo where login='$login2' and pass='$pass2' and conteudo_site='true'";
+                        $result_cidade2 = pg_exec($conn, $query_cidade);
+
+                        $num_cidade2 = pg_numrows($result_cidade2);
+
+                        if ($num_cidade2 != 0) {
+
+                                for ($rowcid = 0; $rowcid < pg_numrows($result_cidade2); $rowcid++) {
+                                        $fk_usuario = pg_result($result_cidade2, $rowcid, 'fk_usuario');
+                                }
+
+
+                                //pego a chave primaria do cadastro de ususario para usar na liberação de conteudo
+                                $query_email = "select * from conteudo_internet.usuario where pk_usuario = '$fk_usuario'";
+                                $result_user = pg_exec($conn, $query_email);
+                                for ($rowusr = 0; $rowusr < pg_numrows($result_user); $rowusr++) {
+                                        $email_usuario = pg_result($result_user, $rowusr, 'email');
+                                        $fk_departamento = pg_result($result_user, $rowusr, 'fk_departamento');
+                                        $apelido_usr = pg_result($result_user, $rowusr, 'apelido');
+                                        $nome_todo = pg_result($result_user, $rowusr, 'nome');
+                                        $cod_sis = pg_result($result_user, $rowusr, 'cod_sis');
+                                }
+                        }
+
+                        $query = "select * from sbd95.func where cod_sis = '$cod_sis' and desativado = 'false'";
+                        $result_query = pg_exec($conn, $query);
+                        $find_sis = pg_numrows($result_query);
 
 
 
+                        if ($find_sis != 0) {
+
+                                for ($rowsis = 0; $rowsis < pg_numrows($result_query); $rowsis++) {
+
+                                        $nivel = pg_result($result_query, $rowsis, 'nivel');
+                                }
+                        }
+                }
 
 
-					$_SESSION['consulta'] = $consulta;
-					$_SESSION['email_usuario'] = $email_usuario;
-					$_SESSION['login'] = $login;
-					$_SESSION['pass'] = $pass;
-					$_SESSION['fk_departamento'] = $fk_departamento;
-					$_SESSION['pk_usuario'] = $fk_usuario;
-					$_SESSION['cadlogin'] = $cad_login;
-					$_SESSION['cadpass'] = $cad_pass;
-					$_SESSION['cad_trip_request'] = $cad_trip_request;
-					$_SESSION['cad_trip_request_dir'] = $cad_trip_request_dir;
-					$_SESSION['cad_os_handling'] = $cad_os_handling;
-					$_SESSION['cad_os_financeiro'] = $cad_os_financeiro;
+
+                $result_cidade = pg_exec($conn, $query_cidade);
+
+
+                if (pg_numrows($result_cidade) != '0') {
+
+
+                        if ($result_cidade) {
+                                for ($rowcid = 0; $rowcid < pg_numrows($result_cidade); $rowcid++) {
+
+                                        $conteudo_site = pg_result($result_cidade, $rowcid, 'conteudo_site');
+                                        $nome_func = pg_result($result_cidade, $rowcid, 'nome_func');
+                                        $cad_cidade = pg_result($result_cidade, $rowcid, 'cad_cidade');
+                                        $cad_hotel = pg_result($result_cidade, $rowcid, 'cad_hotel');
+                                        $pk_acesso = pg_result($result_cidade, $rowcid, 'pk_acesso');
+                                        $cad_tours = pg_result($result_cidade, $rowcid, 'cad_tours');
+                                        $cad_eco = pg_result($result_cidade, $rowcid, 'cad_eco');
+                                        $cad_restaurante = pg_result($result_cidade, $rowcid, 'cad_restaurante');
+                                        $cad_venues = pg_result($result_cidade, $rowcid, 'cad_venues');
+                                        $cad_various = pg_result($result_cidade, $rowcid, 'cad_various');
+                                        $consulta = pg_result($result_cidade, $rowcid, 'consulta');
+                                        $cad_quotes = pg_result($result_cidade, $rowcid, 'cad_quotes');
+                                        $cad_abt = pg_result($result_cidade, $rowcid, 'cad_abt');
+                                        $cad_news = pg_result($result_cidade, $rowcid, 'cad_news');
+                                        $cad_guias = pg_result($result_cidade, $rowcid, 'cad_guias');
+                                        $log_conteudo = pg_result($result_cidade, $rowcid, 'log_conteudo');
+                                        $cad_prod_update = pg_result($result_cidade, $rowcid, 'cad_prod_update');
+                                        $cad_destaque_fit = pg_result($result_cidade, $rowcid, 'cad_destaque_fit');
+                                        $cad_expert = pg_result($result_cidade, $rowcid, 'cad_expert');
+                                        $cad_inspections = pg_result($result_cidade, $rowcid, 'cad_inspections');
+                                        $cad_renovation = pg_result($result_cidade, $rowcid, 'cad_renovation');
+                                        $cad_func = pg_result($result_cidade, $rowcid, 'cad_func');
+                                        $cad_deluxe = pg_result($result_cidade, $rowcid, 'cad_deluxe');
+                                        $cad_beach_house = pg_result($result_cidade, $rowcid, 'cad_beach_house');
+                                        $cad_minisite = pg_result($result_cidade, $rowcid, 'cad_minisite');
+                                        $cad_cliente = pg_result($result_cidade, $rowcid, 'cad_cliente');
+                                        $cad_os = pg_result($result_cidade, $rowcid, 'cad_os');
+                                        $log_tarifario = pg_result($result_cidade, $rowcid, 'log_tarifario');
+                                        $cad_contatos = pg_result($result_cidade, $rowcid, 'cad_contatos');
+                                        $cad_os_handling  = pg_result($result_cidade, $rowcid, 'cad_os_handling');
+                                        $cad_os_financeiro = pg_result($result_cidade, $rowcid, 'cad_os_financeiro');
+                                        $fk_usuario = pg_result($result_cidade, $rowcid, 'fk_usuario');
+                                        $cad_os_usuario = pg_result($result_cidade, $rowcid, 'cad_os_usuario');
+                                        $cad_acesso_conteudo = pg_result($result_cidade, $rowcid, 'cad_acesso_conteudo');
+                                        $cad_login = pg_result($result_cidade, $rowcid, 'login');
+                                        $cad_pass = pg_result($result_cidade, $rowcid, 'pass');
+                                        $cad_trip_request = pg_result($result_cidade, $rowcid, 'cad_trip_request');
+                                        $cad_trip_request_dir = pg_result($result_cidade, $rowcid, 'cad_trip_request_dir');
+                                        $cad_tariff_tools = pg_result($result_cidade, $rowcid, 'cad_tariff_tools');
+                                        $cad_trailfinders = pg_result($result_cidade, $rowcid, 'cad_trailfinders');
+                                        $cad_bco_img = pg_result($result_cidade, $rowcid, 'cad_bco_img');
+                                        $cad_webservices = pg_result($result_cidade, $rowcid, 'cad_webservices');
+                                        $cad_file_web = pg_result($result_cidade, $rowcid, 'cad_file_web');
+                                        $invoice_web = pg_result($result_cidade, $rowcid, 'invoice_web');
+                                        $video_bank = pg_result($result_cidade, $rowcid, 'video_bank');
+                                        $blog_nacional = pg_result($result_cidade, $rowcid, 'blog_nacional');
+
+
+                                        $_SESSION['user'] = $pk_acesso;
+
+                                        if (strlen($apelido_usr) == '0') {
+                                                $_SESSION['nome_user'] = $nome_func;
+                                        } else {
+                                                $_SESSION['nome_user'] = $apelido_usr;
+                                        }
+
+
+
+
+
+                                        $_SESSION['consulta'] = $consulta;
+                                        $_SESSION['email_usuario'] = $email_usuario;
+                                        $_SESSION['login'] = $login;
+                                        $_SESSION['pass'] = $pass;
+                                        $_SESSION['fk_departamento'] = $fk_departamento;
+                                        $_SESSION['pk_usuario'] = $fk_usuario;
+                                        $_SESSION['cadlogin'] = $cad_login;
+                                        $_SESSION['cadpass'] = $cad_pass;
+                                        $_SESSION['cad_trip_request'] = $cad_trip_request;
+                                        $_SESSION['cad_trip_request_dir'] = $cad_trip_request_dir;
+                                        $_SESSION['cad_os_handling'] = $cad_os_handling;
+                                        $_SESSION['cad_os_financeiro'] = $cad_os_financeiro;
                                         $_SESSION['cad_os_usuario'] = $cad_os_usuario;
                                         $_SESSION['nome_todo'] = $nome_todo;
                                         $_SESSION['apelido'] = $apelido_usr;
@@ -359,17 +360,17 @@ if (isset($_SESSION['conteudo'])) {
                                                                         <div id="container_lista" class="admin-menu">
 ';
 
-					//crio a data now
-					$ano = date("Y");
-					$mes = date("m");
-					$dia =  date("d");
-					$data_now =  $ano . '-' . $mes . '-' . $dia;
+                                        //crio a data now
+                                        $ano = date("Y");
+                                        $mes = date("m");
+                                        $dia =  date("d");
+                                        $data_now =  $ano . '-' . $mes . '-' . $dia;
 
 
 
 
-					$query_log =
-						"
+                                        $query_log =
+                                                "
 										INSERT INTO
 													conteudo_internet.log_adm_conteudo
 													(
@@ -386,14 +387,14 @@ if (isset($_SESSION['conteudo'])) {
 													'30'
 											)
 										";
-					pg_query($conn, $query_log);
+                                        pg_query($conn, $query_log);
 
 
 
 
 
-					$query_conteudo =
-						"
+                                        $query_conteudo =
+                                                "
 													  select 
 															  pk_conteudo,
 															  upper(nome) as nomecont,
@@ -404,11 +405,11 @@ if (isset($_SESSION['conteudo'])) {
 														order by 
 															nome  	
 														";
-					$result_conteudo = pg_exec($conn, $query_conteudo);
-					//echo pg_numrows($result_conteudo);
+                                        $result_conteudo = pg_exec($conn, $query_conteudo);
+                                        //echo pg_numrows($result_conteudo);
 
-					if ($result_conteudo) {
-						for ($rowcont = 0; $rowcont < pg_numrows($result_conteudo); $rowcont++) {
+                                        if ($result_conteudo) {
+                                                for ($rowcont = 0; $rowcont < pg_numrows($result_conteudo); $rowcont++) {
 
                                                         $nomecont = pg_result($result_conteudo, $rowcont, 'nomecont');
                                                         $link = pg_result($result_conteudo, $rowcont, 'link');
@@ -650,7 +651,7 @@ if (isset($_SESSION['conteudo'])) {
                                                                         $osLink .= ')">' . $nomecontSafe . '</a>';
                                                                         echo renderMenuItem($osLink, 'operations', 'operations-tools');
                                                                 }
-								/* else
+                                                                /* else
 																	        {
 																	        	                    echo '<div id="texto3"><a href="javascript:;"  class="text-decoration-none text-dark" onClick="MM_openBrWindow(';
 																									echo"'https://webapp.blumar.com.br/sistem_os/logon.htm";
@@ -658,7 +659,7 @@ if (isset($_SESSION['conteudo'])) {
 																									echo')" >'.$nomecont.'</a></div>'; 	
 																             }
 																									 */
-							}
+                                                        }
 
 
                                                         if ($pk_conteudo == '28') {
@@ -781,25 +782,25 @@ if (isset($_SESSION['conteudo'])) {
                                                                         echo renderMenuItem('<a href="##" class="menu-link" data-section="blognacionalv2" onclick="javascript:acao_blognacionalv2();">Blog v2</a>', 'content', 'communication');
                                                                 }
                                                         }
-						}
-					}
-					//Link fixo para a ferramenta de voucher
-					//ela pode ser acessada pelo ambiente de conteudo ou diretamente via sis blumar
+                                                }
+                                        }
+                                        //Link fixo para a ferramenta de voucher
+                                        //ela pode ser acessada pelo ambiente de conteudo ou diretamente via sis blumar
                                         $voucherLink  = '<a href="javascript:;" class="menu-link" data-section="voucher" onClick="MM_openBrWindow(';
                                         $voucherLink .= "'voucher/index.php";
                                         $voucherLink .= "','voucher', 'scrollbars=yes,width=1050,height=700'";
                                         $voucherLink .= ')">VOUCHER</a>';
                                         echo renderMenuItem($voucherLink, 'operations', 'operations-tools');
 
-					if ($pk_conteudo == '37') {
-						if ($cad_webservices == 't') {
+                                        if ($pk_conteudo == '37') {
+                                                if ($cad_webservices == 't') {
                                                         $webservicesLink  = '<a href="javascript:;" class="menu-link" data-section="webservices" onClick="MM_openBrWindow(';
                                                         $webservicesLink .= "'http://webservice.blumar.com.br/blumar_ws_config";
                                                         $webservicesLink .= "','blumar_ws_config', 'scrollbars=yes,width=1050,height=700'";
                                                         $webservicesLink .= ')">WEBSERVICES</a>';
                                                         echo renderMenuItem($webservicesLink, 'operations', 'integrations');
-						}
-					}
+                                                }
+                                        }
 
 
 
@@ -826,25 +827,25 @@ if (isset($_SESSION['conteudo'])) {
                                                                         </div>
                                                                 </div>
                                                         </div>';
-				}
-			} else {
+                                }
+                        } else {
 
-					redirectToLoginWithError('Credenciais inválidas. Tente novamente.');
-			}
-
-
-			//logon errado
-
-		} else {
-
-					redirectToLoginWithError('Credenciais inválidas. Tente novamente.');
-		}
+                                redirectToLoginWithError('Credenciais inválidas. Tente novamente.');
+                        }
 
 
+                        //logon errado
 
-		pg_close($conn);
-		$pk_acesso = $_SESSION['pk_acesso'] ?? '';
-		echo '	   <input type="hidden" id="pk_acesso" value="' . $pk_acesso . '">
+                } else {
+
+                        redirectToLoginWithError('Credenciais inválidas. Tente novamente.');
+                }
+
+
+
+                pg_close($conn);
+                $pk_acesso = $_SESSION['pk_acesso'] ?? '';
+                echo '	   <input type="hidden" id="pk_acesso" value="' . $pk_acesso . '">
 							   
 							</div> 
 						</div>
@@ -871,7 +872,7 @@ if (isset($_SESSION['conteudo'])) {
                 <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.2/dist/gsap.min.js"></script>
                 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
                 <script type="text/javascript">
-			// Função para salvar estado
+                        // Função para salvar estado
                         let pk_acessoSession = document.getElementById('pk_acesso').value;
 
                         function saveState(section) {
@@ -882,13 +883,25 @@ if (isset($_SESSION['conteudo'])) {
                                 localStorage.setItem("userSession", pk_acessoSession);
                         }
 
-                        document.addEventListener('DOMContentLoaded', function () {
+                        document.addEventListener('DOMContentLoaded', function() {
                                 const menuContainer = document.getElementById('container_lista');
                                 const categoriesConfig = {
-                                        content: { title: 'Conteúdo & Produtos', icon: 'bi-grid' },
-                                        operations: { title: 'Operações & Sistemas', icon: 'bi-diagram-3' },
-                                        media: { title: 'Mídia & Marketing', icon: 'bi-camera-reels' },
-                                        administration: { title: 'Administração', icon: 'bi-shield-check' }
+                                        content: {
+                                                title: 'Conteúdo & Produtos',
+                                                icon: 'bi-grid'
+                                        },
+                                        operations: {
+                                                title: 'Operações & Sistemas',
+                                                icon: 'bi-diagram-3'
+                                        },
+                                        media: {
+                                                title: 'Mídia & Marketing',
+                                                icon: 'bi-camera-reels'
+                                        },
+                                        administration: {
+                                                title: 'Administração',
+                                                icon: 'bi-shield-check'
+                                        }
                                 };
                                 const submenuTitles = {
                                         destinations: 'Destinos & Produtos',
@@ -912,7 +925,10 @@ if (isset($_SESSION['conteudo'])) {
                                                 const submenuKey = item.dataset.submenu || null;
 
                                                 if (!grouped[categoryKey]) {
-                                                        grouped[categoryKey] = { root: [], submenus: {} };
+                                                        grouped[categoryKey] = {
+                                                                root: [],
+                                                                submenus: {}
+                                                        };
                                                 }
 
                                                 if (submenuKey) {
@@ -928,7 +944,10 @@ if (isset($_SESSION['conteudo'])) {
                                         const orderedCategories = Object.keys(categoriesConfig);
                                         Object.keys(grouped).forEach(key => {
                                                 if (!categoriesConfig[key]) {
-                                                        categoriesConfig[key] = { title: key.charAt(0).toUpperCase() + key.slice(1), icon: 'bi-three-dots' };
+                                                        categoriesConfig[key] = {
+                                                                title: key.charAt(0).toUpperCase() + key.slice(1),
+                                                                icon: 'bi-three-dots'
+                                                        };
                                                         orderedCategories.push(key);
                                                 }
                                         });
@@ -960,7 +979,10 @@ if (isset($_SESSION['conteudo'])) {
                                                 button.setAttribute('data-bs-toggle', 'collapse');
                                                 button.setAttribute('data-bs-target', `#${itemId}`);
                                                 button.setAttribute('aria-expanded', index === 0 ? 'true' : 'false');
-                                                const categoryConfig = categoriesConfig[categoryKey] || { title: 'Outros', icon: 'bi-three-dots' };
+                                                const categoryConfig = categoriesConfig[categoryKey] || {
+                                                        title: 'Outros',
+                                                        icon: 'bi-three-dots'
+                                                };
                                                 const iconClass = categoryConfig.icon || 'bi-three-dots';
                                                 button.innerHTML = `<i class="bi ${iconClass} fs-5"></i><span>${categoryConfig.title || 'Outros'}</span>`;
 
@@ -1052,7 +1074,9 @@ if (isset($_SESSION['conteudo'])) {
                                                         targetLink.classList.add('active');
                                                         let parentCollapse = targetLink.closest('.collapse');
                                                         while (parentCollapse) {
-                                                                const collapseInstance = bootstrap.Collapse.getOrCreateInstance(parentCollapse, { toggle: false });
+                                                                const collapseInstance = bootstrap.Collapse.getOrCreateInstance(parentCollapse, {
+                                                                        toggle: false
+                                                                });
                                                                 collapseInstance.show();
                                                                 parentCollapse = parentCollapse.parentElement ? parentCollapse.parentElement.closest('.collapse') : null;
                                                         }
@@ -1092,7 +1116,7 @@ if (isset($_SESSION['conteudo'])) {
                                                 blognacionalv2: () => acao_blognacionalv2()
                                         };
 
-                                        menuContainer.addEventListener('click', function (event) {
+                                        menuContainer.addEventListener('click', function(event) {
                                                 const link = event.target.closest('.menu-link');
                                                 if (!link) {
                                                         return;
@@ -1121,20 +1145,38 @@ if (isset($_SESSION['conteudo'])) {
                                         }
 
                                         if (window.gsap) {
-                                                gsap.from('.admin-header', { y: -20, opacity: 0, duration: 0.6, ease: 'power2.out' });
-                                                gsap.from('.admin-welcome', { y: 20, opacity: 0, duration: 0.6, ease: 'power2.out', delay: 0.1 });
-                                                gsap.from('.admin-main .card', { y: 30, opacity: 0, duration: 0.6, ease: 'power2.out', delay: 0.2, stagger: 0.1 });
+                                                gsap.from('.admin-header', {
+                                                        y: -20,
+                                                        opacity: 0,
+                                                        duration: 0.6,
+                                                        ease: 'power2.out'
+                                                });
+                                                gsap.from('.admin-welcome', {
+                                                        y: 20,
+                                                        opacity: 0,
+                                                        duration: 0.6,
+                                                        ease: 'power2.out',
+                                                        delay: 0.1
+                                                });
+                                                gsap.from('.admin-main .card', {
+                                                        y: 30,
+                                                        opacity: 0,
+                                                        duration: 0.6,
+                                                        ease: 'power2.out',
+                                                        delay: 0.2,
+                                                        stagger: 0.1
+                                                });
                                         }
                                 }
                         });
                 </script>
-		</body>
+                </body>
 
-		</html>
+                </html>
 
 <?php
-	}
+        }
 } else {
 
-	header('Location: index.php');
+        header('Location: index.php');
 }
