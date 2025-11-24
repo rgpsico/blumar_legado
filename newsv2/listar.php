@@ -33,7 +33,7 @@ $pk_news = isset($_GET['pk_news']) ? (int) $_GET['pk_news'] : null;
             <strong>Comentário do especialista</strong>
         </div>
         <div class="card-body">
-            <p class="text-muted">Selecione um especialista para abrir o formulário herdado do legado e salvar os dados na nova API.</p>
+            <p class="text-muted">Selecione um especialista para abrir o formulário herdado do legado e editar os dados diretamente na interface original.</p>
             <div class="row g-3 align-items-end">
                 <div class="col-md-6">
                     <label for="especialistaSelect" class="form-label">Especialista</label>
@@ -51,39 +51,17 @@ $pk_news = isset($_GET['pk_news']) ? (int) $_GET['pk_news'] : null;
 
     <div id="formContainer" class="card d-none">
         <div class="card-header bg-secondary text-white d-flex justify-content-between align-items-center">
-            <span>Formulário do especialista</span>
+            <span>Formulário do especialista (legado)</span>
             <span class="small" id="especialistaInfo"></span>
         </div>
-        <div class="card-body">
-            <form id="formEspecialista">
-                <div class="row g-3">
-                    <div class="col-md-6">
-                        <label class="form-label" for="titulo">Título</label>
-                        <input type="text" class="form-control" id="titulo" name="titulo" required>
-                    </div>
-                    <div class="col-md-6">
-                        <label class="form-label" for="subtitulo">Subtítulo</label>
-                        <input type="text" class="form-control" id="subtitulo" name="subtitulo">
-                    </div>
-                    <div class="col-12">
-                        <label class="form-label" for="comentario">Comentário</label>
-                        <textarea class="form-control" id="comentario" name="comentario" rows="5" required></textarea>
-                    </div>
-                    <div class="col-md-6">
-                        <label class="form-label" for="link">Link do especialista</label>
-                        <input type="url" class="form-control" id="link" name="link" placeholder="https://...">
-                    </div>
-                    <div class="col-md-6">
-                        <label class="form-label" for="imagem">URL da imagem</label>
-                        <input type="url" class="form-control" id="imagem" name="imagem" placeholder="https://...">
-                    </div>
-                </div>
-
-                <div class="mt-4 d-flex gap-2">
-                    <button type="submit" class="btn btn-primary">Salvar comentário</button>
-                    <button type="button" id="btnLimpar" class="btn btn-outline-secondary">Limpar</button>
-                </div>
-            </form>
+        <div class="card-body p-0">
+            <div class="p-3 border-bottom">
+                <p class="mb-0 text-muted">
+                    O formulário abaixo é carregado diretamente do sistema legado. Qualquer alteração será feita no mesmo fluxo
+                    já conhecido pelos usuários.
+                </p>
+            </div>
+            <iframe id="iframeLegado" src="" style="width: 100%; min-height: 80vh; border: 0;"></iframe>
         </div>
     </div>
 </div>
@@ -91,10 +69,10 @@ $pk_news = isset($_GET['pk_news']) ? (int) $_GET['pk_news'] : null;
 <script>
 const especialistaSelect = document.getElementById('especialistaSelect');
 const formContainer = document.getElementById('formContainer');
-const form = document.getElementById('formEspecialista');
 const especialistaInfo = document.getElementById('especialistaInfo');
 const pkNewsInput = document.getElementById('pk_news');
-const btnLimpar = document.getElementById('btnLimpar');
+const iframeLegado = document.getElementById('iframeLegado');
+const LEGACY_FORM_URL = '../news/listar.php';
 
 async function carregarEspecialistas() {
     const response = await fetch('../api/news.php?request=listar_especialistas');
@@ -108,66 +86,34 @@ async function carregarEspecialistas() {
     });
 }
 
-async function carregarFormulario(especialistaId) {
+function abrirFormularioLegado(especialistaId) {
     if (!especialistaId) {
         formContainer.classList.add('d-none');
-        form.reset();
+        iframeLegado.src = '';
+        especialistaInfo.textContent = '';
         return;
     }
-    const params = new URLSearchParams({
-        request: 'carregar_comentario_especialista',
-        especialista_id: especialistaId,
-        pk_news: pkNewsInput.value || ''
-    });
-    const response = await fetch('../api/news.php', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        body: params.toString()
-    });
-    const payload = await response.json();
-    const { especialista, comentario } = payload;
-    especialistaInfo.textContent = `${especialista.nome} • ${especialista.cargo || 'Especialista'}`;
-    document.getElementById('titulo').value = comentario.titulo || '';
-    document.getElementById('subtitulo').value = comentario.subtitulo || '';
-    document.getElementById('comentario').value = comentario.comentario || '';
-    document.getElementById('link').value = comentario.link || '';
-    document.getElementById('imagem').value = comentario.imagem || '';
+
+    const pkNews = pkNewsInput.value.trim();
+    if (!pkNews) {
+        alert('Informe o ID da newsletter antes de abrir o formulário.');
+        especialistaSelect.value = '';
+        return;
+    }
+
+    const url = new URL(LEGACY_FORM_URL, window.location.href);
+    url.searchParams.set('pk_news', pkNews);
+    url.searchParams.set('especialista_id', especialistaId);
+
+    const selectedOption = especialistaSelect.options[especialistaSelect.selectedIndex];
+    especialistaInfo.textContent = `${selectedOption.textContent} • formulário do legado`;
+    iframeLegado.src = url.toString();
     formContainer.classList.remove('d-none');
+    formContainer.scrollIntoView({ behavior: 'smooth' });
 }
 
-form.addEventListener('submit', async (event) => {
-    event.preventDefault();
-    const params = new URLSearchParams({
-        request: 'salvar_comentario_especialista',
-        especialista_id: especialistaSelect.value,
-        pk_news: pkNewsInput.value || '',
-        titulo: document.getElementById('titulo').value,
-        subtitulo: document.getElementById('subtitulo').value,
-        comentario: document.getElementById('comentario').value,
-        link: document.getElementById('link').value,
-        imagem: document.getElementById('imagem').value
-    });
-
-    const response = await fetch('../api/news.php', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        body: params.toString()
-    });
-
-    const payload = await response.json();
-    if (payload.success) {
-        alert('Comentário salvo com sucesso!');
-    } else {
-        alert(payload.message || 'Erro ao salvar.');
-    }
-});
-
-btnLimpar.addEventListener('click', () => {
-    form.reset();
-});
-
 especialistaSelect.addEventListener('change', (event) => {
-    carregarFormulario(event.target.value);
+    abrirFormularioLegado(event.target.value);
 });
 
 carregarEspecialistas();
