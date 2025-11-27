@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Blumar - Special INCENTIVE Client Area</title>
+    <title>Painel Super Admin - Blumar</title>
     <script src="https://cdn.jsdelivr.net/npm/vue@3.3.4/dist/vue.global.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
@@ -13,267 +13,345 @@
         }
 
         .card-hover {
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
         }
 
         .card-hover:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            transform: translateY(-4px);
+            box-shadow: 0 12px 24px rgba(15, 23, 42, 0.12);
         }
     </style>
 </head>
 
-<body class="bg-gray-100">
-    <div id="app" v-cloak>
-        <!-- Header -->
-        <header class="bg-slate-800 text-white py-4 px-6">
-            <div class="max-w-7xl mx-auto flex items-center justify-between">
-                <div class="text-2xl font-bold tracking-wider">BLUMAR</div>
-                <div class="flex items-center gap-4">
-                    <img src="https://flagcdn.com/w40/us.png" alt="US Flag" class="w-8 h-5">
-                    <button class="px-4 py-2 bg-blue-400 hover:bg-blue-500 text-white rounded text-sm transition">
-                        Back to Main Site
-                    </button>
+<body class="bg-slate-50">
+    <div id="app" v-cloak class="min-h-screen flex flex-col">
+        <header class="bg-slate-900 text-white shadow-sm">
+            <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+                <div class="flex items-center gap-3">
+                    <div class="h-10 w-10 rounded-xl bg-blue-500/20 border border-blue-400/40 flex items-center justify-center font-bold text-lg">B</div>
+                    <div>
+                        <p class="text-xs uppercase tracking-[0.2em] text-blue-100">Área Administrativa</p>
+                        <h1 class="text-2xl font-semibold leading-tight">Painel Super Admin</h1>
+                    </div>
+                </div>
+                <div class="flex items-center gap-3">
+                    <div class="text-right">
+                        <p class="text-xs text-slate-200">Usuário</p>
+                        <p class="font-semibold">admin@blumar.com</p>
+                    </div>
+                    <div class="h-10 w-10 rounded-full bg-white/10 border border-white/10 flex items-center justify-center">SA</div>
                 </div>
             </div>
         </header>
 
-        <!-- Main Content -->
-        <main class="max-w-7xl mx-auto px-6 py-12">
-            <!-- Title Section -->
-            <div class="mb-12">
-                <h1 class="text-4xl font-bold text-slate-800 mb-6">Special INCENTIVE Client Area</h1>
-
-                <div class="bg-white rounded-lg shadow-sm p-6 mb-6">
-                    <h2 class="text-xl font-semibold text-slate-700 mb-4">Welcome!</h2>
-                    <p class="text-gray-600 mb-4">
-                        We have created a special area that will allow you to navigate through all the information our
-                        team has put together to help you better sell Brazil. At just a few clicks you will have access
-                        to many products that were designed carefully to better help you sell our destination: tariff
-                        rates, special programs, inspection reports, online training, detailed maps and lots of product
-                        update just to mention a few.
-                    </p>
-                    <p class="text-lg font-semibold text-slate-700">
-                        We invite you to explore and enjoy!
-                    </p>
+        <main class="max-w-7xl mx-auto w-full px-6 py-10 space-y-10 flex-1">
+            <div class="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+                <div>
+                    <p class="text-sm text-slate-500">Visão geral e gestão de todos os módulos</p>
+                    <h2 class="text-3xl font-bold text-slate-900">Dashboard operacional</h2>
+                </div>
+                <div class="flex items-center gap-3">
+                    <div class="flex items-center gap-2 bg-white px-3 py-2 rounded-lg shadow-sm border border-slate-100">
+                        <span class="text-sm text-slate-600">Filtro rápido</span>
+                        <select v-model="filters.status" class="text-sm border border-slate-200 rounded px-2 py-1 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                            <option value="todos">Todos</option>
+                            <option value="ativo">Ativos</option>
+                            <option value="pendente">Pendentes</option>
+                            <option value="inativo">Inativos</option>
+                        </select>
+                    </div>
+                    <input v-model="filters.search" type="search" placeholder="Buscar por nome ou cidade" class="w-64 text-sm border border-slate-200 rounded-lg px-3 py-2 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500" />
                 </div>
             </div>
 
-            <!-- Cards Grid -->
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                <!-- Hotels Card -->
-                <div
-                    class="card-hover bg-sky-400 rounded-lg overflow-hidden shadow-lg cursor-pointer h-64 flex flex-col justify-between p-6 text-white">
-                    <div>
-                        <h3 class="text-3xl font-bold mb-4">Hotels</h3>
-                        <div class="w-16 h-1 bg-yellow-400 mb-4"></div>
-                    </div>
-                    <p class="text-sm">Um breve texto introdutório sobre</p>
-                </div>
-
-                <!-- Activities Card -->
-                <div
-                    class="card-hover bg-white rounded-lg overflow-hidden shadow-lg cursor-pointer h-64 flex flex-col justify-between p-6">
-                    <div>
-                        <h3 class="text-3xl font-bold mb-4 text-slate-800">Activities</h3>
-                        <div class="w-16 h-1 bg-yellow-400 mb-4"></div>
-                    </div>
-                    <p class="text-sm text-gray-600">Um breve texto introdutório sobre</p>
-                </div>
-
-                <!-- Venues Card -->
-                <div class="card-hover rounded-lg overflow-hidden shadow-lg cursor-pointer h-64 relative">
-                    <img src="https://images.unsplash.com/photo-1516306580123-e6e52b1b7b5f?w=600&h=400&fit=crop"
-                        alt="Museum" class="w-full h-full object-cover">
-                    <div
-                        class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent flex flex-col justify-between p-6 text-white">
+            <section class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="card-hover bg-white rounded-2xl p-5 border border-slate-100 shadow-sm">
+                    <div class="flex items-center justify-between">
                         <div>
-                            <h3 class="text-3xl font-bold mb-4">Venues</h3>
-                            <div class="w-16 h-1 bg-yellow-400 mb-4"></div>
+                            <p class="text-sm text-slate-500">Proprietários</p>
+                            <h3 class="text-3xl font-bold text-slate-900">{{ totalProprietarios }}</h3>
                         </div>
-                        <p class="text-sm">Um breve texto introdutório sobre</p>
+                        <div class="h-12 w-12 rounded-xl bg-blue-500/10 text-blue-600 flex items-center justify-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M5 7a2 2 0 012-2h1.5A1.5 1.5 0 0110 6.5V8a2 2 0 002 2h0a2 2 0 002-2V6.5A1.5 1.5 0 0115.5 5H17a2 2 0 012 2v10a2 2 0 01-2 2H7a2 2 0 01-2-2V7z"/></svg>
+                        </div>
                     </div>
+                    <p class="mt-3 text-sm text-slate-500">Gestão de proprietários e imóveis vinculados.</p>
                 </div>
-
-                <!-- Entertainment Card -->
-                <div class="card-hover rounded-lg overflow-hidden shadow-lg cursor-pointer h-64 relative">
-                    <img src="https://images.unsplash.com/photo-1516026672322-bc52d61a55d5?w=600&h=400&fit=crop"
-                        alt="Carnival" class="w-full h-full object-cover">
-                    <div
-                        class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent flex flex-col justify-between p-6 text-white">
+                <div class="card-hover bg-white rounded-2xl p-5 border border-slate-100 shadow-sm">
+                    <div class="flex items-center justify-between">
                         <div>
-                            <h3 class="text-3xl font-bold mb-4">Entertainment</h3>
-                            <div class="w-16 h-1 bg-yellow-400 mb-4"></div>
+                            <p class="text-sm text-slate-500">Inquilinos</p>
+                            <h3 class="text-3xl font-bold text-slate-900">{{ totalInquilinos }}</h3>
                         </div>
-                        <p class="text-sm">Um breve texto introdutório sobre</p>
+                        <div class="h-12 w-12 rounded-xl bg-emerald-500/10 text-emerald-600 flex items-center justify-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v1h16v-1c0-2.66-5.33-4-8-4z"/></svg>
+                        </div>
                     </div>
+                    <p class="mt-3 text-sm text-slate-500">Controle de contratos e relacionamento.</p>
                 </div>
-
-                <!-- Restaurants Card -->
-                <div
-                    class="card-hover bg-slate-800 rounded-lg overflow-hidden shadow-lg cursor-pointer h-64 flex flex-col justify-between p-6 text-white">
-                    <div>
-                        <h3 class="text-3xl font-bold mb-4">Restaurants</h3>
-                        <div class="w-16 h-1 bg-yellow-400 mb-4"></div>
-                    </div>
-                    <p class="text-sm">Um breve texto introdutório sobre</p>
-                </div>
-
-                <!-- Gifts Card -->
-                <div
-                    class="card-hover bg-orange-500 rounded-lg overflow-hidden shadow-lg cursor-pointer h-64 flex flex-col justify-between p-6 text-white">
-                    <div>
-                        <h3 class="text-3xl font-bold mb-4">Gifts</h3>
-                        <div class="w-16 h-1 bg-yellow-400 mb-4"></div>
-                    </div>
-                    <p class="text-sm">Um breve texto introdutório sobre</p>
-                </div>
-
-                <!-- Add Ons Card -->
-                <div
-                    class="card-hover bg-orange-400 rounded-lg overflow-hidden shadow-lg cursor-pointer h-64 flex flex-col justify-between p-6 text-white">
-                    <div>
-                        <h3 class="text-3xl font-bold mb-4">Add Ons</h3>
-                        <div class="w-16 h-1 bg-yellow-400 mb-4"></div>
-                    </div>
-                    <p class="text-sm">Um breve texto introdutório sobre</p>
-                </div>
-
-                <!-- Library Card -->
-                <div class="card-hover rounded-lg overflow-hidden shadow-lg cursor-pointer h-64 relative">
-                    <img src="https://images.unsplash.com/photo-1483729558449-99ef09a8c325?w=600&h=400&fit=crop"
-                        alt="Rio" class="w-full h-full object-cover">
-                    <div
-                        class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent flex flex-col justify-between p-6 text-white">
+                <div class="card-hover bg-white rounded-2xl p-5 border border-slate-100 shadow-sm">
+                    <div class="flex items-center justify-between">
                         <div>
-                            <h3 class="text-3xl font-bold mb-4">Library</h3>
-                            <div class="w-16 h-1 bg-yellow-400 mb-4"></div>
+                            <p class="text-sm text-slate-500">Imóveis cadastrados</p>
+                            <h3 class="text-3xl font-bold text-slate-900">{{ totalImoveis }}</h3>
                         </div>
-                        <p class="text-sm">Our collection of inspirational destinations in Brazil</p>
+                        <div class="h-12 w-12 rounded-xl bg-amber-500/10 text-amber-600 flex items-center justify-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 12l2-2m0 0l7-7 7 7m-9-5v18"/></svg>
+                        </div>
+                    </div>
+                    <p class="mt-3 text-sm text-slate-500">Total de unidades disponíveis no sistema.</p>
+                </div>
+            </section>
+
+            <section class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <div class="bg-white border border-slate-100 rounded-2xl shadow-sm overflow-hidden">
+                    <div class="flex items-center justify-between px-6 py-4 border-b border-slate-100">
+                        <div>
+                            <p class="text-xs uppercase tracking-[0.2em] text-slate-400">Cadastros</p>
+                            <h3 class="text-lg font-semibold text-slate-900">Proprietários</h3>
+                        </div>
+                        <button class="px-3 py-2 text-sm bg-blue-50 text-blue-700 border border-blue-100 rounded-lg hover:bg-blue-100">+ Novo proprietário</button>
+                    </div>
+                    <div class="overflow-x-auto">
+                        <table class="w-full min-w-[520px] text-sm">
+                            <thead class="bg-slate-50 text-slate-500">
+                                <tr>
+                                    <th class="text-left px-6 py-3 font-medium">Nome</th>
+                                    <th class="text-left px-4 py-3 font-medium">Cidade</th>
+                                    <th class="text-left px-4 py-3 font-medium">Imóveis</th>
+                                    <th class="text-left px-4 py-3 font-medium">Status</th>
+                                    <th class="text-right px-6 py-3 font-medium">Ações</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr v-for="owner in proprietariosFiltrados" :key="owner.id" class="border-b border-slate-100">
+                                    <td class="px-6 py-3 font-medium text-slate-800">{{ owner.nome }}</td>
+                                    <td class="px-4 py-3 text-slate-600">{{ owner.cidade }}</td>
+                                    <td class="px-4 py-3 text-slate-600">{{ owner.imoveis }}</td>
+                                    <td class="px-4 py-3">
+                                        <span :class="statusClass(owner.status)" class="px-2 py-1 rounded-full text-xs font-semibold">{{ owner.status }}</span>
+                                    </td>
+                                    <td class="px-6 py-3 text-right space-x-2">
+                                        <button class="px-2 py-1 text-xs rounded border border-slate-200 text-slate-700 hover:bg-slate-50" @click="handleAcao('visualizar', 'Proprietário', owner)">Ver</button>
+                                        <button class="px-2 py-1 text-xs rounded border border-amber-200 text-amber-700 hover:bg-amber-50" @click="handleAcao('editar', 'Proprietário', owner)">Editar</button>
+                                        <button class="px-2 py-1 text-xs rounded border border-rose-200 text-rose-700 hover:bg-rose-50" @click="handleAcao('inativar', 'Proprietário', owner)">Inativar</button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
 
-                <!-- Team Blumar Card -->
-                <div
-                    class="card-hover bg-sky-400 rounded-lg overflow-hidden shadow-lg cursor-pointer h-64 flex flex-col justify-between p-6 text-white">
-                    <div>
-                        <h3 class="text-3xl font-bold mb-4">Team Blumar</h3>
-                        <div class="w-16 h-1 bg-yellow-400 mb-4"></div>
+                <div class="bg-white border border-slate-100 rounded-2xl shadow-sm overflow-hidden">
+                    <div class="flex items-center justify-between px-6 py-4 border-b border-slate-100">
+                        <div>
+                            <p class="text-xs uppercase tracking-[0.2em] text-slate-400">Cadastros</p>
+                            <h3 class="text-lg font-semibold text-slate-900">Inquilinos</h3>
+                        </div>
+                        <button class="px-3 py-2 text-sm bg-emerald-50 text-emerald-700 border border-emerald-100 rounded-lg hover:bg-emerald-100">+ Novo inquilino</button>
                     </div>
-                    <p class="text-sm">Um breve texto introdutório sobre</p>
+                    <div class="overflow-x-auto">
+                        <table class="w-full min-w-[520px] text-sm">
+                            <thead class="bg-slate-50 text-slate-500">
+                                <tr>
+                                    <th class="text-left px-6 py-3 font-medium">Nome</th>
+                                    <th class="text-left px-4 py-3 font-medium">Contato</th>
+                                    <th class="text-left px-4 py-3 font-medium">Unidades</th>
+                                    <th class="text-left px-4 py-3 font-medium">Status</th>
+                                    <th class="text-right px-6 py-3 font-medium">Ações</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr v-for="tenant in inquilinosFiltrados" :key="tenant.id" class="border-b border-slate-100">
+                                    <td class="px-6 py-3 font-medium text-slate-800">{{ tenant.nome }}</td>
+                                    <td class="px-4 py-3 text-slate-600">{{ tenant.email }}</td>
+                                    <td class="px-4 py-3 text-slate-600">{{ tenant.unidades }}</td>
+                                    <td class="px-4 py-3">
+                                        <span :class="statusClass(tenant.status)" class="px-2 py-1 rounded-full text-xs font-semibold">{{ tenant.status }}</span>
+                                    </td>
+                                    <td class="px-6 py-3 text-right space-x-2">
+                                        <button class="px-2 py-1 text-xs rounded border border-slate-200 text-slate-700 hover:bg-slate-50" @click="handleAcao('visualizar', 'Inquilino', tenant)">Ver</button>
+                                        <button class="px-2 py-1 text-xs rounded border border-amber-200 text-amber-700 hover:bg-amber-50" @click="handleAcao('editar', 'Inquilino', tenant)">Editar</button>
+                                        <button class="px-2 py-1 text-xs rounded border border-rose-200 text-rose-700 hover:bg-rose-50" @click="handleAcao('inativar', 'Inquilino', tenant)">Inativar</button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <section class="bg-white border border-slate-100 rounded-2xl shadow-sm">
+                <div class="flex items-center justify-between px-6 py-4 border-b border-slate-100">
+                    <div>
+                        <p class="text-xs uppercase tracking-[0.2em] text-slate-400">Comunidade</p>
+                        <h3 class="text-lg font-semibold text-slate-900">Moderação e ações rápidas</h3>
+                    </div>
+                    <div class="flex items-center gap-3">
+                        <button class="px-3 py-2 text-sm bg-white border border-slate-200 rounded-lg hover:bg-slate-50" @click="abrirNovoTopico()">+ Novo tópico</button>
+                    </div>
+                </div>
+                <div class="divide-y divide-slate-100">
+                    <div v-for="post in comunidade" :key="post.id" class="flex flex-wrap items-center justify-between gap-3 px-6 py-4">
+                        <div>
+                            <p class="text-sm text-slate-500">{{ post.categoria }} • Atualizado {{ post.ultimaAtualizacao }}</p>
+                            <h4 class="text-base font-semibold text-slate-900">{{ post.titulo }}</h4>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <button class="px-3 py-1.5 text-xs rounded border border-slate-200 text-slate-700 hover:bg-slate-50" @click="abrirEdicao(post)">Editar</button>
+                            <button class="px-3 py-1.5 text-xs rounded border border-rose-200 text-rose-700 hover:bg-rose-50" @click="abrirExclusao(post)">Excluir</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <div v-if="modal.edicaoAberta" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4">
+                <div class="bg-white rounded-2xl shadow-xl w-full max-w-lg">
+                    <div class="flex items-center justify-between px-6 py-4 border-b border-slate-100">
+                        <h3 class="text-lg font-semibold">Editar tópico da comunidade</h3>
+                        <button class="text-slate-400 hover:text-slate-600" @click="fecharModais">✕</button>
+                    </div>
+                    <div class="p-6 space-y-4">
+                        <label class="block text-sm text-slate-600">Título
+                            <input v-model="modal.postSelecionado.titulo" type="text" class="mt-1 w-full border border-slate-200 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500" />
+                        </label>
+                        <label class="block text-sm text-slate-600">Categoria
+                            <input v-model="modal.postSelecionado.categoria" type="text" class="mt-1 w-full border border-slate-200 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500" />
+                        </label>
+                        <label class="block text-sm text-slate-600">Descrição
+                            <textarea v-model="modal.postSelecionado.descricao" rows="3" class="mt-1 w-full border border-slate-200 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"></textarea>
+                        </label>
+                    </div>
+                    <div class="px-6 py-4 bg-slate-50 flex items-center justify-end gap-3 rounded-b-2xl">
+                        <button class="px-4 py-2 text-sm border border-slate-200 rounded-lg hover:bg-white" @click="fecharModais">Cancelar</button>
+                        <button class="px-4 py-2 text-sm bg-blue-600 text-white rounded-lg hover:bg-blue-700" @click="salvarEdicao">Salvar</button>
+                    </div>
+                </div>
+            </div>
+
+            <div v-if="modal.exclusaoAberta" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4">
+                <div class="bg-white rounded-2xl shadow-xl w-full max-w-md">
+                    <div class="px-6 py-5 space-y-3 text-center">
+                        <div class="mx-auto h-12 w-12 rounded-full bg-rose-50 text-rose-600 flex items-center justify-center">✕</div>
+                        <h3 class="text-lg font-semibold text-slate-900">Confirmar exclusão</h3>
+                        <p class="text-sm text-slate-600">Deseja remover o tópico "{{ modal.postSelecionado?.titulo }}"? Essa ação pode ser revertida somente pelo suporte.</p>
+                    </div>
+                    <div class="px-6 py-4 bg-slate-50 flex items-center justify-end gap-3 rounded-b-2xl">
+                        <button class="px-4 py-2 text-sm border border-slate-200 rounded-lg hover:bg-white" @click="fecharModais">Cancelar</button>
+                        <button class="px-4 py-2 text-sm bg-rose-600 text-white rounded-lg hover:bg-rose-700" @click="confirmarExclusao">Excluir</button>
+                    </div>
                 </div>
             </div>
         </main>
-
-        <!-- Footer -->
-        <footer class="bg-slate-800 text-white py-8 px-6 mt-16">
-            <div class="max-w-7xl mx-auto">
-                <!-- Contact Info -->
-                <div
-                    class="flex flex-wrap items-center justify-center gap-6 text-sm mb-8 pb-8 border-b border-slate-700">
-                    <div class="flex items-center gap-2">
-                        <span class="font-bold">BLUMAR</span>
-                        <span>Rua Siqueira Campos, 43 - conj 2 - Copacabana | Rio de Janeiro - RJ | Brazil</span>
-                    </div>
-                    <div class="flex items-center gap-2">
-                        <span>CEP: 22031-901</span>
-                    </div>
-                    <div class="flex items-center gap-2">
-                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-                            <path
-                                d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z" />
-                        </svg>
-                        <span>+ 55 21 2145 9000</span>
-                    </div>
-                    <div class="flex items-center gap-2">
-                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-                            <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z" />
-                            <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z" />
-                        </svg>
-                        <span>incentives@blumar.com.br</span>
-                    </div>
-                    <div class="flex items-center gap-3">
-                        <a href="#" class="hover:text-blue-400">
-                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                                <path
-                                    d="M9 8h-3v4h3v12h5v-12h3.642l.358-4h-4v-1.667c0-.955.192-1.333 1.115-1.333h2.885v-5h-3.808c-3.596 0-5.192 1.583-5.192 4.615v3.385z" />
-                            </svg>
-                        </a>
-                        <a href="#" class="hover:text-blue-400">
-                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                                <path
-                                    d="M4.98 3.5c0 1.381-1.11 2.5-2.48 2.5s-2.48-1.119-2.48-2.5c0-1.38 1.11-2.5 2.48-2.5s2.48 1.12 2.48 2.5zm.02 4.5h-5v16h5v-16zm7.982 0h-4.968v16h4.969v-8.399c0-4.67 6.029-5.052 6.029 0v8.399h4.988v-10.131c0-7.88-8.922-7.593-11.018-3.714v-2.155z" />
-                            </svg>
-                        </a>
-                    </div>
-                </div>
-
-                <!-- Partners Section -->
-                <div class="mb-8">
-                    <div
-                        class="grid grid-cols-3 md:grid-cols-6 lg:grid-cols-10 gap-6 items-center justify-items-center mb-8">
-                        <img v-for="(logo, index) in topLogos" :key="index" :src="logo.src" :alt="logo.alt"
-                            class="h-12 object-contain opacity-80 hover:opacity-100 transition">
-                    </div>
-
-                    <div class="text-center text-sm text-gray-400 mb-4">WE ARE IN COMPLIANCE WITH:</div>
-
-                    <div class="grid grid-cols-3 md:grid-cols-6 gap-6 items-center justify-items-center mb-8">
-                        <img v-for="(logo, index) in complianceLogos" :key="index" :src="logo.src" :alt="logo.alt"
-                            class="h-12 object-contain opacity-80 hover:opacity-100 transition">
-                    </div>
-
-                    <div class="text-center text-sm text-gray-400 mb-4">REPRESENTED BY:</div>
-
-                    <div class="grid grid-cols-2 md:grid-cols-4 gap-6 items-center justify-items-center">
-                        <img v-for="(logo, index) in representedLogos" :key="index" :src="logo.src" :alt="logo.alt"
-                            class="h-12 object-contain opacity-80 hover:opacity-100 transition">
-                    </div>
-                </div>
-
-                <!-- Copyright -->
-                <div class="text-center text-sm text-gray-400 pt-8 border-t border-slate-700">
-                    <p>Made with ❤️ in Brazil</p>
-                </div>
-            </div>
-        </footer>
     </div>
 
     <script>
-        const { createApp } = Vue;
+        const { createApp, computed } = Vue;
 
         createApp({
             data() {
                 return {
-                    topLogos: [
-                        { src: 'https://via.placeholder.com/120x60/4A5568/FFFFFF?text=Virtuoso', alt: 'Virtuoso' },
-                        { src: 'https://via.placeholder.com/120x60/4A5568/FFFFFF?text=ILTM', alt: 'ILTM' },
-                        { src: 'https://via.placeholder.com/120x60/4A5568/FFFFFF?text=ABTA', alt: 'ABTA' },
-                        { src: 'https://via.placeholder.com/120x60/4A5568/FFFFFF?text=IATA', alt: 'IATA' },
-                        { src: 'https://via.placeholder.com/120x60/4A5568/FFFFFF?text=USTOA', alt: 'USTOA' },
-                        { src: 'https://via.placeholder.com/120x60/4A5568/FFFFFF?text=Travel+Alliance', alt: 'Travel Alliance' },
-                        { src: 'https://via.placeholder.com/120x60/4A5568/FFFFFF?text=Travelsavers', alt: 'Travelsavers' },
-                        { src: 'https://via.placeholder.com/120x60/4A5568/FFFFFF?text=NEST', alt: 'NEST' },
-                        { src: 'https://via.placeholder.com/120x60/4A5568/FFFFFF?text=Brazil+Travel', alt: 'Brazil Travel' },
-                        { src: 'https://via.placeholder.com/120x60/4A5568/FFFFFF?text=Ensemble', alt: 'Ensemble' }
+                    filters: {
+                        status: 'todos',
+                        search: ''
+                    },
+                    proprietarios: [
+                        { id: 1, nome: 'Ana Martins', cidade: 'São Paulo', imoveis: 8, status: 'ativo' },
+                        { id: 2, nome: 'Carlos Santos', cidade: 'Rio de Janeiro', imoveis: 5, status: 'pendente' },
+                        { id: 3, nome: 'Fernanda Costa', cidade: 'Belo Horizonte', imoveis: 3, status: 'ativo' },
+                        { id: 4, nome: 'João Carvalho', cidade: 'Curitiba', imoveis: 2, status: 'inativo' }
                     ],
-                    complianceLogos: [
-                        { src: 'https://via.placeholder.com/100x60/4A5568/FFFFFF?text=Green+Globe', alt: 'Green Globe' },
-                        { src: 'https://via.placeholder.com/100x60/4A5568/FFFFFF?text=Cadastur', alt: 'Cadastur' },
-                        { src: 'https://via.placeholder.com/100x60/4A5568/FFFFFF?text=ISO', alt: 'ISO' }
+                    inquilinos: [
+                        { id: 1, nome: 'Lucas Rocha', email: 'lucas.rocha@email.com', unidades: 2, status: 'ativo' },
+                        { id: 2, nome: 'Patrícia Almeida', email: 'patricia.almeida@email.com', unidades: 1, status: 'pendente' },
+                        { id: 3, nome: 'Thiago Ferreira', email: 'thiago.ferreira@email.com', unidades: 3, status: 'ativo' },
+                        { id: 4, nome: 'Beatriz Gomes', email: 'beatriz.gomes@email.com', unidades: 1, status: 'inativo' }
                     ],
-                    representedLogos: [
-                        { src: 'https://via.placeholder.com/100x60/4A5568/FFFFFF?text=MPI', alt: 'MPI' },
-                        { src: 'https://via.placeholder.com/100x60/4A5568/FFFFFF?text=GPS', alt: 'GPS' },
-                        { src: 'https://via.placeholder.com/100x60/4A5568/FFFFFF?text=Andy+Warhol', alt: 'Andy Warhol' },
-                        { src: 'https://via.placeholder.com/100x60/4A5568/FFFFFF?text=FEL+Brasil', alt: 'FEL Brasil' }
-                    ]
+                    comunidade: [
+                        { id: 1, titulo: 'Atualização do regulamento interno', categoria: 'Avisos', ultimaAtualizacao: 'há 2h', descricao: 'Revisão de regras para visitantes.' },
+                        { id: 2, titulo: 'Checklist de manutenção preventiva', categoria: 'Operação', ultimaAtualizacao: 'há 1 dia', descricao: 'Roteiro mensal de inspeções.' },
+                        { id: 3, titulo: 'Melhorias na experiência dos inquilinos', categoria: 'Sugestões', ultimaAtualizacao: 'há 3 dias', descricao: 'Novas diretrizes de comunicação.' }
+                    ],
+                    modal: {
+                        edicaoAberta: false,
+                        exclusaoAberta: false,
+                        postSelecionado: null
+                    }
+                };
+            },
+            computed: {
+                proprietariosFiltrados() {
+                    return this.proprietarios.filter((owner) => {
+                        const correspondeStatus = this.filters.status === 'todos' || owner.status === this.filters.status;
+                        const correspondeBusca = owner.nome.toLowerCase().includes(this.filters.search.toLowerCase()) || owner.cidade.toLowerCase().includes(this.filters.search.toLowerCase());
+                        return correspondeStatus && correspondeBusca;
+                    });
+                },
+                inquilinosFiltrados() {
+                    return this.inquilinos.filter((tenant) => {
+                        const correspondeStatus = this.filters.status === 'todos' || tenant.status === this.filters.status;
+                        const correspondeBusca = tenant.nome.toLowerCase().includes(this.filters.search.toLowerCase()) || tenant.email.toLowerCase().includes(this.filters.search.toLowerCase());
+                        return correspondeStatus && correspondeBusca;
+                    });
+                },
+                totalProprietarios() {
+                    return this.proprietarios.length;
+                },
+                totalInquilinos() {
+                    return this.inquilinos.length;
+                },
+                totalImoveis() {
+                    return this.proprietarios.reduce((acc, owner) => acc + owner.imoveis, 0);
                 }
             },
             methods: {
-                navigateTo(section) {
-                    console.log('Navigating to:', section);
-                    alert(`Você clicou em: ${section}`);
+                statusClass(status) {
+                    const classes = {
+                        ativo: 'bg-emerald-50 text-emerald-700 border border-emerald-100',
+                        pendente: 'bg-amber-50 text-amber-700 border border-amber-100',
+                        inativo: 'bg-slate-100 text-slate-600 border border-slate-200'
+                    };
+                    return classes[status] || 'bg-slate-100 text-slate-600 border border-slate-200';
+                },
+                handleAcao(acao, tipo, item) {
+                    const mensagem = `${acao} ${tipo}: ${item.nome}`;
+                    console.log(mensagem);
+                    alert(mensagem);
+                },
+                abrirEdicao(post) {
+                    this.modal.postSelecionado = { ...post };
+                    this.modal.edicaoAberta = true;
+                },
+                abrirExclusao(post) {
+                    this.modal.postSelecionado = { ...post };
+                    this.modal.exclusaoAberta = true;
+                },
+                abrirNovoTopico() {
+                    this.modal.postSelecionado = { titulo: 'Novo tópico', categoria: 'Geral', descricao: '' };
+                    this.modal.edicaoAberta = true;
+                },
+                salvarEdicao() {
+                    if (this.modal.postSelecionado?.id) {
+                        const indice = this.comunidade.findIndex((p) => p.id === this.modal.postSelecionado.id);
+                        if (indice !== -1) {
+                            this.comunidade[indice] = { ...this.modal.postSelecionado, ultimaAtualizacao: 'agora' };
+                        }
+                    } else {
+                        const novoId = Math.max(...this.comunidade.map((p) => p.id)) + 1;
+                        this.comunidade.push({ ...this.modal.postSelecionado, id: novoId, ultimaAtualizacao: 'agora' });
+                    }
+                    this.fecharModais();
+                },
+                confirmarExclusao() {
+                    if (this.modal.postSelecionado?.id) {
+                        this.comunidade = this.comunidade.filter((p) => p.id !== this.modal.postSelecionado.id);
+                    }
+                    this.fecharModais();
+                },
+                fecharModais() {
+                    this.modal.edicaoAberta = false;
+                    this.modal.exclusaoAberta = false;
+                    this.modal.postSelecionado = null;
                 }
             }
         }).mount('#app');
